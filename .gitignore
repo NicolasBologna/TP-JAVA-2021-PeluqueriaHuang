@@ -25,4 +25,4 @@ hs_err_pid*
 
 
 # Whitelist connector/j #
-!/TP-JAVA-2021-PeluqueriaHuang/lib/*.jar
+!/WebContent/WEB-INF/lib/*.jar
