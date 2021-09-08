@@ -1,9 +1,14 @@
 package logic;
 
 import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import data.*;
 import entities.*;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
 
 public class Login {
 	private DataPersona dp;
@@ -13,10 +18,7 @@ public class Login {
 	}
 	
 	public Persona validate(Persona p) {
-		/* para hacer más seguro el manejo de passwords este sería un lugar 
-		 * adecuado para generar un hash de la password utilizando un cifrado
-		 * asimétrico como sha256 y utilizar el hash en lugar de la password en plano 
-		 */
+		p.setPassword(encriptadoMD5(p.getPassword()));
 		return dp.getByUser(p);
 	}
 
@@ -28,4 +30,21 @@ public class Login {
 		return dp.getByDocumento(per);
 		
 	}
+	
+	private String encriptadoMD5(String pasword) {
+
+        String passEncript = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] encBytes = md.digest(pasword.getBytes());
+            BigInteger numero = new BigInteger(1, encBytes);
+            passEncript = numero.toString();
+            while (passEncript.length() < 32) {
+                passEncript = "0" + passEncript;
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR en encriptado");
+        }
+        return passEncript;
+    }        
 }

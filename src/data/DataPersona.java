@@ -91,7 +91,7 @@ public class DataPersona {
 				e.printStackTrace();
 			}
 		}
-		
+		System.out.println(p);
 		return p;
 	}
 	
