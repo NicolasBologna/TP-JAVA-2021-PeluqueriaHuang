@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@page import="entities.User"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
 	<link rel="icon" type="image/png" href="Main-assets/assets/img/favicon.png">	
 	
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>Peluquerías Huang</title>
+	<title>SALÓN LEGEND</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -20,6 +21,12 @@
     <!--     Font Awesome     -->
     <link href="Main-assets/bootstrap3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
+	
+		<%
+			User user = (User)session.getAttribute("user");
+			
+		%>
+	
 </head>
 <body>
 <div id="navbar-full">
@@ -35,24 +42,31 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <%if (user != null){%>
                 <a href="http://creative-tim.com">
                      <div class="logo-container">
                         <div class="logo">
                             <img src="Main-assets/assets/img/new_logo.png">
                         </div>
                         <div class="brand">
-                            Creative Tim
+                            <%=user.getFirstName()%> <%=user.getLastName()%>
                         </div>
                     </div>
                 </a>
+                <%}%>
             </div>
         
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/.html">Components</a></li>
-                    
+                    <li><a href="/.html">Nuestros Cortes</a></li>
+                    <%if (user != null){%>
+                    <li><a href="/.html">Turnos</a></li>
+                    <li><a href="Logout" class="btn btn-round btn-default">Salir</a></li>
+                    <%}else{%>
                     <li><a href="Signin" class="btn btn-round btn-default">Ingresar</a></li>
+                    <%}%>
+                    
                </ul>
               
             </div><!-- /.navbar-collapse -->
@@ -62,8 +76,8 @@
     
     <div class='blurred-container'>
         <div class="motto">
-            <div>Huang</div>
-            <div>Peluquerías</div>
+            <div>SALÓN</div>
+            <div>LEGEND</div>
         </div>
         <div class="img-src" style="background-image: url('Main-assets/assets/img/cover_4.jpg')"></div>
         <div class='img-src blur' style="background-image: url('Main-assets/assets/img/cover_4_blur.jpg')"></div>

@@ -16,12 +16,12 @@ public class DataRol {
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select * from rol");
+			rs= stmt.executeQuery("select * from roles");
 			if(rs!=null) {
 				while(rs.next()) {
 					Rol r=new Rol();
 					r.setId(rs.getInt("id"));
-					r.setDescripcion(rs.getString("descripcion"));
+					r.setRole(rs.getString("role"));
 					roles.add(r);
 				}
 			}
@@ -49,14 +49,14 @@ public class DataRol {
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select * from rol where id=?"
+					"select * from roles where id=?"
 					);
 			stmt.setInt(1, rolToSearch.getId());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
 				r=new Rol();
 				r.setId(rs.getInt("id"));
-				r.setDescripcion(rs.getString("descripcion"));
+				r.setRole(rs.getString("role"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -79,14 +79,14 @@ public class DataRol {
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select * from rol where descripcion=?"
+					"select * from roles where role=?"
 					);
-			stmt.setString(1, rolToSearch.getDescripcion());
+			stmt.setString(1, rolToSearch.getRole());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
 				r=new Rol();
 				r.setId(rs.getInt("id"));
-				r.setDescripcion(rs.getString("descripcion"));
+				r.setRole(rs.getString("role"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -103,16 +103,16 @@ public class DataRol {
 		return r;
 	}
 	
-	public void setRoles(Persona per) {
+	public void setRoles(User per) {
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					  "select rol.* "
-					+ "from rol "
-					+ "inner join rol_persona "
-					+ "on rol.id=rol_persona.id_rol "
-					+ "where id_persona=?"
+					  "select roles.* "
+					+ "from roles "
+					+ "inner join role_user "
+					+ "on roles.id=role_user.role_id "
+					+ "where user_id=?"
 					);
 			stmt.setInt(1, per.getId());
 			rs= stmt.executeQuery();
@@ -120,7 +120,7 @@ public class DataRol {
 				while(rs.next()) {
 					Rol r=new Rol();
 					r.setId(rs.getInt("id"));
-					r.setDescripcion(rs.getString("descripcion"));
+					r.setRole(rs.getString("role"));
 					per.addRol(r);
 				}
 			}
@@ -144,10 +144,10 @@ public class DataRol {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"insert into rol(descripcion) values(?)",
+							"insert into roles(role) values(?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
-			stmt.setString(1, rol.getDescripcion());
+			stmt.setString(1, rol.getRole());
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
@@ -175,8 +175,8 @@ public class DataRol {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"update rol set descripcion=? where id=?");
-			stmt.setString(1, rol.getDescripcion());
+							"update roles set role=? where id=?");
+			stmt.setString(1, rol.getRole());
 			stmt.setInt(2, rol.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -196,7 +196,7 @@ public class DataRol {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"delete from rol where id=?");
+							"delete from roles where id=?");
 			stmt.setInt(1, rol.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -211,13 +211,13 @@ public class DataRol {
 		}
 	}
 	
-	public void setRolesDePersona(Persona p) {
+	public void setRolesDePersona(User p) {
 		
 		PreparedStatement stmt= null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"insert into rol_persona values(?,?);");
+							"insert into role_user values(?,?);");
 			stmt.setInt(1,p.getId());
 			for(Rol r:p.getAllRoles().values()) {
 				stmt.setInt(2, r.getId());

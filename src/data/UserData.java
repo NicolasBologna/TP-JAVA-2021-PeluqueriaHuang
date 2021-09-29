@@ -5,31 +5,28 @@ import entities.*;
 import java.sql.*;
 import java.util.LinkedList;
 
-public class DataPersona {
+public class UserData {
 	
-	public LinkedList<Persona> getAll(){
+	public LinkedList<User> getAll(){
 		DataRol dr=new DataRol();
 		Statement stmt=null;
 		ResultSet rs=null;
-		LinkedList<Persona> pers= new LinkedList<>();
+		LinkedList<User> pers= new LinkedList<>();
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select id,nombre,apellido,tipo_doc,nro_doc,email,tel,habilitado from persona");
-			//intencionalmente no se recupera la password
+			rs= stmt.executeQuery("select user_id,first_name,last_name,dni,email,phone,is_enable from users");
 			if(rs!=null) {
 				while(rs.next()) {
-					Persona p=new Persona();
-					p.setDocumento(new Documento());
-					p.setId(rs.getInt("id"));
-					p.setNombre(rs.getString("nombre"));
-					p.setApellido(rs.getString("apellido"));
-					p.getDocumento().setTipo(rs.getString("tipo_doc"));
-					p.getDocumento().setNro(rs.getString("nro_doc"));
+					User p=new User();
+					p.setId(rs.getInt("user_id"));
+					p.setFirstName(rs.getString("first_name"));
+					p.setLastName(rs.getString("last_name"));
+					p.setDocument(rs.getInt("dni"));
 					p.setEmail(rs.getString("email"));
-					p.setTel(rs.getString("tel"));
+					p.setPhone(rs.getString("phone"));
 					
-					p.setHabilitado(rs.getBoolean("habilitado"));
+					p.setEnable(rs.getBoolean("is_enable"));
 					
 					dr.setRoles(p);
 					
@@ -54,29 +51,28 @@ public class DataPersona {
 		return pers;
 	}
 	
-	public Persona getByUser(Persona per) {
+	public User getByUser(User per) {
 		DataRol dr=new DataRol();
-		Persona p=null;
+		User p=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select id,nombre,apellido,tipo_doc,nro_doc,email,tel,habilitado from persona where email=? and password=?"
+					"select user_id,first_name,last_name,dni,email,phone,is_enable from users where email=? and password=?"
 					);
 			stmt.setString(1, per.getEmail());
 			stmt.setString(2, per.getPassword());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
-				p=new Persona();
-				p.setDocumento(new Documento());
-				p.setId(rs.getInt("id"));
-				p.setNombre(rs.getString("nombre"));
-				p.setApellido(rs.getString("apellido"));
-				p.getDocumento().setTipo(rs.getString("tipo_doc"));
-				p.getDocumento().setNro(rs.getString("nro_doc"));
+				p=new User();
+				p.setId(rs.getInt("user_id"));
+				p.setFirstName(rs.getString("first_name"));
+				p.setLastName(rs.getString("last_name"));
+				p.setDocument(rs.getInt("dni"));
 				p.setEmail(rs.getString("email"));
-				p.setTel(rs.getString("tel"));
-				p.setHabilitado(rs.getBoolean("habilitado"));
+				p.setPhone(rs.getString("phone"));
+				
+				p.setEnable(rs.getBoolean("is_enable"));
 				//
 				dr.setRoles(p);
 			}
@@ -95,9 +91,49 @@ public class DataPersona {
 		return p;
 	}
 	
-	public Persona getByDocumento(Persona per) {
+	
+	public User getByEmail(String email) {
 		DataRol dr=new DataRol();
-		Persona p=null;
+		User p=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select user_id,first_name,last_name,dni,email,phone,is_enable from users where email=?"
+					);
+			stmt.setString(1, email);
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()) {
+				p=new User();
+				p.setId(rs.getInt("user_id"));
+				p.setFirstName(rs.getString("first_name"));
+				p.setLastName(rs.getString("last_name"));
+				p.setDocument(rs.getInt("dni"));
+				p.setEmail(rs.getString("email"));
+				p.setPhone(rs.getString("phone"));
+				
+				p.setEnable(rs.getBoolean("is_enable"));
+				//
+				dr.setRoles(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println(p);
+		return p;
+	}
+	
+	/*public User getByDocumento(User per) {
+		DataRol dr=new DataRol();
+		User p=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
@@ -108,7 +144,7 @@ public class DataPersona {
 			stmt.setString(2, per.getDocumento().getNro());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
-				p=new Persona();
+				p=new User();
 				p.setDocumento(new Documento());
 				p.setId(rs.getInt("id"));
 				p.setNombre(rs.getString("nombre"));
@@ -134,34 +170,34 @@ public class DataPersona {
 		}
 		
 		return p;
-	}
+	}*/
 	
-	public void add(Persona p) {
+	public int add(User p) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"insert into persona(nombre, apellido, tipo_doc, nro_doc, email, password, tel, habilitado) values(?,?,?,?,?,?,?,?)",
+							"insert into users(first_name, last_name, dni, phone, email, password) values(?,?,?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
-			stmt.setString(1, p.getNombre());
-			stmt.setString(2, p.getApellido());
-			stmt.setString(3, p.getDocumento().getTipo());
-			stmt.setString(4, p.getDocumento().getNro());
+			stmt.setString(1, p.getFirstName());
+			stmt.setString(2, p.getLastName());
+			stmt.setInt(3, p.getDocument());
+			stmt.setString(4, p.getPhone());
 			stmt.setString(5, p.getEmail());
-			stmt.setString(5, p.getPassword());
-			stmt.setString(6, p.getTel());
-			stmt.setBoolean(7, p.isHabilitado());
+			stmt.setString(6, p.getPassword());
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
                 p.setId(keyResultSet.getInt(1));
+                
+                DataRol dr = new DataRol();
+                dr.setRolesDePersona(p);
             }
-            
-            DataRol dr = new DataRol();
-            dr.setRolesDePersona(p);
+            return p.getId();
+
 
 			
 		}  catch (SQLException e) {
@@ -173,8 +209,10 @@ public class DataPersona {
                 DbConnector.getInstancia().releaseConn();
             } catch (SQLException e) {
             	e.printStackTrace();
-            }
+            }            
 		}
+		//if error return -1?
+		return -1;
     }
 
 	

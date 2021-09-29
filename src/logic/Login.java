@@ -6,45 +6,31 @@ import java.util.regex.Pattern;
 
 import data.*;
 import entities.*;
+import utils.Encrypters;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
 public class Login {
-	private DataPersona dp;
+	private UserData dp;
 	
 	public Login() {
-		dp=new DataPersona();
+		dp=new UserData();
 	}
 	
-	public Persona validate(Persona p) {
-		p.setPassword(encriptadoMD5(p.getPassword()));
+	public User validate(User p) {
+		p.setPassword(Encrypters.encriptadoMD5(p.getPassword()));
 		return dp.getByUser(p);
 	}
 
-	public LinkedList<Persona> getAll(){
+	public LinkedList<User> getAll(){
 		return dp.getAll();
 	}
 
-	public Persona getByDocumento(Persona per) {
+	/*public User getByDocumento(User per) {
 		return dp.getByDocumento(per);
 		
-	}
+	}*/
 	
-	private String encriptadoMD5(String pasword) {
-
-        String passEncript = "";
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] encBytes = md.digest(pasword.getBytes());
-            BigInteger numero = new BigInteger(1, encBytes);
-            passEncript = numero.toString();
-            while (passEncript.length() < 32) {
-                passEncript = "0" + passEncript;
-            }
-        } catch (Exception e) {
-            System.out.println("ERROR en encriptado");
-        }
-        return passEncript;
-    }        
+        
 }

@@ -1,5 +1,5 @@
 <%@page import="java.util.LinkedList"%>
-<%@page import="entities.Persona"%>
+<%@page import="entities.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -22,9 +22,9 @@
     <link href="style/start.css" rel="stylesheet">
 	
 	<%
-		Persona p = (Persona)session.getAttribute("usuario");
-    	LinkedList<Persona> lp = (LinkedList<Persona>)request.getAttribute("listaPersonas");
-	%>
+			User p = (User)session.getAttribute("usuario");
+		    	LinkedList<User> lp = (LinkedList<User>)request.getAttribute("listaPersonas");
+		%>
 	
 </head>
 <body>
@@ -47,7 +47,9 @@
                       			</tr>
                       		</thead>
                     		<tbody>
-                    		<% for (Persona per : lp) { %>
+                    		<%
+                    			for (User per : lp) {
+                    		%>
                     			<tr>
                     				<td><%=per.getId()%></td>
                     				<td><%=per.getNombre()%></td>
