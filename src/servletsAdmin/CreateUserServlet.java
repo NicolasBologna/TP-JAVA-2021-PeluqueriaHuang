@@ -35,7 +35,7 @@ public class CreateUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		request.setAttribute("rolList", Admin.getAllRoles());
+		request.setAttribute("roleList", Admin.getAllRoles());
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/User/CreateUser.jsp");
         dispatcher.forward(request, response);
 	}

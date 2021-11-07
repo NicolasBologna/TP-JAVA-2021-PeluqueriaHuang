@@ -27,15 +27,15 @@
 <link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
 
 <%
-	LinkedList<Role> rolList = (LinkedList<Role>)request.getAttribute("rolList");
+	LinkedList<Role> rolList = (LinkedList<Role>)request.getAttribute("roleList");
 %>
 
 </head>
 <body class="bg-dark text-light">
 	<main>
 	<div class="container">
-		<h1 class="login-title">Crear Usuario</h1>
-		<form action="CreateUserServlet" method="post">
+		<h1 class="text-center pt-2">Crear Usuario</h1>
+		<form action="CreateUserServlet" method="post" class="shadow p-5">
 			<div class="form-group mb-4">
 				<label for="email">Email</label> <input type="email" name="email"
 					id="email" class="form-control" placeholder="email@ejemplo.com"

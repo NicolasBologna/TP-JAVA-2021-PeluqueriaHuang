@@ -58,7 +58,7 @@
                    				<td><%=per.getDni()%></td>
                    				<td><%=per.getPhone()%></td>
                    				<td>
-	                   				<input type="checkbox" <%=per.isEnable()?"checked":""%> name="checkbox" class="bootstrap-switch"
+	                   				<input type="checkbox" <%=per.getIsEnable()?"checked":""%> name="checkbox" class="bootstrap-switch"
 									    data-on-label="ON"
 									    data-off-label="OFF"
 									/>
