@@ -1,15 +1,11 @@
 package logic;
 
 import java.util.LinkedList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import data.*;
 import entities.*;
 import utils.Encrypters;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
 
 public class Login {
 	private UserData dp;

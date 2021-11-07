@@ -7,19 +7,19 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import entities.*;
 
-public class DataRol {
+public class RolData {
 	
-	public LinkedList<Rol> getAll(){
+	public LinkedList<Role> getAll(){
 		Statement stmt=null;
 		ResultSet rs=null;
-		LinkedList<Rol> roles= new LinkedList<>();
+		LinkedList<Role> roles= new LinkedList<>();
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			rs= stmt.executeQuery("select * from roles");
 			if(rs!=null) {
 				while(rs.next()) {
-					Rol r=new Rol();
+					Role r=new Role();
 					r.setId(rs.getInt("id"));
 					r.setRole(rs.getString("role"));
 					roles.add(r);
@@ -43,8 +43,8 @@ public class DataRol {
 		return roles;
 	}
 	
-	public Rol getById(Rol rolToSearch) {
-		Rol r=null;
+	public Role getById(Role rolToSearch) {
+		Role r=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
@@ -54,7 +54,7 @@ public class DataRol {
 			stmt.setInt(1, rolToSearch.getId());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
-				r=new Rol();
+				r=new Role();
 				r.setId(rs.getInt("id"));
 				r.setRole(rs.getString("role"));
 			}
@@ -73,8 +73,8 @@ public class DataRol {
 		return r;
 	}
 	
-	public Rol getByDesc(Rol rolToSearch) {
-		Rol r=null;
+	public Role getByDesc(Role rolToSearch) {
+		Role r=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
@@ -84,7 +84,7 @@ public class DataRol {
 			stmt.setString(1, rolToSearch.getRole());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
-				r=new Rol();
+				r=new Role();
 				r.setId(rs.getInt("id"));
 				r.setRole(rs.getString("role"));
 			}
@@ -114,11 +114,11 @@ public class DataRol {
 					+ "on roles.id=role_user.role_id "
 					+ "where user_id=?"
 					);
-			stmt.setInt(1, per.getId());
+			stmt.setInt(1, per.getUserId());
 			rs= stmt.executeQuery();
 			if(rs!=null) {
 				while(rs.next()) {
-					Rol r=new Rol();
+					Role r=new Role();
 					r.setId(rs.getInt("id"));
 					r.setRole(rs.getString("role"));
 					per.addRol(r);
@@ -138,7 +138,7 @@ public class DataRol {
 		}
 	}
 	
-	public void add(Rol rol) {
+	public void add(Role role) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
 		try {
@@ -147,12 +147,12 @@ public class DataRol {
 							"insert into roles(role) values(?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
-			stmt.setString(1, rol.getRole());
+			stmt.setString(1, role.getRole());
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
-                rol.setId(keyResultSet.getInt(1));
+                role.setId(keyResultSet.getInt(1));
             }
 
 			
@@ -170,14 +170,14 @@ public class DataRol {
 
 	}
 	
-	public void update(Rol rol) {
+	public void update(Role role) {
 		PreparedStatement stmt= null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
 							"update roles set role=? where id=?");
-			stmt.setString(1, rol.getRole());
-			stmt.setInt(2, rol.getId());
+			stmt.setString(1, role.getRole());
+			stmt.setInt(2, role.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
             e.printStackTrace();
@@ -191,13 +191,13 @@ public class DataRol {
 		}
 	}
 	
-	public void remove(Rol rol) {
+	public void remove(Role role) {
 		PreparedStatement stmt= null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
 							"delete from roles where id=?");
-			stmt.setInt(1, rol.getId());
+			stmt.setInt(1, role.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
             e.printStackTrace();
@@ -218,8 +218,8 @@ public class DataRol {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
 							"insert into role_user values(?,?);");
-			stmt.setInt(1,p.getId());
-			for(Rol r:p.getAllRoles().values()) {
+			stmt.setInt(1,p.getUserId());
+			for(Role r:p.getAllRoles().values()) {
 				stmt.setInt(2, r.getId());
 				stmt.executeUpdate();
 			}

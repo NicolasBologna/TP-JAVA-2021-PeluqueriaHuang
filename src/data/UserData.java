@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class UserData {
 	
 	public LinkedList<User> getAll(){
-		DataRol dr=new DataRol();
+		RolData dr=new RolData();
 		Statement stmt=null;
 		ResultSet rs=null;
 		LinkedList<User> pers= new LinkedList<>();
@@ -19,14 +19,14 @@ public class UserData {
 			if(rs!=null) {
 				while(rs.next()) {
 					User p=new User();
-					p.setId(rs.getInt("user_id"));
+					p.setUserId(rs.getInt("user_id"));
 					p.setFirstName(rs.getString("first_name"));
 					p.setLastName(rs.getString("last_name"));
-					p.setDocument(rs.getInt("dni"));
+					p.setDni(rs.getInt("dni"));
 					p.setEmail(rs.getString("email"));
 					p.setPhone(rs.getString("phone"));
 					
-					p.setEnable(rs.getBoolean("is_enable"));
+					p.setIsEnable(rs.getBoolean("is_enable"));
 					
 					dr.setRoles(p);
 					
@@ -52,7 +52,7 @@ public class UserData {
 	}
 	
 	public User getByUser(User per) {
-		DataRol dr=new DataRol();
+		RolData dr=new RolData();
 		User p=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
@@ -65,14 +65,14 @@ public class UserData {
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
 				p=new User();
-				p.setId(rs.getInt("user_id"));
+				p.setUserId(rs.getInt("user_id"));
 				p.setFirstName(rs.getString("first_name"));
 				p.setLastName(rs.getString("last_name"));
-				p.setDocument(rs.getInt("dni"));
+				p.setDni(rs.getInt("dni"));
 				p.setEmail(rs.getString("email"));
 				p.setPhone(rs.getString("phone"));
 				
-				p.setEnable(rs.getBoolean("is_enable"));
+				p.setIsEnable(rs.getBoolean("is_enable"));
 				//
 				dr.setRoles(p);
 			}
@@ -93,7 +93,7 @@ public class UserData {
 	
 	
 	public User getByEmail(String email) {
-		DataRol dr=new DataRol();
+		RolData dr=new RolData();
 		User p=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
@@ -105,14 +105,14 @@ public class UserData {
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
 				p=new User();
-				p.setId(rs.getInt("user_id"));
+				p.setUserId(rs.getInt("user_id"));
 				p.setFirstName(rs.getString("first_name"));
 				p.setLastName(rs.getString("last_name"));
-				p.setDocument(rs.getInt("dni"));
+				p.setDni(rs.getInt("dni"));
 				p.setEmail(rs.getString("email"));
 				p.setPhone(rs.getString("phone"));
 				
-				p.setEnable(rs.getBoolean("is_enable"));
+				p.setIsEnable(rs.getBoolean("is_enable"));
 				//
 				dr.setRoles(p);
 			}
@@ -172,7 +172,7 @@ public class UserData {
 		return p;
 	}*/
 	
-	public int add(User p) {
+	public int add(User user) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
 		try {
@@ -181,22 +181,22 @@ public class UserData {
 							"insert into users(first_name, last_name, dni, phone, email, password) values(?,?,?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
-			stmt.setString(1, p.getFirstName());
-			stmt.setString(2, p.getLastName());
-			stmt.setInt(3, p.getDocument());
-			stmt.setString(4, p.getPhone());
-			stmt.setString(5, p.getEmail());
-			stmt.setString(6, p.getPassword());
+			stmt.setString(1, user.getFirstName());
+			stmt.setString(2, user.getLastName());
+			stmt.setInt(3, user.getDni());
+			stmt.setString(4, user.getPhone());
+			stmt.setString(5, user.getEmail());
+			stmt.setString(6, user.getPassword());
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
-                p.setId(keyResultSet.getInt(1));
+                user.setUserId(keyResultSet.getInt(1));
                 
-                DataRol dr = new DataRol();
-                dr.setRolesDePersona(p);
+                RolData dr = new RolData();
+                dr.setRolesDePersona(user);
             }
-            return p.getId();
+            return user.getUserId();
 
 
 			
@@ -214,6 +214,65 @@ public class UserData {
 		//if error return -1?
 		return -1;
     }
+	
+	public boolean remove(int userId) {
+		PreparedStatement stmt= null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"UPDATE users SET is_enable=0 WHERE user_id = ?"
+							);
+			stmt.setInt(1, userId);
+			stmt.executeUpdate();
 
+            return stmt.executeUpdate() > 0;
+			
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }            
+		}
+		//if error return false
+		return false;	
+	}
+	
+	public boolean update(User user) {
+		PreparedStatement stmt= null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"UPDATE users SET first_name = ?, last_name = ?, dni = ?, phone = ?, email = ?, password = ? WHERE user_id = ?",
+							PreparedStatement.RETURN_GENERATED_KEYS
+							);
+			stmt.setString(1, user.getFirstName());
+			stmt.setString(2, user.getLastName());
+			stmt.setInt(3, user.getDni());
+			stmt.setString(4, user.getPhone());
+			stmt.setString(5, user.getEmail());
+			stmt.setString(6, user.getPassword());
+			stmt.setInt(7, user.getUserId());
+			
+            return stmt.executeUpdate() > 0;
+            
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }            
+		}
+		//if error return false
+		return false;
+    }
+	
+	
 	
 }

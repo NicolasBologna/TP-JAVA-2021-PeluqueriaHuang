@@ -3,7 +3,7 @@ package entities;
 import java.util.HashMap;
 
 public class User {
-	private int user_id;
+	private int userId;
 	private String firstName;
 	private String lastName;
 	private int dni;
@@ -11,31 +11,37 @@ public class User {
 	private String email;
 	private String password;
 	private boolean isEnable;
-	private HashMap<Integer, Rol> roles;
+	private HashMap<Integer, Role> roles;
 	
-	public int getId() {
-		return user_id;
+	public int getUserId() {
+		return userId;
 	}
-	public void setId(int id) {
-		this.user_id = id;
-	}
-	public int getDocument() {
-		return dni;
-	}
-	public void setDocument(int dni) {
-		this.dni = dni;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public String getFirstName() {
 		return firstName;
 	}
-	public void setFirstName(String name) {
-		this.firstName = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 	public String getLastName() {
 		return lastName;
 	}
-	public void setLastName(String last_name) {
-		this.lastName = last_name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public int getDni() {
+		return dni;
+	}
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public String getEmail() {
 		return email;
@@ -49,45 +55,36 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public boolean isEnable() {
+	public boolean getIsEnable() {
 		return isEnable;
 	}
-	public void setEnable(boolean enable) {
-		this.isEnable = enable;
+	public void setIsEnable(boolean isEnable) {
+		this.isEnable = isEnable;
+	}
+	public HashMap<Integer, Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(HashMap<Integer, Role> roles) {
+		this.roles = roles;
 	}
 	
 	public User() {
 		this.roles=new HashMap<>();
 	}
 	
-	public void addRol(Rol rolToBeAdded) {
+	public void addRol(Role rolToBeAdded) {
 		this.roles.put(rolToBeAdded.getId(), rolToBeAdded);
 	}
 	
-	public void removeRol(Rol rolToBeRemoved) {
+	public void removeRol(Role rolToBeRemoved) {
 		this.roles.remove(rolToBeRemoved.getId());
 	}
 	
-	public boolean hasRol(Rol rolToCheck) {
+	public boolean hasRol(Role rolToCheck) {
 		return this.roles.containsKey(rolToCheck.getId());
 	}
 	
-	public HashMap<Integer, Rol> getAllRoles(){
+	public HashMap<Integer, Role> getAllRoles(){
 		return this.roles;
 	}
-	
-	@Override
-	public String toString() {
-		return "\nPersona [user_id =" + user_id  + ", dni=" + dni + ", first_name=" + firstName + ", last_name=" + lastName
-				+ ", email=" + email + ", phone=" + phone + ", is_enable=" + isEnable + ", roles=" + roles + "]";
-	}
-	
-	
-
 }

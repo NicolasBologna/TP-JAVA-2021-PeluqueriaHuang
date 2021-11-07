@@ -1,4 +1,4 @@
-package servlet;
+package servletsAdmin;
 
 import java.io.IOException;
 
@@ -11,19 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entities.User;
-import logic.*;
+import logic.Admin;
+import logic.SignUp;
 
 /**
- * Servlet implementation class Signup
+ * Servlet implementation class CreateUserServlet
  */
-@WebServlet({ "/Signup", "/signup", "/SignUp" })
-public class Signup extends HttpServlet {
+@WebServlet("/CreateUserServlet")
+public class CreateUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Signup() {
+    public CreateUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,30 +34,25 @@ public class Signup extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		User user = (User)request.getSession().getAttribute("user");
-		RequestDispatcher dispatcher = (user != null) ? request.getRequestDispatcher("index") : request.getRequestDispatcher("WEB-INF/User/Signup.jsp");
-	
-		dispatcher.forward(request, response);
+		
+		request.setAttribute("rolList", Admin.getAllRoles());
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/User/CreateUser.jsp");
+        dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
-		
-	
 		User newUser = new User();
-		SignUp ctrl = new SignUp();
 		
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 		String firsName = request.getParameter("first_name");
 		String lastName = request.getParameter("last_name");
 		String dni =  request.getParameter("dni");
 		String phone = request.getParameter("phone");		
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		
+		String isEnable = request.getParameter("isEnable");
 		
 		newUser.setFirstName(firsName);
 		newUser.setLastName(lastName);
@@ -64,26 +60,10 @@ public class Signup extends HttpServlet {
 		newUser.setPhone(phone);
 		newUser.setEmail(email);
 		newUser.setPassword(password);
+		newUser.setIsEnable(isEnable.equals("on") ? true : false);
 		
 		try {
 			
-			String destPage = "WEB-INF/User/Signup.jsp";
-        	if (ctrl.checkEmailAvailability(newUser.getEmail())) {
-        		String message = "El Email ya está en uso";
-                request.setAttribute("message", message);
-        	}else {
-            	int idNewUser = ctrl.addNewUser(newUser);
-            	if (idNewUser != -1) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user", newUser);
-                    destPage = "/index";
-            	} else {
-            		String message = "Hubo un error en el registro.";
-                    request.setAttribute("message", message);
-            	}
-        	}
-            RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
-            dispatcher.forward(request, response);
             
         } catch (Exception ex) {
             throw new ServletException(ex);
