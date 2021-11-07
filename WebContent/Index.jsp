@@ -1,887 +1,1476 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@page import="entities.User"%>
-<!doctype html>
+	pageEncoding="ISO-8859-1"%>
+<%@page import="entities.User"%>
+
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8" />
-	<link rel="apple-touch-icon" sizes="76x76" href="Main-assets/assets/img/apple-icon.png">
-	<link rel="icon" type="image/png" href="Main-assets/assets/img/favicon.png">	
-	
+	<link rel="apple-touch-icon" sizes="76x76"
+		href="./assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" href="./assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<title>SAL�N LEGEND</title>
-
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
-	
-    <link href="Main-assets/bootstrap3/css/bootstrap.css" rel="stylesheet" />
-	<link href="Main-assets/assets/css/gsdk.css" rel="stylesheet" />  
-    <link href="Main-assets/assets/css/demo.css" rel="stylesheet" /> 
-    
-    <!--     Font Awesome     -->
-    <link href="Main-assets/bootstrap3/css/font-awesome.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
-	
-		<%
-			User user = (User)session.getAttribute("user");
-			
-		%>
-	
+	<meta
+		content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+		name='viewport' />
+	<!--     Fonts and icons     -->
+	<link
+		href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200"
+		rel="stylesheet" />
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+		crossorigin="anonymous">
+	<!-- CSS Files -->
+	<link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link href="./assets/demo/demo.css" rel="stylesheet" />
+	<%
+		User user = (User) session.getAttribute("user");
+	%>
 </head>
-<body>
-<div id="navbar-full">
-    <div class="container">
-        <nav class="navbar navbar-ct-blue navbar-transparent navbar-fixed-top" role="navigation">
-          
-          <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <%if (user != null){%>
-                <a href="http://creative-tim.com">
-                     <div class="logo-container">
-                        <div class="logo">
-                            <img src="Main-assets/assets/img/new_logo.png">
-                        </div>
-                        <div class="brand">
-                            <%=user.getFirstName()%> <%=user.getLastName()%>
-                        </div>
-                    </div>
-                </a>
-                <%}%>
-            </div>
-        
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/.html">Nuestros Cortes</a></li>
-                    <%if (user != null){%>
-                    <li><a href="/.html">Turnos</a></li>
-                    <li><a href="Logout" class="btn btn-round btn-default">Salir</a></li>
-                    <%}else{%>
-                    <li><a href="Signin" class="btn btn-round btn-default">Ingresar</a></li>
-                    <%}%>
-                    
-               </ul>
-              
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-    </div><!--  end container-->
-    
-    <div class='blurred-container'>
-        <div class="motto">
-            <div>SAL�N</div>
-            <div>LEGEND</div>
-        </div>
-        <div class="img-src" style="background-image: url('Main-assets/assets/img/cover_4.jpg')"></div>
-        <div class='img-src blur' style="background-image: url('Main-assets/assets/img/cover_4_blur.jpg')"></div>
-    </div>
-    
-</div>     
-    
 
+<body class="index-page sidebar-collapse">
+	<!-- Navbar -->
+	<nav
+		class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent "
+		color-on-scroll="400">
+		<div class="container">
+			<div class="navbar-translate">
+				<a class="navbar-brand"
+					href="https://demos.creative-tim.com/now-ui-kit/index.html"
+					rel="tooltip" title="Designed by Invision. Coded by Creative Tim"
+					data-placement="bottom" target="_blank"> Now Ui Kit </a>
+				<button class="navbar-toggler navbar-toggler" type="button"
+					data-toggle="collapse" data-target="#navigation"
+					aria-controls="navigation-index" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-bar top-bar"></span> <span
+						class="navbar-toggler-bar middle-bar"></span> <span
+						class="navbar-toggler-bar bottom-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse justify-content-end"
+				id="navigation" data-nav-image="./assets/img/blurred-image-1.jpg">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link"
+						href="UserListServlet"> <i
+							class="now-ui-icons arrows-1_cloud-download-93"></i>
+							<p>Usuarios</p>
+					</a></li>
+					<li class="nav-item dropdown"><a href="/UserListServlet"
+						class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1"
+						data-toggle="dropdown"> <i class="now-ui-icons design_app"></i>
+							<p>Components</p>
+					</a>
+						<div class="dropdown-menu dropdown-menu-right"
+							aria-labelledby="navbarDropdownMenuLink1">
+							<a class="dropdown-item" href="./index.html"> <i
+								class="now-ui-icons business_chart-pie-36"></i> All components
+							</a> <a class="dropdown-item" target="_blank"
+								href="https://demos.creative-tim.com/now-ui-kit/docs/1.0/getting-started/introduction.html">
+								<i class="now-ui-icons design_bullet-list-67"></i> Documentation
+							</a>
+						</div></li>
+					<li class="nav-item"><a class="nav-link btn btn-neutral"
+						href="https://www.creative-tim.com/product/now-ui-kit-pro"
+						target="_blank"> <i class="now-ui-icons arrows-1_share-66"></i>
+							<p>Upgrade to PRO</p>
+					</a></li>
+					<li class="nav-item"><a class="nav-link" rel="tooltip"
+						title="Follow us on Twitter" data-placement="bottom"
+						href="https://twitter.com/CreativeTim" target="_blank"> <i
+							class="fab fa-twitter"></i>
+							<p class="d-lg-none d-xl-none">Twitter</p>
+					</a></li>
+					<li class="nav-item"><a class="nav-link" rel="tooltip"
+						title="Like us on Facebook" data-placement="bottom"
+						href="https://www.facebook.com/CreativeTim" target="_blank"> <i
+							class="fab fa-facebook-square"></i>
+							<p class="d-lg-none d-xl-none">Facebook</p>
+					</a></li>
+					<li class="nav-item"><a class="nav-link" rel="tooltip"
+						title="Follow us on Instagram" data-placement="bottom"
+						href="https://www.instagram.com/CreativeTimOfficial"
+						target="_blank"> <i class="fab fa-instagram"></i>
+							<p class="d-lg-none d-xl-none">Instagram</p>
+					</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- End Navbar -->
+	<div class="wrapper">
+		<div class="page-header clear-filter" filter-color="orange">
+			<div class="page-header-image" data-parallax="true"
+				style="background-image: url('assets/img/cover_4.jpg');"></div>
+			<div class="container">
+				<div class="content-center brand">
+					<img class="n-logo" src="./assets/img/now-logo.png" alt="">
+					<h1 class="h1-seo">Sal�n Legends</h1>
+					<h3>Siempre el mejor servicio</h3>
+				</div>
+				<h6 class="category category-absolute">
+					Designed by <a href="http://invisionapp.com/" target="_blank">
+						<img src="./assets/img/invision-white-slim.png"
+						class="invision-logo" />
+					</a>. Coded by <a href="https://www.creative-tim.com" target="_blank">
+						<img src="./assets/img/creative-tim-white-slim2.png"
+						class="creative-tim-logo" />
+					</a>.
+				</h6>
+			</div>
+		</div>
+		<div class="main">
+			<div class="section section-images">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="hero-images-container">
+								<img src="assets/img/hero-image-1.png" alt="">
+							</div>
+							<div class="hero-images-container-1">
+								<img src="assets/img/hero-image-2.png" alt="">
+							</div>
+							<div class="hero-images-container-2">
+								<img src="assets/img/hero-image-3.png" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section section-basic" id="basic-elements">
+				<div class="container">
+					<h3 class="title">Basic Elements</h3>
+					<h4>Buttons</h4>
+					<p class="category">Pick your style</p>
+					<div class="row">
+						<div class="col-md-10">
+							<button class="btn btn-primary" type="button">Default</button>
+							<button class="btn btn-primary btn-round" type="button">Round</button>
+							<button class="btn btn-primary btn-round" type="button">
+								<i class="now-ui-icons ui-2_favourite-28"></i> With Icon
+							</button>
+							<button class="btn btn-primary btn-icon btn-round" type="button">
+								<i class="now-ui-icons ui-2_favourite-28"></i>
+							</button>
+							<button class="btn btn-primary btn-outline-primary btn-round"
+								type="button">Outline</button>
+						</div>
+					</div>
+					<p class="category">Pick your size</p>
+					<div class="row">
+						<div class="col-md-10">
+							<button class="btn btn-primary btn-sm">Small</button>
+							<button class="btn btn-primary">Regular</button>
+							<button class="btn btn-primary btn-lg">Large</button>
+						</div>
+					</div>
+					<p class="category">Pick your color</p>
+					<div class="row">
+						<div class="col-md-10">
+							<button class="btn">Default</button>
+							<button class="btn btn-primary">Primary</button>
+							<button class="btn btn-info">Info</button>
+							<button class="btn btn-success">Success</button>
+							<button class="btn btn-warning">Warning</button>
+							<button class="btn btn-danger">Danger</button>
+							<button class="btn btn-neutral">Neutral</button>
+						</div>
+					</div>
+					<h4>Links</h4>
+					<div class="row">
+						<div class="col-md-8">
+							<button class="btn btn-link">Default</button>
+							<button class="btn btn-link btn-primary ">Primary</button>
+							<button class="btn btn-link btn-info">Info</button>
+							<button class="btn btn-link btn-success">Success</button>
+							<button class="btn btn-link btn-warning">Warning</button>
+							<button class="btn btn-link btn-danger">Danger</button>
+						</div>
+					</div>
+					<div class="space-70"></div>
+					<div id="inputs">
+						<h4>Inputs</h4>
+						<p class="category">Form Controls</p>
+						<div class="row">
+							<div class="col-sm-6 col-lg-3">
+								<div class="form-group">
+									<input type="text" value="" placeholder="Regular"
+										class="form-control" />
+								</div>
+							</div>
+							<div class="col-sm-6 col-lg-3">
+								<div class="form-group has-success">
+									<input type="text" value="Success"
+										class="form-control form-control-success" />
+								</div>
+							</div>
+							<div class="col-sm-6 col-lg-3">
+								<div class="form-group has-danger">
+									<input type="email" value="Error Input"
+										class="form-control form-control-danger" />
+								</div>
+							</div>
+							<div class="col-sm-6 col-lg-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i
+											class="fa fa-user-circle"></i></span>
+									</div>
+									<input type="text" class="form-control"
+										placeholder="Left Font Awesome Icon">
+								</div>
+							</div>
+							<div class="col-sm-6 col-lg-3">
+								<div class="input-group">
+									<input type="text" class="form-control"
+										placeholder="Right Nucleo Icon">
+									<div class="input-group-append">
+										<span class="input-group-text"><i
+											class="now-ui-icons users_single-02"></i></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="space-70"></div>
+					<div class="row" id="checkRadios">
+						<div class="col-sm-6 col-lg-3 mb-4">
+							<p class="category">Checkboxes</p>
+							<div class="form-check">
+								<label class="form-check-label"> <input
+									class="form-check-input" type="checkbox"> <span
+									class="form-check-sign"></span> Unchecked
+								</label>
+							</div>
+							<div class="form-check">
+								<label class="form-check-label"> <input
+									class="form-check-input" type="checkbox" checked> <span
+									class="form-check-sign"></span> Checked
+								</label>
+							</div>
+							<div class="form-check disabled">
+								<label class="form-check-label"> <input
+									class="form-check-input" type="checkbox" disabled> <span
+									class="form-check-sign"></span> Disabled Unchecked
+								</label>
+							</div>
+							<div class="form-check disabled">
+								<label class="form-check-label"> <input
+									class="form-check-input" type="checkbox" checked disabled>
+									<span class="form-check-sign"></span> Disabled Checked
+								</label>
+							</div>
+						</div>
+						<div class="col-sm-6 col-lg-3 mb-4">
+							<p class="category">Radios</p>
+							<div class="form-check form-check-radio">
+								<label class="form-check-label"> <input
+									class="form-check-input" type="radio" name="exampleRadios"
+									id="exampleRadios1" value="option1"> <span
+									class="form-check-sign"></span> Radio is off
+								</label>
+							</div>
+							<div class="form-check form-check-radio">
+								<label class="form-check-label"> <input
+									class="form-check-input" type="radio" name="exampleRadios"
+									id="exampleRadios1" value="option2" checked> <span
+									class="form-check-sign"></span> Radio is on
+								</label>
+							</div>
+							<div class="form-check form-check-radio disabled">
+								<label class="form-check-label"> <input
+									class="form-check-input" type="radio" name="exampleRadios1"
+									id="exampleRadios2" value="option3" disabled> <span
+									class="form-check-sign"></span> Disabled radio is off
+								</label>
+							</div>
+							<div class="form-check form-check-radio disabled">
+								<label class="form-check-label"> <input
+									class="form-check-input" type="radio" name="exampleRadios1"
+									id="exampleRadios2" value="option4" disabled checked> <span
+									class="form-check-sign"></span> Disabled radio is on
+								</label>
+							</div>
+						</div>
+						<div class="col-sm-6 col-lg-3">
+							<p class="category">Toggle Buttons</p>
+							<input type="checkbox" name="checkbox" class="bootstrap-switch"
+								checked /> <br> <input type="checkbox" name="checkbox"
+								class="bootstrap-switch" data-on-label="ON" data-off-label="OFF" />
+						</div>
+						<div class="col-sm-6 col-lg-3">
+							<p class="category">Sliders</p>
+							<div id="sliderRegular" class="slider"></div>
+							<br>
+							<div id="sliderDouble" class="slider slider-primary"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section section-navbars">
+				<div class="container" id="menu-dropdown">
+					<div class="row">
+						<div class="col-md-6">
+							<h4>Menu</h4>
+							<nav class="navbar navbar-expand-lg bg-primary">
+								<div class="container">
+									<a class="navbar-brand" href="#">Menu</a>
+									<button class="navbar-toggler" type="button"
+										data-toggle="collapse" data-target="#example-navbar"
+										aria-controls="navbarSupportedContent" aria-expanded="false"
+										aria-label="Toggle navigation">
+										<span class="navbar-toggler-bar bar1"></span> <span
+											class="navbar-toggler-bar bar2"></span> <span
+											class="navbar-toggler-bar bar3"></span>
+									</button>
+									<div class="collapse navbar-collapse" id="example-navbar"
+										data-nav-image="assets/img/blurred-image-1.jpg">
+										<ul class="navbar-nav">
+											<li class="nav-item active"><a class="nav-link" href="#">
+													<p>Link</p>
+											</a></li>
+											<li class="nav-item"><a class="nav-link" href="#">
+													<p>Link</p>
+											</a></li>
+											<li class="nav-item dropdown"><a
+												class="nav-link dropdown-toggle" href="http://example.com"
+												id="navbarDropdownMenuLink" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">
+													<p>Dropdown</p>
+											</a>
+												<div class="dropdown-menu"
+													aria-labelledby="navbarDropdownMenuLink">
+													<a class="dropdown-item" href="#">Action</a> <a
+														class="dropdown-item" href="#">Another action</a> <a
+														class="dropdown-item" href="#">Something else here</a>
+												</div></li>
+										</ul>
+									</div>
+								</div>
+							</nav>
+						</div>
+						<div class="col-md-6">
+							<h4>Menu with Icons</h4>
+							<nav class="navbar navbar-expand-lg bg-info">
+								<div class="container">
+									<a class="navbar-brand" href="#">Icons</a>
+									<button class="navbar-toggler" type="button"
+										data-toggle="collapse" data-target="#example-navbar-icons"
+										aria-controls="navbarSupportedContent" aria-expanded="false"
+										aria-label="Toggle navigation">
+										<span class="navbar-toggler-bar bar1"></span> <span
+											class="navbar-toggler-bar bar2"></span> <span
+											class="navbar-toggler-bar bar3"></span>
+									</button>
+									<div class="collapse navbar-collapse" id="example-navbar-icons">
+										<ul class="navbar-nav ml-auto">
+											<li class="nav-item"><a class="nav-link" href="#pablo"><i
+													class="now-ui-icons ui-1_send" aria-hidden="true"></i></a></li>
+											<li class="nav-item"><a class="nav-link" href="#pablo"><i
+													class="now-ui-icons users_single-02" aria-hidden="true"></i></a>
+											</li>
+											<li class="nav-item dropdown"><a href="#"
+												class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
+												data-toggle="dropdown"> <i
+													class="now-ui-icons ui-1_settings-gear-63"
+													aria-hidden="true"></i>
+											</a>
+												<div class="dropdown-menu dropdown-menu-right"
+													aria-labelledby="navbarDropdownMenuLink">
+													<a class="dropdown-header">Dropdown header</a> <a
+														class="dropdown-item" href="#">Action</a> <a
+														class="dropdown-item" href="#">Another action</a> <a
+														class="dropdown-item" href="#">Something else here</a>
+													<div class="divider"></div>
+													<a class="dropdown-item" href="#">Separated link</a>
+													<div class="divider"></div>
+													<a class="dropdown-item" href="#">One more separated
+														link</a>
+												</div></li>
+										</ul>
+									</div>
+								</div>
+							</nav>
+						</div>
+					</div>
+					<h4>Navigation</h4>
+				</div>
+				<div id="navbar">
+					<div class="navigation-example"
+						style="background-image: url('assets/img/bg7.jpg')">
+						<!-- Navbar Primary  -->
+						<nav class="navbar navbar-expand-lg bg-primary">
+							<div class="container">
+								<div class="navbar-translate">
+									<a class="navbar-brand" href="#pablo">Primary color</a>
+									<button class="navbar-toggler" type="button"
+										data-toggle="collapse" data-target="#example-navbar-primary"
+										aria-controls="navbarSupportedContent" aria-expanded="false"
+										aria-label="Toggle navigation">
+										<span class="navbar-toggler-bar bar1"></span> <span
+											class="navbar-toggler-bar bar2"></span> <span
+											class="navbar-toggler-bar bar3"></span>
+									</button>
+								</div>
+								<div class="collapse navbar-collapse"
+									id="example-navbar-primary">
+									<ul class="navbar-nav ml-auto">
+										<li class="nav-item active"><a class="nav-link"
+											href="#pablo"> <i class="now-ui-icons objects_globe"></i>
+												<p>Discover</p>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="now-ui-icons users_circle-08"></i>
+												<p>Profile</p>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="now-ui-icons ui-1_settings-gear-63"></i>
+												<p>Settings</p>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+						</nav>
+						<!-- End Navbar Primary -->
+						<!-- Navbar Info -->
+						<nav class="navbar navbar-expand-lg bg-info">
+							<div class="container">
+								<div class="navbar-translate">
+									<a class="navbar-brand" href="#pablo">Info Color</a>
+									<button class="navbar-toggler" type="button"
+										data-toggle="collapse" data-target="#example-navbar-info"
+										aria-controls="navbarSupportedContent" aria-expanded="false"
+										aria-label="Toggle navigation">
+										<span class="navbar-toggler-bar bar1"></span> <span
+											class="navbar-toggler-bar bar2"></span> <span
+											class="navbar-toggler-bar bar3"></span>
+									</button>
+								</div>
+								<div class="collapse navbar-collapse" id="example-navbar-info">
+									<ul class="navbar-nav ml-auto">
+										<li class="nav-item active"><a class="nav-link"
+											href="#pablo">
+												<p>Discover</p>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<p>Profile</p>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<p>Settings</p>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+						</nav>
+						<!-- End Navbar Info -->
+						<!-- Navbar Success -->
+						<nav class="navbar navbar-expand-lg bg-success">
+							<div class="container">
+								<div class="navbar-translate">
+									<a class="navbar-brand" href="#">Success Color</a>
+									<button class="navbar-toggler" type="button"
+										data-toggle="collapse" data-target="#example-navbar-success"
+										aria-controls="navbarSupportedContent" aria-expanded="false"
+										aria-label="Toggle navigation">
+										<span class="navbar-toggler-bar bar1"></span> <span
+											class="navbar-toggler-bar bar2"></span> <span
+											class="navbar-toggler-bar bar3"></span>
+									</button>
+								</div>
+								<div class="collapse navbar-collapse"
+									id="example-navbar-success">
+									<ul class="navbar-nav ml-auto">
+										<li class="nav-item active"><a class="nav-link"
+											href="#pablo"> <i class="now-ui-icons objects_globe"></i>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="now-ui-icons users_circle-08"></i>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="now-ui-icons ui-1_settings-gear-63"></i>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+						</nav>
+						<!-- End Navbar Success -->
+						<!-- Navbar Warning -->
+						<nav class="navbar navbar-expand-lg bg-warning">
+							<div class="container">
+								<div class="navbar-translate">
+									<a class="navbar-brand" href="#pablo">Warning Color</a>
+									<button class="navbar-toggler" type="button"
+										data-toggle="collapse" data-target="#example-navbar-warning"
+										aria-controls="navbarSupportedContent" aria-expanded="false"
+										aria-label="Toggle navigation">
+										<span class="navbar-toggler-bar bar1"></span> <span
+											class="navbar-toggler-bar bar2"></span> <span
+											class="navbar-toggler-bar bar3"></span>
+									</button>
+								</div>
+								<div class="collapse navbar-collapse"
+									id="example-navbar-warning">
+									<ul class="navbar-nav ml-auto">
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="fab fa-facebook-square"></i>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="fab fa-twitter"></i>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="fab fa-google-plus"></i>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="fab fa-instagram"></i>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+						</nav>
+						<!-- End Navbar Warning -->
+						<!-- Navbar Danger -->
+						<nav class="navbar navbar-expand-lg bg-danger">
+							<div class="container">
+								<div class="navbar-translate">
+									<a class="navbar-brand" href="#pablo">Danger Color</a>
+									<button class="navbar-toggler" type="button"
+										data-toggle="collapse" data-target="#example-navbar-danger"
+										aria-controls="navbarSupportedContent" aria-expanded="false"
+										aria-label="Toggle navigation">
+										<span class="navbar-toggler-bar bar1"></span> <span
+											class="navbar-toggler-bar bar2"></span> <span
+											class="navbar-toggler-bar bar3"></span>
+									</button>
+								</div>
+								<div class="collapse navbar-collapse" id="example-navbar-danger">
+									<ul class="navbar-nav ml-auto">
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="fab fa-facebook-square"></i>
+												<p>Share</p>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="fab fa-twitter"></i>
+												<p>Tweet</p>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="fab fa-pinterest"></i>
+												<p>Pin</p>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+						</nav>
+						<!-- End Navbar Danger -->
+						<!-- Navbar Transparent -->
+						<nav class="navbar navbar-expand-lg navbar-transparent">
+							<div class="container">
+								<div class="navbar-translate">
+									<a class="navbar-brand" href="#pablo">Transparent</a>
+									<button class="navbar-toggler" type="button"
+										data-toggle="collapse"
+										data-target="#example-navbar-transparent"
+										aria-controls="navbarSupportedContent" aria-expanded="false"
+										aria-label="Toggle navigation">
+										<span class="navbar-toggler-bar bar1"></span> <span
+											class="navbar-toggler-bar bar2"></span> <span
+											class="navbar-toggler-bar bar3"></span>
+									</button>
+								</div>
+								<div class="collapse navbar-collapse"
+									id="example-navbar-transparent">
+									<ul class="navbar-nav ml-auto">
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="fab fa-facebook-square"></i>
+												<p>Facebook</p>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="fab fa-twitter"></i>
+												<p>Twitter</p>
+										</a></li>
+										<li class="nav-item"><a class="nav-link" href="#pablo">
+												<i class="fab fa-instagram"></i>
+												<p>Instagram</p>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+						</nav>
+						<!-- End Navbar Transparent-->
+					</div>
+				</div>
+			</div>
+			<!-- End .section-navbars  -->
+			<div class="section section-tabs">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-10 ml-auto col-xl-6 mr-auto">
+							<p class="category">Tabs with Icons on Card</p>
+							<!-- Nav tabs -->
+							<div class="card">
+								<div class="card-header">
+									<ul class="nav nav-tabs justify-content-center" role="tablist">
+										<li class="nav-item"><a class="nav-link active"
+											data-toggle="tab" href="#home" role="tab"> <i
+												class="now-ui-icons objects_umbrella-13"></i> Home
+										</a></li>
+										<li class="nav-item"><a class="nav-link"
+											data-toggle="tab" href="#profile" role="tab"> <i
+												class="now-ui-icons shopping_cart-simple"></i> Profile
+										</a></li>
+										<li class="nav-item"><a class="nav-link"
+											data-toggle="tab" href="#messages" role="tab"> <i
+												class="now-ui-icons shopping_shop"></i> Messages
+										</a></li>
+										<li class="nav-item"><a class="nav-link"
+											data-toggle="tab" href="#settings" role="tab"> <i
+												class="now-ui-icons ui-2_settings-90"></i> Settings
+										</a></li>
+									</ul>
+								</div>
+								<div class="card-body">
+									<!-- Tab panes -->
+									<div class="tab-content text-center">
+										<div class="tab-pane active" id="home" role="tabpanel">
+											<p>I think that’s a responsibility that I have, to push
+												possibilities, to show people, this is the level that things
+												could be at. So when you get something that has the name
+												Kanye West on it, it’s supposed to be pushing the furthest
+												possibilities. I will be the leader of a company that ends
+												up being worth billions of dollars, because I got the
+												answers. I understand culture. I am the nucleus.</p>
+										</div>
+										<div class="tab-pane" id="profile" role="tabpanel">
+											<p>I will be the leader of a company that ends up being
+												worth billions of dollars, because I got the answers. I
+												understand culture. I am the nucleus. I think that’s a
+												responsibility that I have, to push possibilities, to show
+												people, this is the level that things could be at. I think
+												that’s a responsibility that I have, to push
+												possibilities, to show people, this is the level that things
+												could be at.</p>
+										</div>
+										<div class="tab-pane" id="messages" role="tabpanel">
+											<p>I think that’s a responsibility that I have, to push
+												possibilities, to show people, this is the level that things
+												could be at. So when you get something that has the name
+												Kanye West on it, it’s supposed to be pushing the furthest
+												possibilities. I will be the leader of a company that ends
+												up being worth billions of dollars, because I got the
+												answers. I understand culture. I am the nucleus.</p>
+										</div>
+										<div class="tab-pane" id="settings" role="tabpanel">
+											<p>"I will be the leader of a company that ends up being
+												worth billions of dollars, because I got the answers. I
+												understand culture. I am the nucleus. I think that’s a
+												responsibility that I have, to push possibilities, to show
+												people, this is the level that things could be at."</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-10 ml-auto col-xl-6 mr-auto">
+							<p class="category">Tabs with Background on Card</p>
+							<!-- Tabs with Background on Card -->
+							<div class="card">
+								<div class="card-header">
+									<ul
+										class="nav nav-tabs nav-tabs-neutral justify-content-center"
+										role="tablist" data-background-color="orange">
+										<li class="nav-item"><a class="nav-link active"
+											data-toggle="tab" href="#home1" role="tab">Home</a></li>
+										<li class="nav-item"><a class="nav-link"
+											data-toggle="tab" href="#profile1" role="tab">Profile</a></li>
+										<li class="nav-item"><a class="nav-link"
+											data-toggle="tab" href="#messages1" role="tab">Messages</a></li>
+										<li class="nav-item"><a class="nav-link"
+											data-toggle="tab" href="#settings1" role="tab">Settings</a></li>
+									</ul>
+								</div>
+								<div class="card-body">
+									<!-- Tab panes -->
+									<div class="tab-content text-center">
+										<div class="tab-pane active" id="home1" role="tabpanel">
+											<p>I think that’s a responsibility that I have, to push
+												possibilities, to show people, this is the level that things
+												could be at. So when you get something that has the name
+												Kanye West on it, it’s supposed to be pushing the furthest
+												possibilities. I will be the leader of a company that ends
+												up being worth billions of dollars, because I got the
+												answers. I understand culture. I am the nucleus.</p>
+										</div>
+										<div class="tab-pane" id="profile1" role="tabpanel">
+											<p>I will be the leader of a company that ends up being
+												worth billions of dollars, because I got the answers. I
+												understand culture. I am the nucleus. I think that’s a
+												responsibility that I have, to push possibilities, to show
+												people, this is the level that things could be at. I think
+												that’s a responsibility that I have, to push
+												possibilities, to show people, this is the level that things
+												could be at.</p>
+										</div>
+										<div class="tab-pane" id="messages1" role="tabpanel">
+											<p>I think that’s a responsibility that I have, to push
+												possibilities, to show people, this is the level that things
+												could be at. So when you get something that has the name
+												Kanye West on it, it’s supposed to be pushing the furthest
+												possibilities. I will be the leader of a company that ends
+												up being worth billions of dollars, because I got the
+												answers. I understand culture. I am the nucleus.</p>
+										</div>
+										<div class="tab-pane" id="settings1" role="tabpanel">
+											<p>"I will be the leader of a company that ends up being
+												worth billions of dollars, because I got the answers. I
+												understand culture. I am the nucleus. I think that’s a
+												responsibility that I have, to push possibilities, to show
+												people, this is the level that things could be at."</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Tabs on plain Card -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Section Tabs -->
+			<div class="section section-pagination">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6">
+							<h4>Progress Bars</h4>
+							<div class="progress-container">
+								<span class="progress-badge">Default</span>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" aria-valuenow="60"
+										aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+										<span class="progress-value">25%</span>
+									</div>
+								</div>
+							</div>
+							<div class="progress-container progress-primary">
+								<span class="progress-badge">Primary</span>
+								<div class="progress">
+									<div class="progress-bar progress-bar-warning"
+										role="progressbar" aria-valuenow="60" aria-valuemin="0"
+										aria-valuemax="100" style="width: 60%;">
+										<span class="progress-value">60%</span>
+									</div>
+								</div>
+							</div>
+							<br>
+							<h4>Navigation Pills</h4>
+							<ul class="nav nav-pills nav-pills-primary nav-pills-just-icons"
+								role="tablist">
+								<li class="nav-item"><a class="nav-link" data-toggle="tab"
+									href="#active" role="tablist"> <i class="far fa-gem"></i>
+								</a></li>
+								<li class="nav-item"><a class="nav-link active"
+									data-toggle="tab" href="#link" role="tablist"> <i
+										class="fa fa-thermometer-full"></i>
+								</a></li>
+								<li class="nav-item"><a class="nav-link" data-toggle="tab"
+									href="#link" role="tablist"> <i class="fa fa-suitcase"></i>
+								</a></li>
+								<li class="nav-item"><a class="nav-link disabled"
+									data-toggle="tab" href="#disabled" role="tablist"> <i
+										class="fa fa-exclamation"></i>
+								</a></li>
+							</ul>
+						</div>
+						<div class="col-sm-6">
+							<h4>Pagination</h4>
+							<ul class="pagination pagination-primary">
+								<li class="page-item active"><a class="page-link" href="#">1</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#link">2</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#link">3</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#link">4</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#link">5</a>
+								</li>
+							</ul>
+							<ul class="pagination">
+								<li class="page-item"><a class="page-link" href="#link"
+									aria-label="Previous"> <span aria-hidden="true"><i
+											class="fa fa-angle-double-left" aria-hidden="true"></i></span>
+								</a></li>
+								<li class="page-item"><a class="page-link" href="#link">1</a>
+								</li>
+								<li class="page-item active"><a class="page-link"
+									href="#link">2</a></li>
+								<li class="page-item"><a class="page-link" href="#link">3</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#link"
+									aria-label="Next"> <span aria-hidden="true"><i
+											class="fa fa-angle-double-right" aria-hidden="true"></i></span>
+								</a></li>
+							</ul>
+							<br>
+							<h4>Labels</h4>
+							<span class="badge badge-default">Default</span> <span
+								class="badge badge-primary">Primary</span> <span
+								class="badge badge-success">Success</span> <span
+								class="badge badge-info">Info</span> <span
+								class="badge badge-warning">Warning</span> <span
+								class="badge badge-danger">Danger</span> <span
+								class="badge badge-neutral">Neutral</span>
+						</div>
+					</div>
+					<br>
+					<div class="space"></div>
+					<h4>Notifications</h4>
+				</div>
+			</div>
+			<div class="section section-notifications">
+				<div class="alert alert-success" role="alert">
+					<div class="container">
+						<div class="alert-icon">
+							<i class="now-ui-icons ui-2_like"></i>
+						</div>
+						<strong>Well done!</strong> You successfully read this important
+						alert message.
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true"> <i
+								class="now-ui-icons ui-1_simple-remove"></i>
+							</span>
+						</button>
+					</div>
+				</div>
+				<div class="alert alert-info" role="alert">
+					<div class="container">
+						<div class="alert-icon">
+							<i class="now-ui-icons travel_info"></i>
+						</div>
+						<strong>Heads up!</strong> This alert needs your attention, but
+						it's not super important.
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true"> <i
+								class="now-ui-icons ui-1_simple-remove"></i>
+							</span>
+						</button>
+					</div>
+				</div>
+				<div class="alert alert-warning" role="alert">
+					<div class="container">
+						<div class="alert-icon">
+							<i class="now-ui-icons ui-1_bell-53"></i>
+						</div>
+						<strong>Warning!</strong> Better check yourself, you're not
+						looking too good.
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true"> <i
+								class="now-ui-icons ui-1_simple-remove"></i>
+							</span>
+						</button>
+					</div>
+				</div>
+				<div class="alert alert-danger" role="alert">
+					<div class="container">
+						<div class="alert-icon">
+							<i class="now-ui-icons objects_support-17"></i>
+						</div>
+						<strong>Oh snap!</strong> Change a few things up and try
+						submitting again.
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true"> <i
+								class="now-ui-icons ui-1_simple-remove"></i>
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<!--  end notifications -->
+			<!-- Typography -->
+			<div class="section">
+				<div class="container">
+					<h3 class="title">Typography</h3>
+					<div id="typography">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="typography-line">
+									<h1>
+										<span>Header 1</span>The Life of Now UI Kit
+									</h1>
+								</div>
+								<div class="typography-line">
+									<h2>
+										<span>Header 2</span>The Life of Now UI Kit
+									</h2>
+								</div>
+								<div class="typography-line">
+									<h3>
+										<span>Header 3</span>The Life of Now UI Kit
+									</h3>
+								</div>
+								<div class="typography-line">
+									<h4>
+										<span>Header 4</span>The Life of Now UI Kit
+									</h4>
+								</div>
+								<div class="typography-line">
+									<h5>
+										<span>Header 5</span>The Life of Now UI Kit
+									</h5>
+								</div>
+								<div class="typography-line">
+									<h6>
+										<span>Header 6</span>The Life of Now UI Kit
+									</h6>
+								</div>
+								<div class="typography-line">
+									<p>
+										<span>Paragraph</span> I will be the leader of a company that
+										ends up being worth billions of dollars, because I got the
+										answers. I understand culture. I am the nucleus. I think
+										that’s a responsibility that I have, to push possibilities,
+										to show people, this is the level that things could be at.
+									</p>
+								</div>
+								<div class="typography-line">
+									<span>Quote</span>
+									<blockquote>
+										<p class="blockquote blockquote-primary">
+											"I will be the leader of a company that ends up being worth
+											billions of dollars, because I got the answers. I understand
+											culture. I am the nucleus. I think that’s a responsibility
+											that I have, to push possibilities, to show people, this is
+											the level that things could be at." <br> <br> <small>
+												- Noaa </small>
+										</p>
+									</blockquote>
+								</div>
+								<div class="typography-line">
+									<span>Muted Text</span>
+									<p class="text-muted">I will be the leader of a company
+										that ends up being worth billions of dollars, because I got
+										the answers...</p>
+								</div>
+								<div class="typography-line">
+									<span>Primary Text</span>
+									<p class="text-primary">I will be the leader of a company
+										that ends up being worth billions of dollars, because I got
+										the answers...</p>
+								</div>
+								<div class="typography-line">
+									<span>Info Text</span>
+									<p class="text-info">I will be the leader of a company that
+										ends up being worth billions of dollars, because I got the
+										answers...</p>
+								</div>
+								<div class="typography-line">
+									<span>Success Text</span>
+									<p class="text-success">I will be the leader of a company
+										that ends up being worth billions of dollars, because I got
+										the answers...</p>
+								</div>
+								<div class="typography-line">
+									<span>Warning Text</span>
+									<p class="text-warning">I will be the leader of a company
+										that ends up being worth billions of dollars, because I got
+										the answers...</p>
+								</div>
+								<div class="typography-line">
+									<span>Danger Text</span>
+									<p class="text-danger">I will be the leader of a company
+										that ends up being worth billions of dollars, because I got
+										the answers...</p>
+								</div>
+								<div class="typography-line">
+									<h2>
+										<span>Small Tag</span> Header with small subtitle <br> <small>Use
+											"small" tag for the headers</small>
+									</h2>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="space-50"></div>
+					<div id="images">
+						<h4>Images</h4>
+						<div class="row">
+							<div class="col-sm-2">
+								<p class="category">Image</p>
+								<img src="./assets/img/julie.jpg" alt="Rounded Image"
+									class="rounded">
+							</div>
+							<div class="col-sm-2">
+								<p class="category">Circle Image</p>
+								<img src="./assets/img/julie.jpg" alt="Circle Image"
+									class="rounded-circle">
+							</div>
+							<div class="col-sm-2">
+								<p class="category">Raised</p>
+								<img src="./assets/img/julie.jpg" alt="Raised Image"
+									class="rounded img-raised">
+							</div>
+							<div class="col-sm-2">
+								<p class="category">Circle Raised</p>
+								<img src="./assets/img/julie.jpg" alt="Thumbnail Image"
+									class="rounded-circle img-raised">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section section-javascript" id="javascriptComponents">
+				<div class="container">
+					<h3 class="title">Javascript components</h3>
+					<div class="row" id="modals">
+						<div class="col-md-6">
+							<h4>Modal</h4>
+							<button class="btn btn-primary" data-toggle="modal"
+								data-target="#myModal">Launch Modal</button>
+							<button class="btn btn-warning" data-toggle="modal"
+								data-target="#myModal1">Launch Modal Mini</button>
+						</div>
+						<div class="col-md-6">
+							<h4>Popovers</h4>
+							<button type="button" class="btn btn-default"
+								data-container="body" data-original-title="Popover On Left"
+								data-toggle="popover" data-placement="left"
+								data-content="Here will be some very useful information about his popover."
+								data-color="primary">On left</button>
+							<button type="button" class="btn btn-default"
+								data-container="body" data-original-title="Popover on Top"
+								data-toggle="popover" data-placement="top"
+								data-content="Here will be some very useful information about his popover.">
+								On top</button>
+							<button type="button" class="btn btn-default"
+								data-container="body" data-original-title="Popover on Right"
+								data-toggle="popover" data-placement="right"
+								data-content="Here will be some very useful information about his popover.<br> Here will be some very useful information about his popover.">
+								On right</button>
+							<button type="button" class="btn btn-default"
+								data-container="body" data-original-title="Popover on Bottom"
+								data-toggle="popover" data-placement="bottom"
+								data-content="Here will be some very useful information about his popover.">
+								On bottom</button>
+						</div>
+						<br /> <br />
+						<div class="col-md-6">
+							<h4>Datepicker</h4>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="datepicker-container">
+										<div class="form-group">
+											<input type="text" class="form-control date-picker"
+												value="10/05/2016" data-datepicker-color="primary">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<h4>Tooltips</h4>
+							<button type="button" class="btn btn-default btn-tooltip"
+								data-toggle="tooltip" data-placement="left"
+								title="Tooltip on left" data-container="body"
+								data-animation="true" data-delay="100">On left</button>
+							<button type="button" class="btn btn-default btn-tooltip"
+								data-toggle="tooltip" data-placement="top"
+								title="Tooltip on top" data-container="body"
+								data-animation="true">On top</button>
+							<button type="button" class="btn btn-default btn-tooltip"
+								data-toggle="tooltip" data-placement="bottom"
+								title="Tooltip on bottom" data-container="body"
+								data-animation="true">On bottom</button>
+							<button type="button" class="btn btn-default btn-tooltip"
+								data-toggle="tooltip" data-placement="right"
+								title="Tooltip on right" data-container="body"
+								data-animation="true">On right</button>
+							<div class="clearfix"></div>
+							<br> <br>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="carousel">
+				<div class="container">
+					<div class="title">
+						<h4>Carousel</h4>
+					</div>
+					<div class="row justify-content-center">
+						<div class="col-lg-8 col-md-12">
+							<div id="carouselExampleIndicators" class="carousel slide"
+								data-ride="carousel">
+								<ol class="carousel-indicators">
+									<li data-target="#carouselExampleIndicators" data-slide-to="0"
+										class="active"></li>
+									<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+									<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+								</ol>
+								<div class="carousel-inner" role="listbox">
+									<div class="carousel-item active">
+										<img class="d-block" src="assets/img/bg1.jpg"
+											alt="First slide">
+										<div class="carousel-caption d-none d-md-block">
+											<h5>Nature, United States</h5>
+										</div>
+									</div>
+									<div class="carousel-item">
+										<img class="d-block" src="assets/img/bg3.jpg"
+											alt="Second slide">
+										<div class="carousel-caption d-none d-md-block">
+											<h5>Somewhere Beyond, United States</h5>
+										</div>
+									</div>
+									<div class="carousel-item">
+										<img class="d-block" src="assets/img/bg4.jpg"
+											alt="Third slide">
+										<div class="carousel-caption d-none d-md-block">
+											<h5>Yellowstone National Park, United States</h5>
+										</div>
+									</div>
+								</div>
+								<a class="carousel-control-prev"
+									href="#carouselExampleIndicators" role="button"
+									data-slide="prev"> <i
+									class="now-ui-icons arrows-1_minimal-left"></i>
+								</a> <a class="carousel-control-next"
+									href="#carouselExampleIndicators" role="button"
+									data-slide="next"> <i
+									class="now-ui-icons arrows-1_minimal-right"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section section-nucleo-icons">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6 col-md-12">
+							<h2 class="title">Nucleo Icons</h2>
+							<h5 class="description">Now UI Kit PRO comes with 100 custom
+								icons made by our friends from NucleoApp. The official package
+								contains over 2.100 thin icons which are looking great in
+								combination with Now UI Kit PRO Make sure you check all of them
+								and use those that you like the most.</h5>
+							<!-- <div class="nucleo-container">
+							<img src="assets/img/nucleo.svg" alt="">
+						</div> -->
+							<a href="nucleo-icons.html"
+								class="btn btn-primary btn-round btn-lg" target="_blank">View
+								Demo Icons</a> <a href="https://nucleoapp.com/?ref=1712"
+								class="btn btn-outline-primary btn-round btn-lg" target="_blank">View
+								All Icons</a>
+						</div>
+						<div class="col-lg-6 col-md-12">
+							<div class="icons-container">
+								<i class="now-ui-icons ui-1_send"></i> <i
+									class="now-ui-icons ui-2_like"></i> <i
+									class="now-ui-icons transportation_air-baloon"></i> <i
+									class="now-ui-icons text_bold"></i> <i
+									class="now-ui-icons tech_headphones"></i> <i
+									class="now-ui-icons emoticons_satisfied"></i> <i
+									class="now-ui-icons shopping_cart-simple"></i> <i
+									class="now-ui-icons objects_spaceship"></i> <i
+									class="now-ui-icons media-2_note-03"></i> <i
+									class="now-ui-icons ui-2_favourite-28"></i> <i
+									class="now-ui-icons design_palette"></i> <i
+									class="now-ui-icons clothes_tie-bow"></i> <i
+									class="now-ui-icons location_pin"></i> <i
+									class="now-ui-icons objects_key-25"></i> <i
+									class="now-ui-icons travel_istanbul"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section">
+				<div class="container text-center">
+					<div class="row justify-content-md-center">
+						<div class="col-md-12 col-lg-8">
+							<h2 class="title">Completed with examples</h2>
+							<h5 class="description">The kit comes with three pre-built
+								pages to help you get started faster. You can change the text
+								and images and you're good to go. More importantly, looking at
+								them will give you a picture of what you can built with this
+								powerful Bootstrap 4 ui kit.</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section section-signup"
+				style="background-image: url('assets/img/bg11.jpg'); background-size: cover; background-position: top center; min-height: 700px;">
+				<div class="container">
+					<div class="row">
+						<div class="card card-signup" data-background-color="orange">
+							<form class="form" method="" action="">
+								<div class="card-header text-center">
+									<h3 class="card-title title-up">Sign Up</h3>
+									<div class="social-line">
+										<a href="#pablo"
+											class="btn btn-neutral btn-facebook btn-icon btn-round">
+											<i class="fab fa-facebook-square"></i>
+										</a> <a href="#pablo"
+											class="btn btn-neutral btn-twitter btn-icon btn-lg btn-round">
+											<i class="fab fa-twitter"></i>
+										</a> <a href="#pablo"
+											class="btn btn-neutral btn-google btn-icon btn-round"> <i
+											class="fab fa-google-plus"></i>
+										</a>
+									</div>
+								</div>
+								<div class="card-body">
+									<div class="input-group no-border">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> <i
+												class="now-ui-icons users_circle-08"></i>
+											</span>
+										</div>
+										<input type="text" class="form-control"
+											placeholder="First Name...">
+									</div>
+									<div class="input-group no-border">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> <i
+												class="now-ui-icons text_caps-small"></i>
+											</span>
+										</div>
+										<input type="text" placeholder="Last Name..."
+											class="form-control" />
+									</div>
+									<div class="input-group no-border">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> <i
+												class="now-ui-icons ui-1_email-85"></i>
+											</span>
+										</div>
+										<input type="text" class="form-control" placeholder="Email...">
+									</div>
+									<!-- If you want to add a checkbox to this form, uncomment this code -->
+									<!-- <div class="checkbox">
+								<input id="checkboxSignup" type="checkbox">
+									<label for="checkboxSignup">
+									Unchecked
+									</label>
+								</div> -->
+								</div>
+								<div class="card-footer text-center">
+									<a href="#pablo" class="btn btn-neutral btn-round btn-lg">Get
+										Started</a>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="col text-center">
+						<a href="examples/login-page.html"
+							class="btn btn-outline-default btn-round btn-white btn-lg"
+							target="_blank">View Login Page</a>
+					</div>
+				</div>
+			</div>
+			<div class="section section-examples" data-background-color="black">
+				<div class="space-50"></div>
+				<div class="container text-center">
+					<div class="row">
+						<div class="col">
+							<a href="examples/landing-page.html" target="_blank"> <img
+								src="assets/img/landing.jpg" alt="Image" class="img-raised">
+							</a> <a href="examples/landing-page.html"
+								class="btn btn-outline-default btn-primary btn-round">View
+								Landing Page</a>
+						</div>
+						<div class="col">
+							<a href="examples/profile-page.html" target="_blank"> <img
+								src="assets/img/profile.jpg" alt="Image" class="img-raised">
+							</a> <a href="examples/profile-page.html"
+								class="btn btn-outline-default btn-primary btn-round">View
+								Profile Page</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section section-download" id="#download-section"
+				data-background-color="black">
+				<div class="container">
+					<div class="row justify-content-md-center">
+						<div class="text-center col-md-12 col-lg-8">
+							<h3 class="title">Do you love this Bootstrap 4 UI Kit?</h3>
+							<h5 class="description">Cause if you do, it can be yours for
+								FREE. Hit the button below to navigate to Creative Tim or
+								Invision where you can find the kit in HTML or Sketch/PSD
+								format. Start a new project or give an old Bootstrap project a
+								new look!</h5>
+						</div>
+						<div class="text-center col-md-12 col-lg-8">
+							<a href="https://www.creative-tim.com/product/now-ui-kit"
+								class="btn btn-primary btn-lg btn-round" role="button">
+								Download HTML </a> <a href="https://www.invisionapp.com/now"
+								target="_blank" class="btn btn-lg btn-outline-primary btn-round"
+								role="button"> Download PSD/Sketch </a>
+						</div>
+					</div>
+					<br> <br> <br>
+					<div class="row text-center mt-5">
+						<div class="col-md-8 ml-auto mr-auto">
+							<h2>Want more?</h2>
+							<h5 class="description">
+								We've just launched <a
+									href="http://demos.creative-tim.com/now-ui-kit-pro/presentation.html"
+									target="_blank">Now UI Kit PRO</a>. It has a huge number of
+								components, sections and example pages. Start Your Development
+								With A Badass Bootstrap 4 UI Kit.
+							</h5>
+						</div>
+						<div class="col-md-12">
+							<a
+								href="http://demos.creative-tim.com/now-ui-kit-pro/presentation.html"
+								class="btn btn-neutral btn-round btn-lg" target="_blank"> <i
+								class="now-ui-icons arrows-1_share-66"></i> Upgrade to PRO
+							</a>
+						</div>
+					</div>
+					<br> <br>
+					<div class="row justify-content-md-center sharing-area text-center">
+						<div class="text-center col-md-12 col-lg-8">
+							<h3>Thank you for supporting us!</h3>
+						</div>
+						<div class="text-center col-md-12 col-lg-8">
+							<a target="_blank" href="https://www.twitter.com/creativetim"
+								class="btn btn-neutral btn-icon btn-twitter btn-round btn-lg"
+								rel="tooltip" title="Follow us"> <i class="fab fa-twitter"></i>
+							</a> <a target="_blank" href="https://www.facebook.com/creativetim"
+								class="btn btn-neutral btn-icon btn-facebook btn-round btn-lg"
+								rel="tooltip" title="Like us"> <i
+								class="fab fa-facebook-square"></i>
+							</a> <a target="_blank"
+								href="https://www.linkedin.com/company-beta/9430489/"
+								class="btn btn-neutral btn-icon btn-linkedin btn-lg btn-round"
+								rel="tooltip" title="Follow us"> <i class="fab fa-linkedin"></i>
+							</a> <a target="_blank"
+								href="https://github.com/creativetimofficial/now-ui-kit"
+								class="btn btn-neutral btn-icon btn-github btn-round btn-lg"
+								rel="tooltip" title="Star on Github"> <i
+								class="fab fa-github"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Sart Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header justify-content-center">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">
+							<i class="now-ui-icons ui-1_simple-remove"></i>
+						</button>
+						<h4 class="title title-up">Modal title</h4>
+					</div>
+					<div class="modal-body">
+						<p>Far far away, behind the word mountains, far from the
+							countries Vokalia and Consonantia, there live the blind texts.
+							Separated they live in Bookmarksgrove right at the coast of the
+							Semantics, a large language ocean. A small river named Duden
+							flows by their place and supplies it with the necessary
+							regelialia. It is a paradisematic country, in which roasted parts
+							of sentences fly into your mouth.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default">Nice Button</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--  End Modal -->
+		<!-- Mini Modal -->
+		<div class="modal fade modal-mini modal-primary" id="myModal1"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header justify-content-center">
+						<div class="modal-profile">
+							<i class="now-ui-icons users_circle-08"></i>
+						</div>
+					</div>
+					<div class="modal-body">
+						<p>Always have an access to your profile</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link btn-neutral">Back</button>
+						<button type="button" class="btn btn-link btn-neutral"
+							data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--  End Modal -->
+		<footer class="footer" data-background-color="black">
+			<div class=" container ">
+				<nav>
+					<ul>
+						<li><a href="https://www.creative-tim.com"> Creative Tim
+						</a></li>
+						<li><a href="http://presentation.creative-tim.com"> About
+								Us </a></li>
+						<li><a href="http://blog.creative-tim.com"> Blog </a></li>
+					</ul>
+				</nav>
+				<div class="copyright" id="copyright">
+					&copy;
+					<script>
+						document.getElementById('copyright').appendChild(
+								document.createTextNode(new Date()
+										.getFullYear()))
+					</script>
+					, Designed by <a href="https://www.invisionapp.com" target="_blank">Invision</a>.
+					Coded by <a href="https://www.creative-tim.com" target="_blank">Creative
+						Tim</a>.
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!--   Core JS Files   -->
+	<script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
+	<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
+	<script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+	<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+	<script src="./assets/js/plugins/bootstrap-switch.js"></script>
+	<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+	<script src="./assets/js/plugins/nouislider.min.js"
+		type="text/javascript"></script>
+	<!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
+	<script src="./assets/js/plugins/bootstrap-datepicker.js"
+		type="text/javascript"></script>
+	<!--  Google Maps Plugin    -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+	<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
+	<script src="./assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
+	<script>
+		$(document).ready(function() {
+			// the body of this function is in assets/js/now-ui-kit.js
+			nowuiKit.initSliders();
+		});
 
-<div class="main">
-    <div class="container tim-container">
-       
-        <div class="tim-title">
-            <h2>Basic Elements</h2>
-        </div>
-        
-        <div id="buttons">
-                <div class="tim-title">
-                    <h3>Buttons <small> Pick your class </small></h3>
-                </div>
-                
-                <div class="row tim-row">
-                    <div class="col-md-6">
-                        <div class="pick-class">
-                            <span class="pick-class-label label-default label-fill label-tooltip" data-toggle="tooltip" data-placement="top" title="Default" new-class="btn-default"> </span>
-                            <span class="pick-class-label label-primary label-fill label-tooltip" data-toggle="tooltip" data-placement="top" title="Primary" new-class="btn-primary"> </span>
-                            <span class="pick-class-label label-info label-fill label-tooltip" data-toggle="tooltip" data-placement="top" title="Info" new-class="btn-info"> </span>
-                            <span class="pick-class-label label-success label-fill label-tooltip" data-toggle="tooltip" data-placement="top" title="Success" new-class="btn-success"> </span>
-                            <span class="pick-class-label label-warning label-fill label-tooltip" data-toggle="tooltip" data-placement="top" title="Warning" new-class="btn-warning"> </span>
-                            <span class="pick-class-label label-danger label-fill label-tooltip" data-toggle="tooltip" data-placement="top" title="Danger" new-class="btn-danger"> </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row tim-row" id="display-buttons" data-class="btn-info">
-                    <div class="col-md-3 col-sm-6">
-                        <button href="#fakelink" class="btn btn-block btn-lg btn-info">Default Button</button>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <button href="#fakelink" class="btn btn-block btn-lg btn-info btn-fill">Filled Button</button>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <button href="#fakelink" class="btn btn-block btn-lg btn-info btn-round">Rounded Button</button>
-                    </div>
-                    
-                    <div class="col-md-3 col-sm-6">
-                        <button href="#fakelink" class="btn btn-block btn-lg btn-info btn-simple">Simple Button</button>
-                    </div>
-                </div> <!-- end row -->               
-        </div>
-    <!-- end buttons div -->
-    
-        <div id="inputs">
-            <div class="tim-title">
-                <h3>Inputs</h3>
-            </div>
-            
-             <div class="row">
-                    <div class="col-sm-3">
-                	<div class="form-group">
-        	        	<input type="text" value="" placeholder="Inactive" class="form-control" />
-                	</div>          
-                </div>
-                
-                <div class="col-sm-3">
-                  <div class="form-group has-success">
-                    <input type="text" value="Success" class="form-control" />
-                  </div>
-                </div>
-                
-                <div class="col-sm-3">
-                  <div class="form-group has-error has-feedback">
-                    <input type="text" value="Error" class="form-control" />
-                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                  </div>
-                </div>
-    
-                <div class="col-sm-3">
-                	<div class="input-group">
-                	<!-- 	   Since the css properties cannot check the previous sibling of an element and for the design consistency we recommend to use the "input-group-addon" after the "form-control" like in this example -->
-                      <input type="text" value="Group Addon" class="form-control">
-                      <span class="input-group-addon"><i class="fa fa-group"></i></span>
-                    </div>       
-                </div>
-              </div> <!-- end row -->
-            
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="tim-title">
-                        <h3>Checkboxes</h3>
-                    </div>
-                    
-                      <label class="checkbox" for="checkbox1">
-                        <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox">
-                        Unchecked
-                      </label>
-                      <label class="checkbox" for="checkbox2">
-                        <input type="checkbox" value="" id="checkbox2" data-toggle="checkbox" checked>
-                        Checked
-                      </label>
-                      <label class="checkbox" for="checkbox3">
-                        <input type="checkbox" value="" id="checkbox3" data-toggle="checkbox" disabled>
-                        Disabled unchecked
-                      </label>
-                      <label class="checkbox" for="checkbox4">
-                        <input type="checkbox" value="" id="checkbox4" data-toggle="checkbox" disabled checked>
-                        Disabled checked
-                      </label>
-                </div>
-                
-                <div class="col-sm-3">
-                    <div class="tim-title">
-                        <h3>Radio Buttons</h3>
-                    </div>
-                    
-                       <label class="radio">
-                        <input type="radio" name="optionsRadios" data-toggle="radio" id="optionsRadios1" value="option1">
-                        <i></i>Radio is off
-                      </label>
-                      <label class="radio">
-                        <input type="radio" name="optionsRadios" data-toggle="radio" id="optionsRadios2" value="option1" checked>
-                        <i></i>Radio is on
-                      </label>
-            
-                      <label class="radio">
-                        <input type="radio" name="optionsRadiosDisabled" data-toggle="radio" id="optionsRadios3" value="option2" disabled>
-                        <i></i>Disabled radio is off
-                      </label>
-                      <label class="radio">
-                        <input type="radio" name="optionsRadiosDisabled" data-toggle="radio" id="optionsRadios4" value="option2" checked disabled>
-                        <i></i>Disabled radio is on
-                      </label>
-                    
-                </div>      
-                
-                <div class="col-sm-3">
-                    <div class="tim-title">
-                        <h3>Switches</h3>
-                        <!--                    
-                        
-                        The colors for checkbox: ct-blue[default], ct-azure, ct-orange, ct-green, ct-red    
-                        <input type="checkbox" checked data-toggle="switch" class="ct-red"/> 
-                         
-                         -->
-                        <input type="checkbox" checked data-toggle="switch" class="ct-info"/>
-                        <input type="checkbox" data-toggle="switch" />
-                        <h3>Switches with icons</h3>
-                        <div class="switch"
-                          data-on-label="<i class='fa fa-check'></i>"
-                          data-off-label="<i class='fa fa-times'></i>">
-                          <input type="checkbox" checked/>
-                        </div>
-                        <div class="switch"
-                          data-on-label="<i class='fa fa-check'></i>"
-                          data-off-label="<i class='fa fa-times'></i>">
-                          <input type="checkbox"/>
-                        </div>
-                    </div>
-                </div> 
-  
-                <div class="col-sm-3">
-                   
-                </div>               
-                    
-            </div><!--  end row -->
-    
-        </div><!--  end inputs -->
-        
-        <div id="menu-dropdown">
-            <div class="row">
-                <div class="col-md-7">
-                    <div class="tim-title">
-                        <h3>Menu & Dropdown</h3>
-                    </div>
-                    
-                    <div id="navbar">
-                        <nav class="navbar navbar-default">
-                          <div class="container-fluid">
-                            <!-- Brand and toggle get grouped for better mobile display -->
-                            <div class="navbar-header">
-                              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                              </button>
-                              <a class="navbar-brand" href="#gsdk">Brand</a>
-                            </div>
-                        
-                            <!-- Collect the nav links, forms, and other content for toggling -->
-                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                              <ul class="nav navbar-nav">
-                                <li class="active"><a href="#gsdk">Link</a></li>
-                                <li><a href="#gsdk">Link</a></li>
-                                <li class="dropdown">
-                                  <a href="#gsdk" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                                  <ul class="dropdown-menu">
-                                    <li><a href="#gsdk">Action</a></li>
-                                    <li><a href="#gsdk">Another action</a></li>
-                                    <li><a href="#gsdk">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#gsdk">Separated link</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#gsdk">One more separated link</a></li>
-                                  </ul>
-                                </li>
-                              </ul>
-                            </div><!-- /.navbar-collapse -->
-                          </div><!-- /.container-fluid -->
-                        </nav>
-                    
-                    </div><!--  end navbar -->
-                    
-                </div>
-                
-            </div> <!-- end row -->
-        </div> <!-- end menu-dropdown -->
-        <div class="tim-title">
-        <h3>Transparent Navigation
-             <a href="navbar-transparent.html" target="_blank" class="btn btn-info btn-fill">Live Preview</a>
-        </h3>
+		function scrollToDownload() {
 
-
-    </div>
-    </div>
-</div>
- <div id="navbar-full">
-    <div id="navbar">
-    <div class="navigation-example">
-         <nav class="navbar navbar-default navbar-transparent" role="navigation-demo">
-          <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#gsdk">GSDKit</a>
-            </div>
-        
-        <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navigation-example-2">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#gsdk">Link</a></li>
-                <li class="dropdown">
-                      <a href="#gsdk" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="#gsdk">Action</a></li>
-                        <li><a href="#gsdk">Another action</a></li>
-                        <li><a href="#gsdk">Something</a></li>
-                        <li><a href="#gsdk">Another action</a></li>
-                        <li><a href="#gsdk">Something</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#gsdk">Separated link</a></li>
-                      </ul>
-                </li>
-                <li>
-                    <a href="javascript:void(0);" data-toggle="search" class="hidden-xs"><i class="fa fa-search"></i></a>
-                </li>
-              </ul>
-               <form class="navbar-form navbar-left navbar-search-form" role="search">                  
-                 <div class="form-group">
-                      <input type="text" value="" class="form-control" placeholder="Search...">
-                 </div> 
-              </form>
-              <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#gsdk">Register</a></li>
-                    
-                    <li><button href="#gsdk" class="btn btn-round btn-default">Sign in</button></li>
-               </ul>
-              
-            </div><!-- /.navbar-collapse -->
-
-          </div><!-- /.container-fluid -->
-        </nav>        
-            <div class="img-src" style="background-image: url('Main-assets/assets/img/bg.jpg')"></div>
-        </div>
-    </div><!--  end navbar -->
-
-</div> <!-- end menu-dropdown -->
-
-<div class="main">
-    <div class="container tim-container">
-         <div id="sliders-navigation">
-            <div class="row">
-                <div class="col-md-6 ">
-                    <div class="tim-title">
-                        <h3>Progress Bars</h3>
-                    </div>
-                    <div class="progress">
-                      <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-                        <span class="sr-only">60% Complete</span>
-                      </div>
-                    </div>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                        <span class="sr-only">60% Complete</span>
-                      </div>
-                    </div>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-success" style="width: 35%">
-                        <span class="sr-only">35% Complete (success)</span>
-                      </div>
-                      <div class="progress-bar progress-bar-warning" style="width: 20%">
-                        <span class="sr-only">20% Complete (warning)</span>
-                      </div>
-                      <div class="progress-bar progress-bar-danger" style="width: 10%">
-                        <span class="sr-only">10% Complete (danger)</span>
-                      </div>
-                    </div>
-                    <div class="tim-title">
-                        <h3>Sliders</h3>
-                    </div>
-                    <div id="slider-default" class="slider-info"></div>
-                    <br>
-                    <div id="slider-range" class="slider-success"></div>
-                    
-                </div>
-                
-                <div class="col-md-6">
-                     <div class="tim-title">
-                        <h3>Navigation Menu</h3>
-                    </div>    
-                    
-                    <ul class="nav nav-tabs">
-                      <li class="active"><a href="#Bla">Home</a></li>
-                      <li><a href="#nice">Profile</a></li>
-                      <li><a href="#best">Messages</a></li>
-                      
-                    </ul>
-                    <br />
-                    <ul class="nav nav-pills">
-                     <!--  color-classes: "ct-blue", "ct-azure", "ct-orange", "ct-red", "ct-green"
-                           special-classes: "no-border"        
-                     -->
-                      <li class="active"><a href="#gsdk">Home</a></li>
-                      <li><a href="#gsdk"> Profile</a></li>
-                      <li><a href="#gsdk">Messages</a></li>
-                    </ul>
-                    
-                    <div class="tim-title">
-                        <h3>Pagination</h3>
-                    </div>  
-                    <ul class="pagination"> 
-                     <!--   color-classes: "ct-blue", "ct-azure", "ct-orange", "ct-red", "ct-green"
-                            special-classes: "no-border"        
-                     -->
-                      <li><a href="#gsdk">&laquo;</a></li>
-                      <li><a href="#gsdk">1</a></li>
-                      <li><a href="#gsdk">2</a></li>
-                      <li class="active"><a href="#gsdk">3</a></li>
-                      <li><a href="#gsdk">4</a></li>
-                      <li><a href="#gsdk">5</a></li>
-                      <li><a href="#gsdk">&raquo;</a></li>
-                    </ul>      
-                </div>
-            </div>
-        </div><!--  end sliders-navigation -->
-        
-        
-        <div id="labels-badges">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="tim-title">
-                        <h3>Labels</h3>
-                        <span class="label label-default">Default</span>
-                        <span class="label label-primary">Primary</span>
-                        <span class="label label-success">Success</span>
-                        <span class="label label-info">Info</span>
-                        <span class="label label-warning">Warning</span>
-                        <span class="label label-danger">Danger</span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                </div>
-            </div> <!-- end row -->
-        </div> <!-- end labels-badges -->
-        <div class="tim-title">
-            <h3>Notifications</h3>
-        </div> 
-    </div>
-</div>
-
-<div id="notifications">
-<!--            De scris la tutorial sa bage in container  -->
-    <div class="alert alert-success">
-        <div class="container">
-        <b>Lorem ipsum</b> dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-        </div>
-    </div>
-    <div class="alert alert-info">
-        <div class="container">
-        <b>Lorem ipsum</b> dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-        </div>
-    </div>
-    <div class="alert alert-warning">
-         <div class="container">
-             <b>Lorem ipsum</b> dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-        </div>
-    </div>
-    <div class="alert alert-danger">
-         <div class="container">
-             <b>Lorem ipsum</b> dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-        </div>
-    </div>
-    <div class="clearfix"></div>
-</div><!--  end notifications -->    
-        
-<div class="main">
-    <div class="container tim-container">
-        <div class="tim-title">
-            <h2>Typography</h2>
-        </div>   
-        <div id="typography">
-            <div class="row">
-                <div class="tim-typo">
-                    <h1><span class="tim-note">Header 1</span>Awesome looking header </h1>
-                </div>
-                <div class="tim-typo">
-                    <h2><span class="tim-note">Header 2</span>Awesome looking header</h2>
-                </div>
-                <div class="tim-typo">
-                    <h3><span class="tim-note">Header 3</span>Awesome looking header</h3>
-                </div>
-                <div class="tim-typo">
-                    <h4><span class="tim-note">Header 4</span>Awesome looking header</h4>
-                </div>
-                <div class="tim-typo">
-                    <h5><span class="tim-note">Header 5</span>Awesome looking header</h5>
-                </div>
-                 <div class="tim-typo">
-                    <h6><span class="tim-note">Header 6</span>Awesome looking header</h6>
-                </div>
-                <div class="tim-typo">
-                    <p><span class="tim-note">Paragraph</span>            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam.</p>
-                </div>
-                <div class="tim-typo">
-                    <span class="tim-note">Quote</span>      
-                    <blockquote> 
-                     <p>
-                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam.
-                     </p>
-                     <small>
-                     Steve Jobs, CEO Apple
-                     </small>
-                    </blockquote>
-                </div>
-                
-                <div class="tim-typo">
-                    <span class="tim-note">Muted Text</span>
-                    <p class="text-muted">            
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.
-                    </p>
-                </div> 
-                <div class="tim-typo">
-                    <!-- 
-                    
-                     there are also "text-info", "text-success", "text-warning", "text-warning" clases for the text 
-                     
-                     -->
-                    <span class="tim-note">Primary Text</span>
-                    <p class="text-primary">            
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.
-                    </p>
-                </div> 
-                <div class="tim-typo">
-                    <h1><span class="tim-note">Special Header</span>Header with special subtitle <small class="subtitle">".subtitle" is a special class for h1 title</small> </h1>
-                </div>
-                <div class="tim-typo">
-                    <h2><span class="tim-note">Small Tag</span>Header with small subtitle <br><small>".small" is a tag for the headers</small> </h2>
-                </div>                                  
-            </div>
-        </div> 
-        <!--   end typography -->
-        <div class="space"></div>
-        <div id="images">
-             <div class="tim-title">
-                <h2>Images</h2>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <h4>Rounded Image</h4>
-                    <img src="Main-assets/assets/img/mockup.png" alt="Rounded Image" class="img-rounded">
-                    
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <h4>Circle Image</h4>
-                    <img src="Main-assets/assets/img/mockup.png" alt="Circle Image" class="img-circle">
-                   
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <h4>Thumbnail Image</h4>
-                    <img src="Main-assets/assets/img/mockup.png" alt="Thumbnail Image" class="img-thumbnail">
-                    
-                </div>
-            </div>
-            <div class="row">
-            
-            </div>
-        </div>  
-    <!--   end images -->
-        
-        <div class="tim-title">
-            <h2>Javascript components</h2>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-6">
-                <div class="tim-title">
-                    <h3>Modal</h3>
-                </div>
-                
-                <!-- Button trigger modal -->
-                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                  Launch demo modal
-                </button>
-                
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                      </div>
-                      <div class="modal-body">
-                        ...
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
-                        <div class="divider"></div>
-                        <button type="button" class="btn btn-info btn-simple">Save</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                
-            </div>
-            
-         <!--    end modal -->
-            
-            <div class="col-md-6">
-                <div id="tooltips">
-                    <div class="tim-title">
-                        <h3>Tooltips</h3>
-                    </div>
-                    <button type="button" class="btn btn-default btn-tooltip" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Tooltip on left</button>
-        
-        <button type="button" class="btn btn-default btn-tooltip" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Tooltip on top</button>
-        
-        <button type="button" class="btn btn-default btn-tooltip" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">Tooltip on bottom</button>
-        
-        <button type="button" class="btn btn-default btn-tooltip" data-toggle="tooltip" data-placement="right" title="Tooltip on right">Tooltip on right</button>
-                </div>
-            </div>
-            <div class="clearfix"></div><br><br>
-        <!--     end tooltips -->
-            
-        </div><!--  end row -->
-    
-        <div class="tim-title">
-            <h3>Collapse</h3>
-        </div>
-        <div id="acordeon">
-            
-            <div class="panel-group" id="accordion">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-target="#collapseOne" href="#collapseOne" data-toggle="gsdk-collapse">
-                      GSDK Collapsible Item 1
-                    </a>
-                  </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse">
-                  <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-target="#collapseTwo" href="#collapseTwo" data-toggle="gsdk-collapse">
-                      GSDK Collapsible Item 2
-                    </a>
-                  </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse">
-                  <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-target="#collapseThree" href="#collapseTwo" data-toggle="gsdk-collapse">
-                      GSDK Collapsible Item 3
-                    </a>
-                  </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse">
-                  <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapseFour">
-                      Default Collapsible Item 1
-                    </a>
-                  </h4>
-                </div>
-                <div id="collapseFour" class="panel-collapse collapse">
-                  <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapseFive">
-                      Default Collapsible Item 2
-                    </a>
-                  </h4>
-                </div>
-                <div id="collapseFive" class="panel-collapse collapse">
-                  <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-        </div><!--  end acordeon -->
-        
-        <div class="space"></div>
-        <div class="tim-title">
-            <h3>Carousel</h3>
-        </div>
-    </div>
-</div>
-<div id="carousel">
-    <!--    
-            IMPORTANT - This carousel can have a special class for a smooth transition "gsdk-transition". Since javascript cannot be overwritten, if you want to use it, you can use the bootstrap.js or bootstrap.min.js from the GSDKit or you can open your bootstrap.js file, search for "emulateTransitionEnd(600)" and change it with "emulateTransitionEnd(1200)"     
-            
-    -->
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-      </ol>
-    
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner">
-        <div class="item active">
-          <img src="Main-assets/assets/img/carousel_blue.png" alt="Awesome Image">
-        </div>
-        <div class="item">
-          <img src="Main-assets/assets/img/carousel_green.png" alt="Awesome Image">
-        </div>
-        <div class="item">
-          <img src="Main-assets/assets/img/carousel_red.png" alt="Awesome Image">
-        </div>
-      </div>
-    
-      <!-- Controls -->
-      <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-        <span class="fa fa-angle-left"></span>
-      </a>
-      <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-        <span class="fa fa-angle-right"></span>
-      </a>
-    </div>
-</div> <!-- end carousel -->
-<div class="main">
-    <div class="container tim-container">
-        <div id="extras">
-            <div class="space"></div>
-            <div class="row">
-                <div class="col-md-7 col-md-offset-0 col-sm-10 col-sm-offset-1">
-                    <div class="text-center">
-                        <img src="Main-assets/assets/img/dulau.jpg" alt="Rounded Image" class="img-rounded img-responsive img-dog">
-                    </div>
-                </div>
-                <div class="col-md-5 col-sm-12">
-                                <h1 class="text-center">About Creative Tim
-                                
-                                <small class="subtitle">Get to know us</small></h1>
-                                <hr>
-                                <p>
-                                Creative Tim offers Bootstrap based design elements that speed up your development work. From plugins to complex kits, we have everything you need. 
-                                </p>
-                                <p>
-                                    We love the web and care deeply for how users interact with a digital product. The idea behind Creative Tim was creating a standard of things we actually need and would personally use inside our web projects. We power businesses and individuals to create better looking web projects around the world.
-                                </p>
-                                <p>
-                                We take great interest in how our customers use our resources and offer strong support and unlimited updates. We are constantly thinking about how to make our products intuitive, beautiful and extremely easy to understand, so feel free to tell us your thoughts!                                   
-                                </p>
-
-                </div>
-            </div>
-        </div>
-    <!--     end extras -->    
-    </div>
-<!-- end container -->
-<div class="space-30"></div>
-</div>
-
-
-<!-- end main -->
-
-<div class="parallax-pro">
-    <div class="img-src" style="background-image: url('http://get-shit-done-pro.herokuapp.com/assets/img/bg6.jpg');"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h1>
-                    <small>
-                       Don't forget to check our latest release:<a>
-                    </small>
-                </h1>
-            </div>
-            <div class="col-md-6 col-md-offset-3 col-md-12 text-center">
-                <h1 class="hello text-center">
-                   <a href="http://gsdk.creative-tim.com">Get Shit Done Kit <span class="label label-warning"> Pro</span></a>
-                   <small>
-                    <ul class="list-unstyled">
-                        <li>50+ new elements</li>
-                        <li>LESS and SASS files</li>
-                        <li>PSD for designers</li>
-                        <li>New Font Icons </li>
-                    </ul>
-                    </small>
-                </h1>
-                 <div class="actions">
-                     <a class="btn btn-lg btn-warning btn-fill" href="http://gsdk.creative-tim.com/?ref=get-shit-done">Live Preview Kit</a>
-                </div>
-            </div>
-        </div>
-        <div class="space-30"></div>
-        <div class="row">
-             <div class="col-md-12 text-center">
-                <div class="credits">
-                    &copy; <script>document.write(new Date().getFullYear())</script> Get Shit Done Kit by <a href="http://creative-tim.com"> Creative Tim</a>, made with <i class="fa fa-heart heart" alt="love"></i> for a better web.
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
+			if ($('.section-download').length != 0) {
+				$("html, body").animate({
+					scrollTop : $('.section-download').offset().top
+				}, 1000);
+			}
+		}
+	</script>
 </body>
 
-    <script src="Main-assets/jquery/jquery-1.10.2.js" type="text/javascript"></script>
-	<script src="Main-assets/assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
-
-	<script src="Main-assets/bootstrap3/js/bootstrap.js" type="text/javascript"></script>
-	<script src="Main-assets/assets/js/gsdk-checkbox.js"></script>
-	<script src="Main-assets/assets/js/gsdk-radio.js"></script>
-	<script src="Main-assets/assets/js/gsdk-bootstrapswitch.js"></script>
-	<script src="Main-assets/assets/js/get-shit-done.js"></script>
-    <script src="Main-assets/assets/js/custom.js"></script>
-
-<script type="text/javascript">
-         
-    $('.btn-tooltip').tooltip();
-    $('.label-tooltip').tooltip();
-    $('.pick-class-label').click(function(){
-        var new_class = $(this).attr('new-class');  
-        var old_class = $('#display-buttons').attr('data-class');
-        var display_div = $('#display-buttons');
-        if(display_div.length) {
-        var display_buttons = display_div.find('.btn');
-        display_buttons.removeClass(old_class);
-        display_buttons.addClass(new_class);
-        display_div.attr('data-class', new_class);
-        }
-    });
-    $( "#slider-range" ).slider({
-		range: true,
-		min: 0,
-		max: 500,
-		values: [ 75, 300 ],
-	});
-	$( "#slider-default" ).slider({
-			value: 70,
-			orientation: "horizontal",
-			range: "min",
-			animate: true
-	});
-	$('.carousel').carousel({
-      interval: 4000
-    });
-      
-    
-</script>
 </html>
