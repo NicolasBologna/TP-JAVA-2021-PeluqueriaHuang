@@ -77,12 +77,12 @@ public class CreateUserServlet extends HttpServlet {
 			String destPage = "WEB-INF/Admin/User/CreateUser.jsp";
 			request.setAttribute("roleList", Admin.getAllRoles());
         	if (ctrl.checkEmailAvailability(newUser.getEmail())) {
-        		String message = "El Email ya está en uso";
+        		String message = "El Email ya estï¿½ en uso";
                 request.setAttribute("errorMessage", message);
         	}else {
             	int idNewUser = ctrl.addNewUser(newUser);
             	if (idNewUser != -1) {
-            		String message = "El usuario se agregó correctamente";
+            		String message = "El usuario se agregï¿½ correctamente";
             		request.setAttribute("successMessage", message);
             	} else {
             		String message = "Hubo un error en el registro.";

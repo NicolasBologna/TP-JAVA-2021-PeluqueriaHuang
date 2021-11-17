@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Registro - Peluquerías Huang</title>
+  <title>Registro - SALÓN LEGEND</title>
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -24,17 +24,37 @@
           </div>
           <div class="login-wrapper my-auto">
             <h1 class="login-title">Registrarse</h1>
-            <form  action="signup" method="post">
+            <form  action="Signup" method="post">
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="email@example.com">
+                <input type="email" name="email" id="email" class="form-control" placeholder="email@ejemplo.com" required>
               </div>
               <div class="form-group mb-4">
                 <label for="password">Contraseña</label>
-                <input type="password" name="password" id="password" class="form-control"
-                  placeholder="enter your passsword">
+                <input type="password" name="password" id="password" minlength="8" class="form-control"
+                  placeholder="Ingrese su contraseña" required>
               </div>
-              <input name="login" id="login" class="btn btn-block login-btn" type="submit">
+              <div class="form-group mb-4">
+                <label for="first_name">Nombre</label>
+                <input type="text" name="first_name" id="first_name" class="form-control"
+                  placeholder="Ingrese su nombre" required>
+              </div>
+              <div class="form-group mb-4">
+                <label for="last_name">Apellido</label>
+                <input type="text" name="last_name" id="last_name" class="form-control"
+                  placeholder="Ingrese su apellido" required>
+              </div>
+              <div class="form-group mb-4">
+                <label for="dni">Documento Nacional de Identidad</label>
+                <input type="text" name="dni" id="dni" class="form-control"
+                  placeholder="(Opcional)Ingrese su dni">
+              </div>
+              <div class="form-group mb-4">
+                <label for="phone">Teléfono</label>
+                <input type="text" name="phone" id="phone" class="form-control"
+                  placeholder="Ingrese su teléfono" required>
+              </div>
+              <input name="register" id="register" class="btn btn-block login-btn" type="submit">
             </form>
           </div>
         </div>
