@@ -2,9 +2,6 @@ package servlet;
 
 import java.io.IOException;
 
-import java.util.LinkedList;
-import java.util.regex.Pattern;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import entities.Persona;
+import entities.User;
 import logic.Login;
 
 import utils.Validators.UserValidators;
@@ -38,7 +35,9 @@ public class Signin extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Signin.jsp");
+		User user = (User)request.getSession().getAttribute("user");
+		RequestDispatcher dispatcher = (user != null) ? request.getRequestDispatcher("index") : request.getRequestDispatcher("WEB-INF/User/Signin.jsp");
+         
         dispatcher.forward(request, response);
 	}
 
@@ -48,7 +47,7 @@ public class Signin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		Persona per = new Persona();
+		User per = new User();
 		Login ctrl = new Login();
 		
 		String email = request.getParameter("email");
@@ -68,7 +67,7 @@ public class Signin extends HttpServlet {
 		
 		try {
 			per = ctrl.validate(per);
-            String destPage = "WEB-INF/Signin.jsp";
+            String destPage = "WEB-INF/User/Signin.jsp";
             
             if (per != null) {
                 HttpSession session = request.getSession();

@@ -1,6 +1,6 @@
 --
--- User java
+-- User peluquerias
 --
 
-create user 'java'@'localhost' identified by 'himitsu';
-GRANT SELECT, INSERT, UPDATE, DELETE ON `java`.* TO 'java'@'localhost';
+create user 'peluquerias'@'localhost' identified by 'nichufia';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `peluquerias`.* TO 'peluquerias'@'localhost';
