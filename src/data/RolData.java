@@ -219,7 +219,7 @@ public class RolData {
 					prepareStatement(
 							"insert into role_user values(?,?);");
 			stmt.setInt(1,p.getUserId());
-			for(Role r:p.getAllRoles().values()) {
+			for(Role r:p.getAllRoles()) {
 				stmt.setInt(2, r.getId());
 				stmt.executeUpdate();
 			}

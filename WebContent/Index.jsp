@@ -12,7 +12,7 @@
 		href="./assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" href="./assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>SALï¿½N LEGEND</title>
+	<title>SALÓN LEGEND</title>
 	<meta
 		content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 		name='viewport' />
@@ -61,8 +61,6 @@
 						class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1"
 						data-toggle="dropdown"> <i class="now-ui-icons shopping_shop"></i>
 							<p>Sucursales</p>
-						data-toggle="dropdown"> <i class="now-ui-icons design_app"></i>
-							<p>Components</p>
 					</a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownMenuLink1">
@@ -103,7 +101,7 @@
 			<div class="container">
 				<div class="content-center brand">
 					<img class="img-fluid" src="./assets/img/now-logo.svg" alt="" style="max-width: 200px;">
-					<h1 class="h1-seo">Salï¿½n Legends</h1>
+					<h1 class="h1-seo">Salón Legends</h1>
 					<h3>Siempre el mejor servicio</h3>
 				</div>
 			</div>
