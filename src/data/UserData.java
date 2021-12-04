@@ -131,6 +131,45 @@ public class UserData {
 		return p;
 	}
 	
+	public User getById(int id) {
+		RolData dr=new RolData();
+		User p=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select user_id,first_name,last_name,dni,email,phone,is_enable from users where user_id=?"
+					);
+			stmt.setInt(1, id);
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()) {
+				p=new User();
+				p.setUserId(rs.getInt("user_id"));
+				p.setFirstName(rs.getString("first_name"));
+				p.setLastName(rs.getString("last_name"));
+				p.setDni(rs.getInt("dni"));
+				p.setEmail(rs.getString("email"));
+				p.setPhone(rs.getString("phone"));
+				
+				p.setIsEnable(rs.getBoolean("is_enable"));
+				//
+				dr.setRoles(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println(p);
+		return p;
+	}
+	
 	/*public User getByDocumento(User per) {
 		DataRol dr=new DataRol();
 		User p=null;
@@ -215,14 +254,15 @@ public class UserData {
 		return -1;
     }
 	
-	public boolean remove(int userId) {
+	public boolean switchUserStatus(byte isEnable, int userId) {
 		PreparedStatement stmt= null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"UPDATE users SET is_enable=0 WHERE user_id = ?"
+							"UPDATE users SET is_enable=? WHERE user_id = ?"
 							);
-			stmt.setInt(1, userId);
+			stmt.setInt(1, isEnable);
+			stmt.setInt(2, userId);
 			stmt.executeUpdate();
 
             return stmt.executeUpdate() > 0;
@@ -240,6 +280,7 @@ public class UserData {
 		//if error return false
 		return false;	
 	}
+	
 	
 	public boolean update(User user) {
 		PreparedStatement stmt= null;
