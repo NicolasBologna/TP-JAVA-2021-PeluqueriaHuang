@@ -15,7 +15,7 @@ public class Login {
 	}
 	
 	public User validate(User p) {
-		p.setPassword(Encrypters.encriptadoMD5(p.getPassword()));
+		//p.setPassword(Encrypters.encriptadoMD5(p.getPassword()));
 		return dp.getByUser(p);
 	}
 

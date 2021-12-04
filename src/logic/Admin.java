@@ -27,5 +27,12 @@ public class Admin {
 		roles.removeIf(r -> !Arrays.asList(rolesToSearch).contains(Integer.toString(r.getId())));
 		return roles;
 		
+		
+	}
+		
+	public static boolean switchUserStatus(int id){
+		UserData ud = new UserData();
+		User user =  ud.getById(id);
+		return ud.switchUserStatus((byte)(user.getIsEnable()?0:1), user.getUserId());
 	}
 }

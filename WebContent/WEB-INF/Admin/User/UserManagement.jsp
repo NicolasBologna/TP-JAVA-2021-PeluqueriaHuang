@@ -64,7 +64,7 @@
 									/>
                    				</td>
                    				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0">Editar</button></td><!-- editar -->
-                   				<td><button type="button" class="btn btn-danger btn-round btn-sm my-0">Borrar</button></td><!-- borrar -->
+                   				<td><button type="button" class="btn <%=per.getIsEnable()?"btn-danger":"btn-success"%> btn-round btn-sm my-0" onclick="window.location.href='DeleteUser?id=<%=per.getUserId()%>';"><%=per.getIsEnable()?"Borrar":"Recuperar"%></button></td>
                    			</tr>
                    		<% } %>
                    		<tr class="text-center"> 
@@ -72,6 +72,9 @@
                    		</tr>
                    		</tbody>
                   		</table>
+                  		<span class="text-success">
+			  				${successMessage}
+						</span>
               		</div>
               	</div>	
        	</div>
