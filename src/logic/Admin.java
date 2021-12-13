@@ -35,4 +35,18 @@ public class Admin {
 		User user =  ud.getById(id);
 		return ud.switchUserStatus((byte)(user.getIsEnable()?0:1), user.getUserId());
 	}
+	
+	public static User getUserById(int idUser) {
+		
+		UserData ud = new UserData();
+		User per =ud.getById(idUser);
+		return per;
+	}
+	
+	public static boolean updateUser(User theUser) {
+		
+		UserData ud = new UserData();
+		return ud.update(theUser);
+				
+	}
 }

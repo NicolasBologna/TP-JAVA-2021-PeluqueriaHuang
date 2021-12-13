@@ -211,6 +211,8 @@ public class UserData {
 		return p;
 	}*/
 	
+	
+	
 	public int add(User user) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
@@ -287,18 +289,16 @@ public class UserData {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"UPDATE users SET first_name = ?, last_name = ?, dni = ?, phone = ?, email = ?, password = ? WHERE user_id = ?",
-							PreparedStatement.RETURN_GENERATED_KEYS
+							"UPDATE users SET first_name = ?, last_name = ?, dni = ?, phone = ?, email = ?, habilitado = ? WHERE user_id = ?"
 							);
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
 			stmt.setInt(3, user.getDni());
 			stmt.setString(4, user.getPhone());
 			stmt.setString(5, user.getEmail());
-			stmt.setString(6, user.getPassword());
+			stmt.setBoolean(6, user.getIsEnable());
 			stmt.setInt(7, user.getUserId());
-			
-            return stmt.executeUpdate() > 0;
+			return stmt.executeUpdate() > 0;
             
 		}  catch (SQLException e) {
             e.printStackTrace();

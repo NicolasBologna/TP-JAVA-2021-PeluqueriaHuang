@@ -23,6 +23,7 @@
 	<%
 			User p = (User)session.getAttribute("usuario");
 		    	LinkedList<User> lp = (LinkedList<User>)request.getAttribute("lp");
+		    
 		%>
 	
 </head>
@@ -57,14 +58,19 @@
                    				<td><%=per.getEmail()%></td>
                    				<td><%=per.getDni()%></td>
                    				<td><%=per.getPhone()%></td>
+         
                    				<td>
 	                   				<input type="checkbox" <%=per.getIsEnable()?"checked":""%> name="checkbox" class="bootstrap-switch" onclick="changeEnable(<%=per.getUserId()%>)"
 									    data-on-label="ON"
 									    data-off-label="OFF"
 									/>
                    				</td>
-                   				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0">Editar</button></td><!-- editar -->
+                   				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" onclick="window.location.href='editUser?idPersona='+<%=per.getUserId()%>;">Editar</button></td><!-- editar -->
+                   				
                    				<td><button type="button" class="btn <%=per.getIsEnable()?"btn-danger":"btn-success"%> btn-round btn-sm my-0" onclick="window.location.href='DeleteUser?id=<%=per.getUserId()%>';"><%=per.getIsEnable()?"Borrar":"Recuperar"%></button></td>
+                   				
+                   				 
+                   				
                    			</tr>
                    		<% } %>
                    		<tr class="text-center"> 

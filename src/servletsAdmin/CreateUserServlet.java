@@ -82,7 +82,7 @@ public class CreateUserServlet extends HttpServlet {
         	}else {
             	int idNewUser = ctrl.addNewUser(newUser);
             	if (idNewUser != -1) {
-            		String message = "El usuario se agregï¿½ correctamente";
+            		String message = "El usuario se agregó correctamente";
             		request.setAttribute("successMessage", message);
             	} else {
             		String message = "Hubo un error en el registro.";
