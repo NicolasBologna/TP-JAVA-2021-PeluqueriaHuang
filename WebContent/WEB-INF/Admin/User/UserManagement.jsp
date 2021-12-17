@@ -21,10 +21,10 @@
 	<link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
 	
 	<%
-			User p = (User)session.getAttribute("usuario");
-		    	LinkedList<User> lp = (LinkedList<User>)request.getAttribute("lp");
-		    
-		%>
+		User p = (User)session.getAttribute("usuario");
+	    	LinkedList<User> lp = (LinkedList<User>)request.getAttribute("lp");
+	    
+	%>
 	
 </head>
 <body class="bg-dark text-light">
@@ -65,12 +65,13 @@
 									    data-off-label="OFF"
 									/>
                    				</td>
-                   				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" onclick="window.location.href='editUser?idPersona='+<%=per.getUserId()%>;">Editar</button></td><!-- editar -->
+                   				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" 
+                   						onclick="window.location.href='EditUserServlet?idPersona='+<%=per.getUserId()%>;">Editar</button>
+                   				</td>
                    				
-                   				<td><button type="button" class="btn <%=per.getIsEnable()?"btn-danger":"btn-success"%> btn-round btn-sm my-0" onclick="window.location.href='DeleteUser?id=<%=per.getUserId()%>';"><%=per.getIsEnable()?"Borrar":"Recuperar"%></button></td>
-                   				
-                   				 
-                   				
+                   				<td><button type="button" class="btn <%=per.getIsEnable()?"btn-danger":"btn-success"%> btn-round btn-sm my-0" 
+                   						onclick="window.location.href='DeleteUserServlet?id=<%=per.getUserId()%>';"><%=per.getIsEnable()?"Borrar":"Recuperar"%></button>
+                   				</td>                   						
                    			</tr>
                    		<% } %>
                    		<tr class="text-center"> 
@@ -84,7 +85,7 @@
               		</div>
               	</div>	
        	</div>
-	</div> <!-- /container -->
+	</div>
 	
 	<script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
 	<script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
@@ -92,7 +93,7 @@
 	<script src="./assets/js/plugins/bootstrap-switch.js"></script>
 	<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
 	<script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
-	<script type="text/javascript">
+		<script type="text/javascript">
 	$('.bootstrap-switch').each(function(){
 	    $this = $(this);
 	    data_on_label = $this.data('on-label') || '';
@@ -103,18 +104,6 @@
 	        offText: data_off_label
 	    });
 	});
-	function changeEnable(parameter) {
-		  var xhttp = new XMLHttpRequest();
-		  xhttp.onreadystatechange = function() {
-		    if (this.readyState == 4 && this.status == 200) {
-		     document.getElementById("demo").innerHTML = this.responseText;
-		    }
-		  };
-		  console.log(parameter);
-		  xhttp.open("UPDATE", "/DeleteUser", true);
-		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		  xhttp.send("id="+parameter);
-		}
 	</script>
 </body>
 </html>

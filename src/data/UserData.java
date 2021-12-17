@@ -289,7 +289,7 @@ public class UserData {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"UPDATE users SET first_name = ?, last_name = ?, dni = ?, phone = ?, email = ?, habilitado = ? WHERE user_id = ?"
+							"UPDATE users SET first_name = ?, last_name = ?, dni = ?, phone = ?, email = ?, is_enable = ? WHERE user_id = ?"
 							);
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());

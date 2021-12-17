@@ -49,8 +49,8 @@
 	<main>
 	<div class="container">
 		<h1 class="text-center pt-2">Editar Usuario</h1>
-		<form action="editUser" method="post" class="shadow p-5">
-		<div class="form-group mb-4">
+		<form action="EditUserServlet" method="post" class="shadow p-5">
+		<div class="form-group mb-4 d-none">
 				<label for="id">ID</label> <input type="text" readonly = "" name="id"
 					id="id" class="form-control"  value="<%= p.getUserId()%>">
 			</div>

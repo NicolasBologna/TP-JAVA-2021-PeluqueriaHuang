@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import logic.Admin;
 
 /**
- * Servlet implementation class DeleteUser
+ * Servlet implementation class DeleteUserServlet
  */
-@WebServlet("/DeleteUser")
-public class DeleteUser extends HttpServlet {
+@WebServlet("/DeleteUserServlet")
+public class DeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteUser() {
+    public DeleteUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
