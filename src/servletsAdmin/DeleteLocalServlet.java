@@ -43,7 +43,7 @@ public class DeleteLocalServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		Local local = new Local();
 		local.setLocalId(Integer.parseInt(request.getParameter("id")));
-		String message = LocalAdmin.delete(local)?"Se elimino el usuario":"No se elimino el usuario";
+		String message = LocalAdmin.delete(local)?"Se elimino la peluquería":"No se elimino la peluquería";
 		
 		request.setAttribute("deletionMessage", message);
 		

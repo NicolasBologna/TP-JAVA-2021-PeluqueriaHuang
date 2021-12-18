@@ -43,7 +43,7 @@
 	<main>
 	<div class="container">
 		<h1 class="text-center pt-2">Crear Peluquería</h1>
-		<form action="CreateUserServlet" method="post" class="shadow p-5">
+		<form action="CreateLocalServlet" method="post" class="shadow p-5">
 			<div class="form-group mb-4">
 				<label for="name">Nombre</label> <input type="text"
 					name="name" id="name" class="form-control"

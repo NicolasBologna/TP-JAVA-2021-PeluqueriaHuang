@@ -57,35 +57,14 @@
 							class="now-ui-icons users_single-02"></i>
 							<p>Usuarios</p>
 					</a></li>
-					<li class="nav-item dropdown"><a href="/UserListServlet"
-						class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1"
-						data-toggle="dropdown"> <i class="now-ui-icons shopping_shop"></i>
+					<li class="nav-item"><a class="nav-link"
+						href="LocalListServlet"> <i 
+							class="now-ui-icons shopping_shop"></i>
 							<p>Sucursales</p>
-					</a>
-						<div class="dropdown-menu dropdown-menu-right"
-							aria-labelledby="navbarDropdownMenuLink1">
-							<a class="dropdown-item" href="./index.html"> <i
-								class="now-ui-icons business_chart-pie-36"></i> All components
-							</a> <a class="dropdown-item" target="_blank"
-								href="https://demos.creative-tim.com/now-ui-kit/docs/1.0/getting-started/introduction.html">
-								<i class="now-ui-icons design_bullet-list-67"></i> Documentation
-							</a>
-						</div></li>
-					<li class="nav-item"><a class="nav-link" rel="tooltip"
-						title="Follow us on Twitter" data-placement="bottom"
-						href="https://twitter.com/CreativeTim" target="_blank"> <i
-							class="fab fa-twitter"></i>
-							<p class="d-lg-none d-xl-none">Twitter</p>
 					</a></li>
 					<li class="nav-item"><a class="nav-link" rel="tooltip"
-						title="Like us on Facebook" data-placement="bottom"
-						href="https://www.facebook.com/CreativeTim" target="_blank"> <i
-							class="fab fa-facebook-square"></i>
-							<p class="d-lg-none d-xl-none">Facebook</p>
-					</a></li>
-					<li class="nav-item"><a class="nav-link" rel="tooltip"
-						title="Follow us on Instagram" data-placement="bottom"
-						href="https://www.instagram.com/CreativeTimOfficial"
+						title="Seguinos en Instagram" data-placement="bottom"
+						href="https://www.instagram.com/salonlegend_/"
 						target="_blank"> <i class="fab fa-instagram"></i>
 							<p class="d-lg-none d-xl-none">Instagram</p>
 					</a></li>

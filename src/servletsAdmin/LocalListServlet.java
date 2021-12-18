@@ -33,21 +33,14 @@ public class LocalListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		Local local = (Local)request.getSession().getAttribute("local");
+		User user = (User)request.getSession().getAttribute("user");
 		
-		request.setAttribute("ll", LocalAdmin.getAll());
-		RequestDispatcher dispatcher = (local != null) ? request.getRequestDispatcher("WEB-INF/Admin/Local/LocalManagement.jsp") : request.getRequestDispatcher("WEB-INF/Local/CreateLocal.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/User/Signin.jsp");
+		if (user != null) {
+			request.setAttribute("localsList", LocalAdmin.getAll());
+			dispatcher = (LocalAdmin.areLocalsLoaded()) ? request.getRequestDispatcher("WEB-INF/Admin/Locals/LocalsManagement.jsp") : request.getRequestDispatcher("WEB-INF/Admin/Locals/CreateLocal.jsp");
+		}	
 	
 		dispatcher.forward(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 }

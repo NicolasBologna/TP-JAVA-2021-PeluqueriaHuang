@@ -31,7 +31,7 @@ public class CreateLocalServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/Local/CreateLocal.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/Locals/CreateLocal.jsp");
         dispatcher.forward(request, response);
 	}
 
@@ -39,7 +39,6 @@ public class CreateLocalServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		Local newLocal = new Local();
 		
 		String name = request.getParameter("name");
@@ -51,7 +50,7 @@ public class CreateLocalServlet extends HttpServlet {
 		newLocal.setCoordenates(coordenates);
 		
 		try {
-			String destPage = "WEB-INF/Admin/Local/CreateLocal.jsp";
+			String destPage = "WEB-INF/Admin/Locals/CreateLocal.jsp";
         	if (LocalAdmin.checkAddressAvailability(newLocal.getAddress())) {
         		String message = "La dirección ya está en uso";
                 request.setAttribute("errorMessage", message);

@@ -6,6 +6,7 @@ public class Local {
 	private String name;
 	private String address;
 	private String coordenates;
+	private boolean isEnable;
 	
 	public int getLocalId() {
 		return localId;
@@ -30,5 +31,11 @@ public class Local {
 	}
 	public void setCoordenates(String coordenates) {
 		this.coordenates = coordenates;
+	}
+	public boolean getIsEnable() {
+		return isEnable;
+	}
+	public void setIsEnable(boolean isEnable) {
+		this.isEnable = isEnable;
 	}
 }

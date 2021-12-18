@@ -14,7 +14,7 @@ public class LocalData {
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select local_id,name,address,coordenates from locals");
+			rs= stmt.executeQuery("select local_id,name,address,coordenates,is_enable from locals");
 			if(rs!=null) {
 				while(rs.next()) {
 					Local l=new Local();
@@ -22,6 +22,7 @@ public class LocalData {
 					l.setName(rs.getString("name"));
 					l.setAddress(rs.getString("address"));
 					l.setCoordenates(rs.getString("coordenates"));
+					l.setIsEnable(rs.getBoolean("is_enable"));
 					locals.add(l);
 				}
 			}
@@ -57,6 +58,8 @@ public class LocalData {
 				l.setName(rs.getString("name"));
 				l.setAddress(rs.getString("address"));
 				l.setCoordenates(rs.getString("coordenates"));
+				l.setIsEnable(rs.getBoolean("is_enable"));
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -89,6 +92,7 @@ public class LocalData {
 				l.setName(rs.getString("name"));
 				l.setAddress(rs.getString("address"));
 				l.setCoordenates(rs.getString("coordenates"));
+				l.setIsEnable(rs.getBoolean("is_enable"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -189,6 +193,33 @@ public class LocalData {
 		//if error return false
 		return false;
     }
+	
+	public boolean switchLocalStatus(byte isEnable, int localId) {
+		PreparedStatement stmt= null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"UPDATE locals SET is_enable=? WHERE local_id = ?"
+							);
+			stmt.setInt(1, isEnable);
+			stmt.setInt(2, localId);
+			stmt.executeUpdate();
+
+            return stmt.executeUpdate() > 0;
+			
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }            
+		}
+		//if error return false
+		return false;	
+	}
 	
 	
 	
