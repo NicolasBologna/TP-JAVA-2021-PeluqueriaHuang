@@ -14,7 +14,8 @@ public class LocalData {
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select local_id,name,address,coordenates,is_enable from locals");
+			//rs= stmt.executeQuery("select local_id,name,address,coordenates,is_enable from locals");
+			rs= stmt.executeQuery("select local_id,name,address,coordenates  from locals");
 			if(rs!=null) {
 				while(rs.next()) {
 					Local l=new Local();
@@ -22,7 +23,7 @@ public class LocalData {
 					l.setName(rs.getString("name"));
 					l.setAddress(rs.getString("address"));
 					l.setCoordenates(rs.getString("coordenates"));
-					l.setIsEnable(rs.getBoolean("is_enable"));
+					//l.setIsEnable(rs.getBoolean("is_enable"));
 					locals.add(l);
 				}
 			}

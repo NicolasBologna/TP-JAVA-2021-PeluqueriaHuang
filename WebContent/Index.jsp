@@ -62,6 +62,11 @@
 							class="now-ui-icons shopping_shop"></i>
 							<p>Sucursales</p>
 					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ServiceListServlet"> <i
+							class="now-ui-icons users_single-02"></i>
+							<p>Servicios</p>
+					</a></li>
 					<li class="nav-item"><a class="nav-link" rel="tooltip"
 						title="Seguinos en Instagram" data-placement="bottom"
 						href="https://www.instagram.com/salonlegend_/"
