@@ -16,9 +16,9 @@ public class ServiceAdmin {
 	    return sd.add(service);
 	  }
 	  
-	  public static boolean update(Service service){
+	  public static boolean update(Service s){
 	    ServiceData sd = new ServiceData();
-	    return sd.update(service);
+	    return sd.update(s);
 	  }
 	    
 	  public static boolean delete(Service service){
@@ -29,5 +29,10 @@ public class ServiceAdmin {
 			ServiceData sd = new ServiceData();
 			return !sd.getAll().isEmpty();
 		}
+	  
+	  public static Service getServiceById(int id) {
+		  ServiceData sd = new ServiceData();
+		  return sd.getById(id);
+	  }
 
 }

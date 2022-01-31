@@ -46,7 +46,7 @@
                    		</thead>
                    		<tbody>
                    		<%
-                   			for (Service service :ls) {
+                   			for (Service service : ls) {
                    		%>
                    			<tr>
                    				<td><%=service.getServiceId()%></td>
@@ -58,16 +58,17 @@
                    						onclick="window.location.href='EditServiceServlet?idService='+<%=service.getServiceId()%>;">Editar</button>
                    				</td>
                    				
-                   				<td><button type="button" class="btn <%=service.getIsEnable()?"btn-danger":"btn-success"%> btn-round btn-sm my-0" 
-                   						onclick="window.location.href='DeleteLocalServlet?id=<%=service.getServiceId()%>';"><%=service.getIsEnable()?"Borrar":"Recuperar"%></button>
+                   				<td><button type="button" class="btn btn-danger btn-round btn-sm my-0" 
+                   						onclick="window.location.href='DeleteServiceServlet?idService=<%=service.getServiceId()%>';">Eliminar</button>
                    				</td>                   						
                    			</tr>
                    		<% } %>
-                   		<tr class="text-center"> 
+                   		<tr class="text-center">
+                   		<td><button type="button" class="btn btn-danger btn-round btn-sm my-0" onclick="window.location.href='Index.jsp'">Volver</button></td> 
                    			<td colspan=9> <button type="button" class="btn btn-success btn-round" onclick="window.location.href='CreateServiceServlet';">Agregar servicio</button></td>
-                   			<a href="index.jsp">
-<button> Volver</button>
-</a>
+                   			
+                   			
+
                    		</tr>
                    		</tbody>
                   		</table>

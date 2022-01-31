@@ -13,7 +13,7 @@ public class ServiceData {
     
     try {
       stmt= DbConnector.getInstancia().getConn().createStatement();
-      rs= stmt.executeQuery("select service_id,name,description,price,time from services");
+      rs= stmt.executeQuery("select service_id,name,description,price,duration from services");
       if(rs!=null) {
         while(rs.next()) {
           Service s=new Service();
@@ -40,6 +40,42 @@ public class ServiceData {
     }  
     return services;
   }
+  
+  public Service getById(int id) {
+		Service s = null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select service_id,name,description,price, duration from services where service_id=?"
+					);
+			stmt.setInt(1, id);
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()) {
+				
+				s = new Service();
+				s.setServiceId(rs.getInt("service_id"));
+				s.setName(rs.getString("name"));
+				s.setDescription(rs.getString("duration"));
+				s.setPrice(rs.getFloat("price"));
+				s.setDuration(rs.getTime("duration"));
+				
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println(s);
+		return s;
+	}
   
   public int add(Service service) {
     PreparedStatement stmt= null;
@@ -82,7 +118,7 @@ public class ServiceData {
     try {
       stmt=DbConnector.getInstancia().getConn().
           prepareStatement(
-              "delete from services where id=?");
+              "delete from services where service_id=?");
       stmt.setInt(1, service.getServiceId());
       stmt.executeUpdate();
     } catch (SQLException e) {
