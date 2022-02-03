@@ -56,7 +56,7 @@ public class ServiceData {
 				s = new Service();
 				s.setServiceId(rs.getInt("service_id"));
 				s.setName(rs.getString("name"));
-				s.setDescription(rs.getString("duration"));
+				s.setDescription(rs.getString("description"));
 				s.setPrice(rs.getFloat("price"));
 				s.setDuration(rs.getTime("duration"));
 				
@@ -146,6 +146,7 @@ public class ServiceData {
       stmt.setString(2, service.getDescription());
       stmt.setFloat(3, service.getPrice());
       stmt.setTime(4, service.getDuration());
+      stmt.setInt(5,service.getServiceId() );
       
             return stmt.executeUpdate() > 0;
             

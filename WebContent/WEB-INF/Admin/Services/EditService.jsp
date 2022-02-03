@@ -49,7 +49,7 @@
 		<h1 class="text-center pt-2">Editar Servicio</h1>
 		<form action="EditServiceServlet" method="post" class="shadow p-5">
 		<div class="form-group mb-4 d-none">
-				<label for="id">ID</label> <input type="text" readonly = "" name="id"
+				<label for="id">ID</label> <input type="text" readonly = " " name="id"
 					id="id" class="form-control"  value="<%= s.getServiceId()%>">
 			</div>
 			<div class="form-group mb-4">

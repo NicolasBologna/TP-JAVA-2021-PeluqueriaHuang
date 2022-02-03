@@ -21,8 +21,9 @@ public class ServiceAdmin {
 	    return sd.update(s);
 	  }
 	    
-	  public static boolean delete(Service service){
+	  public static boolean delete(int id){
 	    ServiceData sd = new ServiceData();
+	    Service service = sd.getById(id);
 	    return sd.delete(service);
 	  }
 	  public static boolean areServicesLoaded() {

@@ -15,7 +15,7 @@ public class LocalData {
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
 			//rs= stmt.executeQuery("select local_id,name,address,coordenates,is_enable from locals");
-			rs= stmt.executeQuery("select local_id,name,address,coordenates  from locals");
+			rs= stmt.executeQuery("select local_id,name,address,coordenates, is_enable  from locals");
 			if(rs!=null) {
 				while(rs.next()) {
 					Local l=new Local();
@@ -23,7 +23,7 @@ public class LocalData {
 					l.setName(rs.getString("name"));
 					l.setAddress(rs.getString("address"));
 					l.setCoordenates(rs.getString("coordenates"));
-					//l.setIsEnable(rs.getBoolean("is_enable"));
+					l.setIsEnable(rs.getBoolean("is_enable"));
 					locals.add(l);
 				}
 			}
@@ -49,7 +49,7 @@ public class LocalData {
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select local_id,name,address,coordenates from locals where local_id=?"
+					"select local_id,name,address,coordenates, is_enable from locals where local_id=?"
 					);
 			stmt.setInt(1, id);
 			rs=stmt.executeQuery();
@@ -83,7 +83,7 @@ public class LocalData {
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select local_id,name,address,coordenates from locals where address=?"
+					"select local_id,name,address,coordenates, is_enable from locals where address=?"
 					);
 			stmt.setString(1, address);
 			rs=stmt.executeQuery();
@@ -172,13 +172,14 @@ public class LocalData {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"UPDATE locals SET name = ?, address = ?, coordenates = ? WHERE local_id = ?",
+							"UPDATE locals SET name = ?, address = ?, coordenates = ?, is_enable = ? WHERE local_id = ?",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 			stmt.setString(1, local.getName());
 			stmt.setString(2, local.getAddress());
 			stmt.setString(3, local.getCoordenates());
-			
+			stmt.setInt(4, local.getLocalId());
+			stmt.setBoolean(5, local.getIsEnable());
             return stmt.executeUpdate() > 0;
             
 		}  catch (SQLException e) {

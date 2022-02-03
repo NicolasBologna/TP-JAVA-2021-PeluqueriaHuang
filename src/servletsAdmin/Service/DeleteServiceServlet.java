@@ -35,11 +35,10 @@ public class DeleteServiceServlet extends HttpServlet {
 		
 		try {
 
-		Service service = new Service();
+
 		Integer id = Integer.parseInt(request.getParameter("idService"));
-		service.setServiceId(id);
-		
-		String message = ServiceAdmin.delete(service)?"Servicio eliminado":"No se elimino el servicio";
+	
+		String message = ServiceAdmin.delete(id)?"Servicio eliminado":"No se elimino el servicio";
 		request.setAttribute("deletionMessage", message);
 		
 		request.setAttribute("servicesList", ServiceAdmin.getAll());

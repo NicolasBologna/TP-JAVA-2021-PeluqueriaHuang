@@ -1,8 +1,7 @@
-package servletsAdmin.Service;
+package servletsAdmin.Local;
 
 import java.io.IOException;
 import java.sql.Time;
-import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,22 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entities.Service;
-
-import logic.ServiceAdmin;
-
+import entities.Local;
+import logic.LocalAdmin;
 
 /**
- * Servlet implementation class EditServiceServlet
+ * Servlet implementation class EditLocalServlet
  */
-@WebServlet("/EditServiceServlet")
-public class EditServiceServlet extends HttpServlet {
+@WebServlet("/EditLocalServlet")
+public class EditLocalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EditServiceServlet() {
+    public EditLocalServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,41 +33,40 @@ public class EditServiceServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String id = request.getParameter("idService");
-		int idService = Integer.parseInt(id);
+		String id = request.getParameter("id");
+		int idLocal = Integer.parseInt(id);
 		
-		request.setAttribute("service", ServiceAdmin.getServiceById(idService));
+		request.setAttribute("local", LocalAdmin.getById(idLocal));
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/Services/EditService.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/Locals/EditLocal.jsp");
 		
 		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		Service s = new Service();
-		
+		Local l = new Local();
 		int id = Integer.parseInt(request.getParameter("id"));
 		String name = request.getParameter("name");
-		String descrip = request.getParameter("description");
-		Float price = Float.parseFloat(request.getParameter("price"));
+		String coordenates = request.getParameter("coordenates");
+	
 		
-		String time = request.getParameter("duration");
-		Time duration = java.sql.Time.valueOf(time);
-		s.setServiceId(id);
-		s.setName(name);
-		s.setDescription(descrip);
-		s.setPrice(price);
-		s.setDuration(duration);
+		String address = request.getParameter("address");
+		String isEnable = request.getParameter("address");
 		
+		l.setLocalId(id);
+		l.setName(name);
+		l.setCoordenates(coordenates);
+		l.setAddress(address);
+		l.setIsEnable(isEnable.equals("on") ? true : false);
 		
 		try {
-			String destPage = "WEB-INF/Admin/Services/ServicesManagement.jsp";
+			String destPage = "WEB-INF/Admin/Locals/LocalsManagement.jsp";
 			
-			Boolean serviceUpdate = ServiceAdmin.update(s);
-		       
-			request.setAttribute("servicesList", ServiceAdmin.getAll());
-        	if (serviceUpdate== false) {
+			Boolean localUpdate = LocalAdmin.update(l);
+		
+			request.setAttribute("localsList", LocalAdmin.getAll());
+        	if (localUpdate== false) {
         		
         		String message = "Hubo un error en la actualizacion.";
                 request.setAttribute("errorMessage", message);
