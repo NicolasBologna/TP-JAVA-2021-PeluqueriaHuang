@@ -52,7 +52,7 @@ public class EditLocalServlet extends HttpServlet {
 	
 		
 		String address = request.getParameter("address");
-		String isEnable = request.getParameter("address");
+		String isEnable = request.getParameter("is_enable");
 		
 		l.setLocalId(id);
 		l.setName(name);

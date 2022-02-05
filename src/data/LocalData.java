@@ -178,8 +178,9 @@ public class LocalData {
 			stmt.setString(1, local.getName());
 			stmt.setString(2, local.getAddress());
 			stmt.setString(3, local.getCoordenates());
-			stmt.setInt(4, local.getLocalId());
-			stmt.setBoolean(5, local.getIsEnable());
+			stmt.setBoolean(4, local.getIsEnable());
+			stmt.setInt(5, local.getLocalId());
+			
             return stmt.executeUpdate() > 0;
             
 		}  catch (SQLException e) {

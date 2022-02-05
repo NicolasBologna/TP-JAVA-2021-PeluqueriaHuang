@@ -53,7 +53,7 @@
 			</div>
 			<div class="form-group mb-4">
 				<label for="nombre">Nombre</label> <input type="text"
-					name="nombre" id="nombre" class="form-control"
+					name="name" id="name" class="form-control"
 					placeholder="Ingrese su nombre"  value="<%= l.getName()%>">
 			</div>
 			<div class="form-group mb-4">
@@ -66,7 +66,7 @@
 			</div>
 			<div class="form-group mb-4">
 				<label for="isEnable">Local Habilitado</label> <br>
-				<input type="checkbox" checked name="isEnable" class="bootstrap-switch"
+				<input type="checkbox" checked name="is_enable" class="bootstrap-switch"
 				    data-on-label="SI"
 				    data-off-label="NO" value = "<%= l.getIsEnable()%>">
 			</div>
