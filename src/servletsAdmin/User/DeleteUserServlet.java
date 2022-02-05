@@ -29,21 +29,11 @@ public class DeleteUserServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		String idUser = request.getHeader("Id");
 		
-		String idUser = request.getParameter("id");
-		
-		String message = Admin.switchUserStatus(Integer.parseInt(idUser))?"Se elimino el usuario":"No se elimino el usuario";
-		
-		request.setAttribute("deletionMessage", message);
-		
-		request.setAttribute("lp", Admin.getAllUsers());
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/User/UserManagement.jsp");
-		
-        dispatcher.forward(request, response);
-        
+		Admin.switchUserStatus(Integer.parseInt(idUser));        
 	}
 }

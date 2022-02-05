@@ -69,8 +69,9 @@
                    						onclick="window.location.href='EditUserServlet?idPersona='+<%=per.getUserId()%>;">Editar</button>
                    				</td>
                    				
-                   				<td><button type="button" class="btn <%=per.getIsEnable()?"btn-danger":"btn-success"%> btn-round btn-sm my-0" 
-                   						onclick="window.location.href='DeleteUserServlet?id=<%=per.getUserId()%>';"><%=per.getIsEnable()?"Borrar":"Recuperar"%></button>
+                   				<td>
+                   					<button type="button" class="btn <%=per.getIsEnable()?"btn-danger":"btn-success"%> btn-round btn-sm my-0" 
+                   						onclick="changeStatus(<%=per.getUserId()%>)"><%=per.getIsEnable()?"Borrar":"Recuperar"%></button>
                    				</td>                   						
                    			</tr>
                    		<% } %>
@@ -93,17 +94,33 @@
 	<script src="./assets/js/plugins/bootstrap-switch.js"></script>
 	<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
 	<script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
-		<script type="text/javascript">
-	$('.bootstrap-switch').each(function(){
-	    $this = $(this);
-	    data_on_label = $this.data('on-label') || '';
-	    data_off_label = $this.data('off-label') || '';
+	<script type="text/javascript">
+		$('.bootstrap-switch').each(function(){
+		    $this = $(this);
+		    data_on_label = $this.data('on-label') || '';
+		    data_off_label = $this.data('off-label') || '';
+		
+		    $this.bootstrapSwitch({
+		        onText: data_on_label,
+		        offText: data_off_label
+		    });
+		});
+		
+		function changeStatus(id){
+			var dataRequestHeader={"Id" : id};
 	
-	    $this.bootstrapSwitch({
-	        onText: data_on_label,
-	        offText: data_off_label
-	    });
-	});
+		    $.ajax({
+	            type:'POST',
+	            url:'DeleteUserServlet',  
+	            cache:false,
+	            headers:dataRequestHeader,
+	            success:function(){ location.reload(true)},
+	            error:function(xhr,ajaxOptions){
+	                alert(xhr.status + " :: " + xhr.statusText);
+	                } 
+	            });
+		}
+
 	</script>
 </body>
 </html>
