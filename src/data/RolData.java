@@ -235,4 +235,23 @@ public class RolData {
             }
 		}
 	}
+	public void removeRolesUser(User user) {
+		PreparedStatement stmt= null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"delete from role_user where user_id=?");
+			stmt.setInt(1, user.getUserId());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }
+		}
+	}
 }

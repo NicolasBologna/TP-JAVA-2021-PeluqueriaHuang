@@ -298,7 +298,16 @@ public class UserData {
 			stmt.setString(5, user.getEmail());
 			stmt.setBoolean(6, user.getIsEnable());
 			stmt.setInt(7, user.getUserId());
+			stmt.executeUpdate();
+			
+			if(stmt.executeUpdate()>0){
+				 RolData dr = new RolData();
+				 dr.removeRolesUser(user);
+	             dr.setRolesDePersona(user);
+               
+            }
 			return stmt.executeUpdate() > 0;
+			
             
 		}  catch (SQLException e) {
             e.printStackTrace();

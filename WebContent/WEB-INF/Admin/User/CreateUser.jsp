@@ -28,7 +28,8 @@
 <link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
 
 <%
-	LinkedList<Role> rolList = (LinkedList<Role>)request.getAttribute("roleList");
+
+	LinkedList<Role> rolesList = (LinkedList<Role>)request.getAttribute("roleList");
 %>
 
 <style type="text/css">
@@ -90,12 +91,12 @@
 			<label>Roles</label>
 			<div class="mb-4">
 	     		<%
-	       			for (Role role : rolList) {
+	       			for (Role role : rolesList) {
 	       		%>
 	       		
 				<div class="form-check form-check-inline ">
 				  <label class="form-check-label">
-				    <input class="form-check-input" type="checkbox" name="roles" value="<%=role.getId()%>"> <%=role.getRole()%>
+				    <input class="form-check-input" type="checkbox" name="roles" value="<%=role.getId()%>"><%=role.getRole()%>
 				    <span class="form-check-sign">
 				        <span class="check "></span>
 				    </span>
