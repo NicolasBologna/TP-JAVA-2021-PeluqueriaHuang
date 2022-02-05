@@ -1,5 +1,5 @@
 <%@page import="java.util.LinkedList"%>
-<%@page import="entities.Local"%>
+<%@page import="entities.Service"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -10,7 +10,7 @@
 	<link rel="icon" type="image/png" href="./assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<title>
-	  Administar Peluquerías
+	  Administar Servicios
 	</title>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 	<!--     Fonts and icons     -->
@@ -21,7 +21,7 @@
 	<link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
 	
 	<%
-	    	LinkedList<Local> lp = (LinkedList<Local>)request.getAttribute("localsList");
+	    	LinkedList<Service> ls = (LinkedList<Service>)request.getAttribute("servicesList");
 	    
 	%>
 	
@@ -29,7 +29,7 @@
 <body class="bg-dark text-light">
 	<div class="container">
 		<div class="row">
-        	<h1>Peluquerías</h1>
+        	<h1>Servicios</h1>
            	<div class="col-12 col-sm-12 col-lg-12 shadow">
                	<div class="table-responsive">
                    	<table class="table table-dark pt-2">
@@ -37,33 +37,38 @@
                    			<tr>
                    				<th>Id</th>
                    		    	<th>Nombre</th>
-                       			<th>Coordenadas</th>
-                       			<th>Dirección</th>
+                       			<th>Descripcion</th>
+                       			<th>Precio</th>
+                       			<th>Duracion</th>
                        			<th></th>
                        			<th></th>
                    			</tr>
                    		</thead>
                    		<tbody>
                    		<%
-                   			for (Local local : lp) {
+                   			for (Service service : ls) {
                    		%>
                    			<tr>
-                   				<td><%=local.getLocalId()%></td>
-                   				<td><%=local.getName()%></td>
-                   				<td><%=local.getCoordenates()%></td>
-                   				<td><%=local.getAddress()%></td>
+                   				<td><%=service.getServiceId()%></td>
+                   				<td><%=service.getName()%></td>
+                   				<td><%=service.getDescription()%></td>
+                   				<td><%=service.getPrice()%></td>
+                   				<td><%=service.getDuration()%></td>
                    				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" 
-                   						onclick="window.location.href='EditLocalServlet?id='+<%=local.getLocalId()%>;">Editar</button>
+                   						onclick="window.location.href='EditServiceServlet?idService='+<%=service.getServiceId()%>;">Editar</button>
                    				</td>
                    				
-                   					<td><button type="button" class="btn <%=local.getIsEnable()?"btn-danger":"btn-success"%> btn-round btn-sm my-0" 
-                   						onclick="window.location.href='DeleteLocalServlet?id=<%=local.getLocalId()%>';"><%=local.getIsEnable()?"Borrar":"Recuperar"%></button>
-                   				</td>                                     						
+                   				<td><button type="button" class="btn btn-danger btn-round btn-sm my-0" 
+                   						onclick="window.location.href='DeleteServiceServlet?idService=<%=service.getServiceId()%>';">Eliminar</button>
+                   				</td>                   						
                    			</tr>
                    		<% } %>
+                   		<tr class="text-center">
                    		<td><button type="button" class="btn btn-danger btn-round btn-sm my-0" onclick="window.location.href='Index.jsp'">Volver</button></td> 
-                   		<tr class="text-center"> 
-                   			<td colspan=9> <button type="button" class="btn btn-success btn-round" onclick="window.location.href='CreateLocalServlet';">Agregar peluquería</button></td>
+                   			<td colspan=9> <button type="button" class="btn btn-success btn-round" onclick="window.location.href='CreateServiceServlet';">Agregar servicio</button></td>
+                   			
+                   			
+
                    		</tr>
                    		</tbody>
                   		</table>
