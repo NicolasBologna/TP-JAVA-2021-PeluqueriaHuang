@@ -73,7 +73,7 @@ public class RolData {
 		return r;
 	}
 	
-	public Role getByDesc(Role rolToSearch) {
+	public Role getByDesc(String rolToSearch) {
 		Role r=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
@@ -81,7 +81,7 @@ public class RolData {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
 					"select * from roles where role=?"
 					);
-			stmt.setString(1, rolToSearch.getRole());
+			stmt.setString(1, rolToSearch);
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
 				r=new Role();
