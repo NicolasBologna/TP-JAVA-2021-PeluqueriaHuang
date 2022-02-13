@@ -32,26 +32,19 @@ public class DeleteLocalServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		Local local = new Local();
-		local.setLocalId(Integer.parseInt(request.getParameter("id")));
-		String message = LocalAdmin.delete(local)?"Se elimino la peluquería":"No se elimino la peluquería";
+		String id = request.getParameter("id");
+		String message = LocalAdmin.switchLocalStatus(Integer.parseInt(id))?"Se elimino la peluquería":"No se elimino la peluquería";
 		
 		request.setAttribute("deletionMessage", message);
 		
-		request.setAttribute("ll", LocalAdmin.getAll());
+		request.setAttribute("localsList", LocalAdmin.getAll());
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/User/UserManagement.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/Locals/LocalsManagement.jsp");
 		
         dispatcher.forward(request, response);
 	}
+
+	
+
 
 }

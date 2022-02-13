@@ -31,6 +31,7 @@
 	
 	User p = (User)request.getAttribute("user");
 	LinkedList<Role> userRoles = p.getAllRoles();
+	LinkedList<Role> allRoles = (LinkedList<Role>)request.getAttribute("rolesList");
 %>
 
 <style type="text/css">
@@ -86,11 +87,12 @@
 			<label>Roles</label>
 			<div class="mb-4">
 	     		<%
-	       			for (Role role : userRoles) {
+	       			for (Role role : allRoles) {
+	       				
 	       		%>
 				<div class="form-check form-check-inline ">
 				  <label class="form-check-label">
-				    <input class="form-check-input" type="checkbox" name="roles" value="<%=role.getId()%>"><%=role.getRole()%> 
+				    <input class="form-check-input" type="checkbox" <%= p.hasRol(role)? "checked":"" %> name="roles" value="<%=role.getId()%>"><%=role.getRole()%> 
 				    <span class="form-check-sign">
 				        <span class="check "></span>
 				    </span>

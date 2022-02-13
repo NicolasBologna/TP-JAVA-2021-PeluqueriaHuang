@@ -73,7 +73,7 @@ public class RolData {
 		return r;
 	}
 	
-	public Role getByDesc(Role rolToSearch) {
+	public Role getByDesc(String rolToSearch) {
 		Role r=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
@@ -81,7 +81,7 @@ public class RolData {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
 					"select * from roles where role=?"
 					);
-			stmt.setString(1, rolToSearch.getRole());
+			stmt.setString(1, rolToSearch);
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
 				r=new Role();
@@ -224,6 +224,25 @@ public class RolData {
 				stmt.executeUpdate();
 			}
 			
+		} catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }
+		}
+	}
+	public void removeRolesUser(User user) {
+		PreparedStatement stmt= null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"delete from role_user where user_id=?");
+			stmt.setInt(1, user.getUserId());
+			stmt.executeUpdate();
 		} catch (SQLException e) {
             e.printStackTrace();
 		} finally {

@@ -1,8 +1,10 @@
 <%@page import="java.util.LinkedList"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@page import="entities.Schedule"%>
 <%@page import="entities.Local"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="utils.Days"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
@@ -10,7 +12,7 @@
 	href="./assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="./assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>Editar Local</title>
+<title>Alta de Horario</title>
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 	name='viewport' />
@@ -27,7 +29,7 @@
 <link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
 
 <%
-	Local l = (Local)request.getAttribute("local");
+	LinkedList<Local> localsList = (LinkedList<Local>)request.getAttribute("localsList");
 %>
 
 <style type="text/css">
@@ -45,30 +47,39 @@
 <body class="bg-dark text-light">
 	<main>
 	<div class="container">
-		<h1 class="text-center pt-2">Editar Local</h1>
-		<form action="EditLocalServlet" method="post" class="shadow p-5">
-		<div class="form-group mb-4 d-none">
-				<label for="id">ID</label> <input type="text" readonly = "" name="id"
-					id="id" class="form-control"  value="<%= l.getLocalId()%>">
+		<h1 class="text-center pt-2">Crear Horario de trabajo</h1>
+		<form action="CreateScheduleServlet" method="post" class="shadow p-5">
+			<div class="form-group mb-4">
+				<label for="local">Peluquería</label> 
+				<select name="local" class="browser-default custom-select">
+  					<%
+	       			for (Local local: localsList) {
+       				%>
+				    <option value="<%=local.getLocalId()%>">
+				        <%=local.getName()%>
+				    </option>
+				  	<% } %>
+				</select>	       		
+       		</div>
+			<div class="form-group mb-4">
+				<label for="day_of_week">Día de la semana</label> 
+				<select name="day_of_week" class="browser-default custom-select">
+  					<%
+	       			for (Days day: Days.values()) {
+       				%>
+				    <option value="<%=day.name()%>">
+				        <%=day%>
+				    </option>
+				  	<% } %>
+				</select>	       		
+       		</div>
+			<div class="form-group mb-4">
+				<label for="start_time">Horario de inicio</label> <input type="time"
+					name="start_time" id="start_time" class="form-control" min="07:00" max="24:00" required value="09:00" step="1800">
 			</div>
 			<div class="form-group mb-4">
-				<label for="nombre">Nombre</label> <input type="text"
-					name="name" id="name" class="form-control"
-					placeholder="Ingrese su nombre"  value="<%= l.getName()%>">
-			</div>
-			<div class="form-group mb-4">
-				<label for="coordenates">Coordenadas</label> <input type="text"
-					name="coordenates" id="coordenates" class="form-control" value="<%= l.getCoordenates()%>">
-			</div>
-			<div class="form-group mb-4">
-				<label for="address">Direccion</label> <input
-					type="text" name="address" id="address" class="form-control" value="<%= l.getAddress()%>">
-			</div>
-			<div class="form-group mb-4">
-				<label for="isEnable">Local Habilitado</label> <br>
-				<input type="checkbox" checked name="is_enable" class="bootstrap-switch"
-				    data-on-label="SI"
-				    data-off-label="NO" value = "<%= l.getIsEnable()%>">
+				<label for="end_time">Horario de fin</label> <input type="time"
+					name="end_time" id="end_time" class="form-control" step="900" min="07:00" max="24:00" required value="18:00">
 			</div>
        		
        		<span class="text-danger">
@@ -78,9 +89,10 @@
 			<span class="text-success">
 			  ${successMessage}
 			</span>
+			
 			<button name="register" id="register" class="btn btn-block btn-primary"
 				type="submit">
-				<span>Finalizar</span>
+				<span>Agregar</span>
 			</button>
 		</form>
 	</div>
@@ -94,18 +106,5 @@
 	<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 	<script src="./assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
 	
-	<script type="text/javascript">
-		$(document).ready(function () {
-		    $('#checkBtn').click(function() {
-		      checked = $("input[type=checkbox]:checked").length;
-		
-		      if(!checked) {
-		        alert("Debe seleccionar por lo menos un rol.");
-		        return false;
-		      }
-		
-		    });
-		});
-	</script>
 </body>
 </html>

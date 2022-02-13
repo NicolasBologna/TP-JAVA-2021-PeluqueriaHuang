@@ -14,7 +14,8 @@ public class LocalData {
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select local_id,name,address,coordenates,is_enable from locals");
+			//rs= stmt.executeQuery("select local_id,name,address,coordenates,is_enable from locals");
+			rs= stmt.executeQuery("select local_id,name,address,coordenates, is_enable  from locals");
 			if(rs!=null) {
 				while(rs.next()) {
 					Local l=new Local();
@@ -48,7 +49,7 @@ public class LocalData {
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select local_id,name,address,coordenates from locals where local_id=?"
+					"select local_id,name,address,coordenates, is_enable from locals where local_id=?"
 					);
 			stmt.setInt(1, id);
 			rs=stmt.executeQuery();
@@ -82,7 +83,7 @@ public class LocalData {
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select local_id,name,address,coordenates from locals where address=?"
+					"select local_id,name,address,coordenates, is_enable from locals where address=?"
 					);
 			stmt.setString(1, address);
 			rs=stmt.executeQuery();
@@ -171,12 +172,14 @@ public class LocalData {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"UPDATE locals SET name = ?, address = ?, coordenates = ? WHERE local_id = ?",
+							"UPDATE locals SET name = ?, address = ?, coordenates = ?, is_enable = ? WHERE local_id = ?",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 			stmt.setString(1, local.getName());
 			stmt.setString(2, local.getAddress());
 			stmt.setString(3, local.getCoordenates());
+			stmt.setBoolean(4, local.getIsEnable());
+			stmt.setInt(5, local.getLocalId());
 			
             return stmt.executeUpdate() > 0;
             

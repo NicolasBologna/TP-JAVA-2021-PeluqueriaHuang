@@ -43,6 +43,8 @@ public class LocalAdmin {
 		return !ld.getAll().isEmpty();
 	}
 	
+	
+	
 	public static boolean switchLocalStatus(int id){
 		LocalData ld = new LocalData();
 		Local local =  ld.getById(id);
