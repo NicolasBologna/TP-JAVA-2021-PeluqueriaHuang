@@ -63,6 +63,11 @@
 							<p>Sucursales</p>
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
+						href="PublicationListServlet"> <i
+							class="now-ui-icons users_single-02"></i>
+							<p>Publicaciones</p>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
 						href="ServiceListServlet"> <i
 							class="now-ui-icons users_single-02"></i>
 							<p>Servicios</p>
