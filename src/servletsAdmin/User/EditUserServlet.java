@@ -39,7 +39,7 @@ public class EditUserServlet extends HttpServlet {
 		int idUser = Integer.parseInt(id);
 			
 		request.setAttribute("user", Admin.getUserById(idUser));
-		
+		request.setAttribute("rolesList", Admin.getAllRoles());
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/User/EditUser.jsp");
         dispatcher.forward(request, response);
 

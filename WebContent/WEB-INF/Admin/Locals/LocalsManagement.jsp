@@ -53,14 +53,15 @@
                    				<td><%=local.getCoordenates()%></td>
                    				<td><%=local.getAddress()%></td>
                    				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" 
-                   						onclick="window.location.href='EditLocalServlet?idPersona='+<%=local.getLocalId()%>;">Editar</button>
+                   						onclick="window.location.href='EditLocalServlet?id='+<%=local.getLocalId()%>;">Editar</button>
                    				</td>
                    				
-                   				<td><button type="button" class="btn <%=local.getIsEnable()?"btn-danger":"btn-success"%> btn-round btn-sm my-0" 
+                   					<td><button type="button" class="btn <%=local.getIsEnable()?"btn-danger":"btn-success"%> btn-round btn-sm my-0" 
                    						onclick="window.location.href='DeleteLocalServlet?id=<%=local.getLocalId()%>';"><%=local.getIsEnable()?"Borrar":"Recuperar"%></button>
-                   				</td>                   						
+                   				</td>                                     						
                    			</tr>
                    		<% } %>
+                   		<td><button type="button" class="btn btn-danger btn-round btn-sm my-0" onclick="window.location.href='Index.jsp'">Volver</button></td> 
                    		<tr class="text-center"> 
                    			<td colspan=9> <button type="button" class="btn btn-success btn-round" onclick="window.location.href='CreateLocalServlet';">Agregar peluquería</button></td>
                    		</tr>

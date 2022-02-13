@@ -1,8 +1,7 @@
+<%@page import="java.util.LinkedList"%>
+<%@page import="entities.Service"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.LinkedList"%>
-<%@page import="entities.Role"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,7 +10,7 @@
 	href="./assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="./assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>Alta de Usuario</title>
+<title>Editar Servicio</title>
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 	name='viewport' />
@@ -28,8 +27,8 @@
 <link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
 
 <%
-
-	LinkedList<Role> rolesList = (LinkedList<Role>)request.getAttribute("roleList");
+	Service s = (Service)request.getAttribute("service");
+	
 %>
 
 <style type="text/css">
@@ -47,63 +46,30 @@
 <body class="bg-dark text-light">
 	<main>
 	<div class="container">
-		<h1 class="text-center pt-2">Crear Usuario</h1>
-		<form action="CreateUserServlet" method="post" class="shadow p-5">
-			<div class="form-group mb-4">
-				<label for="email">Email</label> <input type="email" name="email"
-					id="email" class="form-control" placeholder="email@ejemplo.com"
-					required>
+		<h1 class="text-center pt-2">Editar Servicio</h1>
+		<form action="EditServiceServlet" method="post" class="shadow p-5">
+		<div class="form-group mb-4 d-none">
+				<label for="id">ID</label> <input type="text" readonly = " " name="id"
+					id="id" class="form-control"  value="<%= s.getServiceId()%>">
 			</div>
 			<div class="form-group mb-4">
-				<label for="password">Contraseña</label> <input type="password"
-					name="password" id="password" minlength="8" class="form-control"
-					placeholder="Ingrese su contraseña" required>
+				<label for="name">Nombre</label> <input type="text" name="name"
+					id="name" class="form-control"  value="<%= s.getName()%>">
 			</div>
 			<div class="form-group mb-4">
-				<label for="first_name">Nombre</label> <input type="text"
-					name="first_name" id="first_name" class="form-control"
-					placeholder="Ingrese su nombre" required>
+				<label for="description">Descripcion</label> <input type="text"
+					name="description" id="description" class="form-control"
+					placeholder="Ingrese descripcion"  value="<%= s.getDescription()%>">
 			</div>
 			<div class="form-group mb-4">
-				<label for="last_name">Apellido</label> <input type="text"
-					name="last_name" id="last_name" class="form-control"
-					placeholder="Ingrese su apellido" required>
+				<label for="price">Precio</label> <input type="text"
+					name="price" id="price" class="form-control" value="<%= s.getPrice()%>">
 			</div>
 			<div class="form-group mb-4">
-				<label for="dni">Documento Nacional de Identidad</label> <input
-					type="text" name="dni" id="dni" class="form-control"
-					placeholder="(Opcional)Ingrese su dni">
+				<label for="duration">Duracion</label> <input
+					type="text" name="duration" id="duration" class="form-control" value="<%= s.getDuration()%>">
 			</div>
-			<div class="form-group mb-4">
-				<label for="phone">Teléfono</label> <input type="text" name="phone"
-					id="phone" class="form-control" placeholder="Ingrese su teléfono"
-					required>
-			</div>
-			
-			<div class="form-group mb-4">
-				<label for="isEnable">Usuario Habilitado</label> <br>
-				<input type="checkbox" checked name="isEnable" class="bootstrap-switch"
-				    data-on-label="SI"
-				    data-off-label="NO"
-				/>
-			</div>
-			
-			<label>Roles</label>
-			<div class="mb-4">
-	     		<%
-	       			for (Role role : rolesList) {
-	       		%>
-	       		
-				<div class="form-check form-check-inline ">
-				  <label class="form-check-label">
-				    <input class="form-check-input" type="checkbox" name="roles" value="<%=role.getId()%>"><%=role.getRole()%>
-				    <span class="form-check-sign">
-				        <span class="check "></span>
-				    </span>
-				  </label>
-				</div>
-	       		<% } %>
-       		</div>
+	
        		
        		<span class="text-danger">
 			  ${errorMessage}
@@ -112,10 +78,9 @@
 			<span class="text-success">
 			  ${successMessage}
 			</span>
-			
 			<button name="register" id="register" class="btn btn-block btn-primary"
 				type="submit">
-				<span>Agregar Usuario</span>
+				<span>Finalizar</span>
 			</button>
 		</form>
 	</div>
