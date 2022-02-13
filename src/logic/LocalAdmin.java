@@ -3,9 +3,7 @@ package logic;
 import java.util.LinkedList;
 
 import data.LocalData;
-import data.UserData;
 import entities.Local;
-import entities.User;
 
 public class LocalAdmin {
 	
