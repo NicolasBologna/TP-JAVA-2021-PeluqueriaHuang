@@ -95,11 +95,70 @@
 			<div class="container">
 				<div class="content-center brand">
 					<img class="img-fluid" src="./assets/img/now-logo.svg" alt="" style="max-width: 200px;">
-					<h1 class="h1-seo">Salï¿½n Legends</h1>
+					<h1 class="h1-seo">Salón Legends</h1>
 					<h3>Siempre el mejor servicio</h3>
 				</div>
 			</div>
 		</div>
+		<div class="row d-flex justify-content-around">
+			<div class="card my-3 col-5 px-0 rounded">
+		  <div class="row no-gutters">
+		    <div class="col-4">
+		      <img class="img-fluid" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.salonsuccessacademy.com%2Fwp-content%2Fuploads%2F2015%2F01%2FFotolia_64007532_Subscription_Monthly_M.jpg&f=1&nofb=1" alt="...">
+		    </div>
+		    <div class="col-8">
+		      <div class="card-body">
+		        <h5 class="card-title">Card title</h5>
+		        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<div class="card my-3 col-5 px-0">
+		  <div class="row no-gutters">
+		    <div class="col-4">
+		      <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.salonsuccessacademy.com%2Fwp-content%2Fuploads%2F2015%2F01%2FFotolia_64007532_Subscription_Monthly_M.jpg&f=1&nofb=1" alt="...">
+		    </div>
+		    <div class="col-8">
+		      <div class="card-body">
+		        <h5 class="card-title">Card title</h5>
+		        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<div class="card my-3 col-5 px-0">
+		  <div class="row no-gutters">
+		    <div class="col-4">
+		      <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.salonsuccessacademy.com%2Fwp-content%2Fuploads%2F2015%2F01%2FFotolia_64007532_Subscription_Monthly_M.jpg&f=1&nofb=1" alt="...">
+		    </div>
+		    <div class="col-8">
+		      <div class="card-body">
+		        <h5 class="card-title">Card title</h5>
+		        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<div class="card my-3 col-5 px-0">
+		  <div class="row no-gutters">
+		    <div class="col-4">
+		      <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.salonsuccessacademy.com%2Fwp-content%2Fuploads%2F2015%2F01%2FFotolia_64007532_Subscription_Monthly_M.jpg&f=1&nofb=1" alt="...">
+		    </div>
+		    <div class="col-8">
+		      <div class="card-body">
+		        <h5 class="card-title">Card title</h5>
+		        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		</div>
+		
 		<!--  End Modal -->
 		<footer class="footer" data-background-color="black">
 			<div class=" container ">
