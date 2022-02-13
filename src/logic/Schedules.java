@@ -2,9 +2,7 @@ package logic;
 
 import java.util.LinkedList;
 
-import data.LocalData;
 import data.ScheduleData;
-import entities.Local;
 import entities.Schedule;
 
 public class Schedules {

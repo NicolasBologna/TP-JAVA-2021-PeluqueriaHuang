@@ -10,10 +10,13 @@ import java.time.LocalTime;
 
 import entities.Local;
 import entities.Schedule;
+import entities.User;
 import utils.Days;
 
 public class ScheduleData {
 	public LinkedList<Schedule> getAllByBarber(int barberId){
+		UserData ud = new UserData();
+		LocalData ld = new LocalData();
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		LinkedList<Schedule> schedules= new LinkedList<Schedule>();		
@@ -27,8 +30,10 @@ public class ScheduleData {
 				while(rs.next()) {
 					Schedule r=new Schedule();
 					r.setId(rs.getInt("id"));
-					r.setBarber_id(rs.getInt("barber_id"));
-					r.setLocal_id(rs.getInt("local_id"));
+					User user = ud.getById(rs.getInt("barber_id"));
+					Local local = ld.getById(rs.getInt("local_id"));
+					r.setBarber(user);
+					r.setLocal(local);
 					r.setDay_of_week(Days.valueOf(rs.getString("day_of_week")));
 					r.setStart_time(rs.getObject("start_time", LocalTime.class));
 					r.setEnd_time(rs.getObject("end_time", LocalTime.class));
@@ -62,8 +67,8 @@ public class ScheduleData {
 							"insert into barber_local(barber_id, local_id, day_of_week, start_time, end_time) values(?,?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
-			stmt.setInt(1, newSchedule.getBarber_id());
-			stmt.setInt(2, newSchedule.getLocal_id());
+			stmt.setInt(1, newSchedule.getBarber().getUserId());
+			stmt.setInt(2, newSchedule.getLocal().getLocalId());
 			stmt.setString(3, newSchedule.getDay_of_week_As_string());
 			stmt.setTime(4, Time.valueOf(newSchedule.getStart_time()));
 			stmt.setTime(5, Time.valueOf(newSchedule.getEnd_time()));

@@ -1,6 +1,8 @@
 package servletsBarber.Schedule;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,9 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entities.User;
-import entities.Role;
+import entities.Schedule;
 import logic.Schedules;
-import logic.Roles;
 
 /**
  * Servlet implementation class ListSchedules
@@ -26,7 +27,6 @@ public class ListSchedules extends HttpServlet {
      */
     public ListSchedules() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -34,16 +34,18 @@ public class ListSchedules extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = (User)request.getSession().getAttribute("user");
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/User/Signin.jsp");
-		Role adminRole = Roles.getRoleByName("Admin");
-		if (user != null && user.hasRol(adminRole)) {
-			request.setAttribute("schedulesList", Schedules.getAllByBarber(user.getUserId()));
-
-			dispatcher = (Schedules.areSchedulesLoaded(user.getUserId())) ? 
-					request.getRequestDispatcher("WEB-INF/Barber/Schedules/SchedulesList.jsp") : request.getRequestDispatcher("/CreateScheduleServlet");
-		}	
 	
+		RequestDispatcher dispatcher;
+		if (user != null) {
+			LinkedList<Schedule> barberSchedules = Schedules.getAllByBarber(user.getUserId());
+			Collections.sort(barberSchedules);
+			request.setAttribute("schedulesList",barberSchedules);
+			dispatcher = (Schedules.areSchedulesLoaded(user.getUserId())) ? 
+					request.getRequestDispatcher("WEB-INF/Barber/Schedules/SchedulesList.jsp") : request.getRequestDispatcher("/CreateScheduleServlet");	
+		}else {
+			dispatcher	= request.getRequestDispatcher("WEB-INF/User/Signin.jsp");
+		}
+			
 		dispatcher.forward(request, response);
 	}
 

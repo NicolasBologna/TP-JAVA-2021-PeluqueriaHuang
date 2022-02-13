@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import data.LocalData;
 import entities.Role;
 import entities.Schedule;
 import entities.User;
@@ -53,25 +54,25 @@ public class CreateScheduleServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Schedule newSchedule = new Schedule();
 		User user = (User)request.getSession().getAttribute("user");
-		int barberId = user.getUserId();
 		String localId = request.getParameter("local");
 		String dayOfWeek = request.getParameter("day_of_week");
 		String startTime = request.getParameter("start_time");
 		String endTime = request.getParameter("end_time");
 		
-		newSchedule.setLocal_id(Integer.parseInt(localId));
+		newSchedule.setLocal(LocalAdmin.getById(Integer.parseInt(localId)));
 		newSchedule.setDay_of_week(Days.valueOf(dayOfWeek));
-		newSchedule.setBarber_id(barberId);
+		newSchedule.setBarber(user);
 		newSchedule.setStart_time(LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:MM")));
 		newSchedule.setEnd_time(LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:MM")));
 		
 		try {
-			String destPage = "WEB-INF/Barber/Schedules/CreateSchedules.jsp";
+			String destPage = "WEB-INF/Barber/Schedules/CreateSchedule.jsp";
         	if (!Schedules.isTimeAvailable()){
-        		String message = "El Email ya estï¿½ en uso";
+        		String message = "El horario no está disponible para este peluquero.";
                 request.setAttribute("errorMessage", message);
         	}else {
             	int idNewUser = Schedules.add(newSchedule);
+            	request.setAttribute("localsList", LocalAdmin.getAll());
             	if (idNewUser != -1) {
             		String message = "El horario se agregó correctamente";
             		request.setAttribute("successMessage", message);
