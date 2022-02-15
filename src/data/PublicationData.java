@@ -14,7 +14,7 @@ public class PublicationData {
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select publication_id,barber_id,text,image,is_enable from publications");
+			rs= stmt.executeQuery("select publication_id,barber_id,text,image from publications");
 			if(rs!=null) {
 				while(rs.next()) {
 					Publication p=new Publication();
@@ -22,7 +22,7 @@ public class PublicationData {
 					p.setBarberId(rs.getInt("barber_id"));
 					p.setText(rs.getString("text"));
 					p.setImage(rs.getString("image"));
-					p.setEnable(rs.getBoolean("is_enable"));
+					
 					publications.add(p);
 				}
 			}

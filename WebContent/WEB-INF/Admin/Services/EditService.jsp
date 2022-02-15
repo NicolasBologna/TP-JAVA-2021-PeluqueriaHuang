@@ -66,8 +66,10 @@
 					name="price" id="price" class="form-control" value="<%= s.getPrice()%>">
 			</div>
 			<div class="form-group mb-4">
+			
+					
 				<label for="duration">Duracion</label> <input
-					type="text" name="duration" id="duration" class="form-control" value="<%= s.getDuration()%>">
+					type="time" name="duration" id="duration" class="form-control" value="<%= s.getDuration()%>" step = "2">
 			</div>
 	
        		

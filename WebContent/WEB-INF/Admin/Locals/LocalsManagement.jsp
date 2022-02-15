@@ -39,6 +39,7 @@
                    		    	<th>Nombre</th>
                        			<th>Coordenadas</th>
                        			<th>Dirección</th>
+                 				<th></th>
                        			<th></th>
                        			<th></th>
                    			</tr>
@@ -53,6 +54,9 @@
                    				<td><%=local.getCoordenates()%></td>
                    				<td><%=local.getAddress()%></td>
                    				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" 
+                   						onclick="window.location.href='BarbersByLocalListServlet?id='+<%=local.getLocalId()%>;">Peluqueros</button></td>
+                   				
+                   				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" 
                    						onclick="window.location.href='EditLocalServlet?id='+<%=local.getLocalId()%>;">Editar</button>
                    				</td>
                    				
@@ -61,8 +65,9 @@
                    				</td>                                     						
                    			</tr>
                    		<% } %>
-                   		<td><button type="button" class="btn btn-danger btn-round btn-sm my-0" onclick="window.location.href='Index.jsp'">Volver</button></td> 
-                   		<tr class="text-center"> 
+                   		
+                   		<tr class="text-center">
+                   			<td ><button type="button" class="btn btn-primary btn-round" onclick="window.location.href='index'">Inicio</button></td>  
                    			<td colspan=9> <button type="button" class="btn btn-success btn-round" onclick="window.location.href='CreateLocalServlet';">Agregar peluquería</button></td>
                    		</tr>
                    		</tbody>
