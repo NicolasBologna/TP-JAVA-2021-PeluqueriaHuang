@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entities.Publication;
+import entities.User;
 import logic.PublicationBarber;
 
 /**
@@ -37,7 +38,7 @@ public class EditPublicationServlet extends HttpServlet {
 		
 		request.setAttribute("publication", PublicationBarber.getById(idPublication));
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/Publication/EditPublication.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Barber/Publications/EditPublication.jsp");
 		
 		dispatcher.forward(request, response);
 	}
@@ -51,22 +52,29 @@ public class EditPublicationServlet extends HttpServlet {
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		String text = request.getParameter("text");
-	
+		String title = request.getParameter("title");
+		System.out.println(id);
 		p.setPublicationId(id);
+		p.setTitle(title);
 		p.setText(text);
 		
 		try {
-			String destPage = "WEB-INF/Admin/Publications/PublicationsManagement.jsp";
+			String destPage = "WEB-INF/Barber/Publications/PublicationsManagement.jsp";
 			
 			Boolean serviceUpdate = PublicationBarber.update(p);
-		       
-			request.setAttribute("publicationList", PublicationBarber.getAll());
+			
+			User user = (User)request.getSession().getAttribute("user");   
+			
+			request.setAttribute("publicationsList", PublicationBarber.getByBarberId(user.getUserId()));			
+			
         	if (serviceUpdate== false) {
         		
-        		String message = "Hubo un error en la actualizacion.";
-                request.setAttribute("errorMessage", message);
+                request.setAttribute("errorMessage", "Hubo un error en la actualizacion.");
         	}
-       
+        	else 
+        	{
+        		request.setAttribute("successMessage", "La publicación se actualizó correctamente.");
+        	}
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
             dispatcher.forward(request, response);
             

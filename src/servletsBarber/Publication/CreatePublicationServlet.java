@@ -34,7 +34,7 @@ public class CreatePublicationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Admin/Publications/CreatePublication.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Barber/Publications/CreatePublication.jsp");
         dispatcher.forward(request, response);
 	}
 
@@ -45,16 +45,18 @@ public class CreatePublicationServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		Publication newPublication = new Publication();
 		User user = (User)request.getSession().getAttribute("user");
+		String title = request.getParameter("title");
 		String text = request.getParameter("text");
 		String image = request.getParameter("image");
 		
 		newPublication.setBarberId(user.getUserId());
+		newPublication.setTitle(title);
 		newPublication.setText(text);
 		newPublication.setImage(image);
 		
 		
 		try {
-			String destPage = "WEB-INF/Admin/Publications/CreatePublication.jsp";
+			String destPage = "WEB-INF/Barber/Publications/CreatePublication.jsp";
 			
 			int idNewPublication = PublicationBarber.add(newPublication);
 			if(idNewPublication != -1) {

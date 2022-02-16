@@ -36,8 +36,8 @@ public class PublicationListServlet extends HttpServlet {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/User/Signin.jsp");
 		if (user != null) {
-			request.setAttribute("publicationsList", PublicationBarber.getAll());
-			dispatcher = (PublicationBarber.arePublicationsLoaded()) ? request.getRequestDispatcher("WEB-INF/Admin/Publications/PublicationsManagement.jsp") : request.getRequestDispatcher("WEB-INF/Admin/Publications/CreatePublication.jsp");
+			request.setAttribute("publicationsList", PublicationBarber.getByBarberId(user.getUserId()));
+			dispatcher = (PublicationBarber.arePublicationsLoaded()) ? request.getRequestDispatcher("WEB-INF/Barber/Publications/PublicationsManagement.jsp") : request.getRequestDispatcher("WEB-INF/Barber/Publications/CreatePublication.jsp");
 		}	
 	
 		dispatcher.forward(request, response);
