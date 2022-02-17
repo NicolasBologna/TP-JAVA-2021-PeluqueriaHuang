@@ -68,8 +68,8 @@
 			</span>
 			
 			<button name="register" id="register" class="btn btn-block btn-primary"
-				type="submit">
-				<span>Agregar</span>
+				type="submit" >
+				<span >Agregar</span>
 			</button>
 		</form>
 	</div>

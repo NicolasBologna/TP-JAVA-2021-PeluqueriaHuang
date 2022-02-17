@@ -63,7 +63,8 @@
                    			</tr>
                    		<% } %>
                  		<tr class="text-center"> 
-                 		 	<td><button type="button" class="btn btn-danger btn-round btn-sm my-0" onclick="window.location.href='Index.jsp'">Volver</button></td> 
+                 		<td ><button type="button" class="btn btn-primary btn-round" onclick="window.location.href='index'">Volver</button></td>  
+                 		 
                    			<td colspan=9> <a type="button" class="btn btn-success btn-round" href="CreatePublicationServlet">Agregar publicación</a></td>
                    		</tr>
                    		</tbody>
