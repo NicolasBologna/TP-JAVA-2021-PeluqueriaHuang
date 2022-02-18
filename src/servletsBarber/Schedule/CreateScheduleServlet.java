@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -66,20 +67,23 @@ public class CreateScheduleServlet extends HttpServlet {
 		newSchedule.setEnd_time(LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:MM")));
 		
 		try {
-			String destPage = "WEB-INF/Barber/Schedules/CreateSchedule.jsp";
+			String destPage = "WEB-INF/Barber/Schedules/SchedulesList.jsp";
         	if (!Schedules.isTimeAvailable()){
         		String message = "El horario no está disponible para este peluquero.";
                 request.setAttribute("errorMessage", message);
         	}else {
-            	int idNewUser = Schedules.add(newSchedule);
+            	int idNewSchedule = Schedules.add(newSchedule);
             	request.setAttribute("localsList", LocalAdmin.getAll());
-            	if (idNewUser != -1) {
+            	if (idNewSchedule != -1) {
             		String message = "El horario se agregó correctamente";
             		request.setAttribute("successMessage", message);
             	} else {
-            		String message = "Hubo un error en el registro.";
+            		String message = "Hubo un error en el registro del horario.";
                     request.setAttribute("errorMessage", message);
             	}
+    			LinkedList<Schedule> barberSchedules = Schedules.getAllByBarber(user.getUserId());
+    			Collections.sort(barberSchedules);
+    			request.setAttribute("schedulesList",barberSchedules);
         	}
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
             dispatcher.forward(request, response);
