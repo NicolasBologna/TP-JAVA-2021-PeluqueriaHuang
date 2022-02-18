@@ -60,9 +60,11 @@
 					placeholder="Ingrese el precio">
 			</div>
        		<div class="form-group mb-4">
+       		
+					
 				<label for="duration">Duracion</label> <input
-					type="text" name="duration" id="duration" class="form-control"
-					placeholder="Ingrese la duracion">
+					type="time" name="duration" id="duration" 
+					class ="form-control" step = "2">
 			</div>
        		<span class="text-danger">
 			  ${errorMessage}

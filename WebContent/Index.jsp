@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="entities.User"%>
-
+<%@page import="entities.Publication"%>
+<%@page import="java.util.LinkedList"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,7 @@
 		href="./assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" href="./assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>SALï¿½N LEGEND</title>
+	<title>SALÓN LEGEND</title>
 	<meta
 		content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 		name='viewport' />
@@ -27,9 +28,12 @@
 	<!-- CSS Files -->
 	<link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
+	
 	<%
 		User user = (User) session.getAttribute("user");
+		LinkedList<Publication> lp = (LinkedList<Publication>)request.getAttribute("publicationList");
 	%>
+	
 </head>
 
 <body class="index-page sidebar-collapse">
@@ -63,6 +67,11 @@
 							<p>Sucursales</p>
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
+						href="PublicationListServlet"> <i
+							class="now-ui-icons users_single-02"></i>
+							<p>Publicaciones</p>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
 						href="ServiceListServlet"> <i
 							class="now-ui-icons users_single-02"></i>
 							<p>Servicios</p>
@@ -90,11 +99,31 @@
 			<div class="container">
 				<div class="content-center brand">
 					<img class="img-fluid" src="./assets/img/now-logo.svg" alt="" style="max-width: 200px;">
-					<h1 class="h1-seo">Salï¿½n Legends</h1>
+					<h1 class="h1-seo">Salón Legends</h1>
 					<h3>Siempre el mejor servicio</h3>
 				</div>
 			</div>
 		</div>
+		<div class="row d-flex justify-content-around">
+		<%for(Publication p: lp){ %>
+			<div class="card my-3 col-5 px-0 rounded">
+		  <div class="row no-gutters">
+		    <div class="col-4">
+		      <img class="img-fluid" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.salonsuccessacademy.com%2Fwp-content%2Fuploads%2F2015%2F01%2FFotolia_64007532_Subscription_Monthly_M.jpg&f=1&nofb=1" alt="...">
+		    </div>
+		    <div class="col-8">
+		      <div class="card-body">
+		        <h5 class="card-title">Publicacion <%= p.getPublicationId() %></h5>
+		        <p class="card-text"><%= p.getText() %>.</p>
+		        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<%} %>
+		</div>
+		 
 		<!--  End Modal -->
 		<footer class="footer" data-background-color="black">
 			<div class=" container ">

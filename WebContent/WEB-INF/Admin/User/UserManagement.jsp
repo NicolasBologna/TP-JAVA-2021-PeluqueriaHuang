@@ -76,6 +76,7 @@
                    			</tr>
                    		<% } %>
                    		<tr class="text-center"> 
+                   		<td ><button type="button" class="btn btn-primary btn-round" onclick="window.location.href='index'">Inicio</button></td> 
                    			<td colspan=9> <button type="button" class="btn btn-success btn-round" onclick="window.location.href='CreateUserServlet';">Agregar usuario</button></td>
                    		</tr>
                    		</tbody>

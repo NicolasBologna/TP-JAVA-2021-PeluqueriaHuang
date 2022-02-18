@@ -110,6 +110,48 @@ public class LocalData {
 		return l;
 	}
 	
+	public LinkedList<User> getBarbers(int idLocal){
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		LinkedList<User> barbers= new LinkedList<>();
+		
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement("select barber_id,first_name,last_name,phone,email "
+					+ "from barber_local bl "
+					+ "inner join users u on bl.barber_id = u.user_id "
+					+ "inner join role_user ru on bl.barber_id = ru.user_id "
+					+ "where local_id = ? and role_id = 1");
+			
+			stmt.setInt(1, idLocal);
+			
+			rs = stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+					User user = new User();
+					user.setUserId(rs.getInt("barber_id"));
+					user.setFirstName(rs.getString("first_name"));
+					user.setLastName(rs.getString("last_name"));
+					user.setPhone(rs.getString("phone"));
+					user.setEmail(rs.getString("email"));
+					barbers.add(user);
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+		return barbers;
+	}
+	
 	public int add(Local local) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
@@ -223,6 +265,7 @@ public class LocalData {
 		//if error return false
 		return false;	
 	}
+	
 	
 	
 	

@@ -3,7 +3,6 @@ package logic;
 import java.util.LinkedList;
 
 import data.LocalData;
-import data.UserData;
 import entities.Local;
 import entities.User;
 
@@ -52,4 +51,9 @@ public class LocalAdmin {
 		Local local =  ld.getById(id);
 		return ld.switchLocalStatus((byte)(local.getIsEnable()?0:1), local.getLocalId());
 	}
-}
+	
+	public static LinkedList<User> getBarbersByLocal(int id){
+		LocalData ld = new LocalData();
+		return ld.getBarbers(id);
+	
+}}
