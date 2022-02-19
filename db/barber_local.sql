@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generaci√≥n: 29-01-2022 a las 17:57:59
--- Versi√≥n del servidor: 10.4.22-MariaDB
--- Versi√≥n de PHP: 8.0.13
+-- Tiempo de generaciÛn: 19-02-2022 a las 20:21:35
+-- VersiÛn del servidor: 10.4.22-MariaDB
+-- VersiÛn de PHP: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,22 +28,33 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `barber_local` (
+  `id` int(11) NOT NULL,
   `barber_id` int(11) NOT NULL,
   `local_id` int(11) NOT NULL,
-  `day_of_week` int(11) NOT NULL,
+  `day_of_week` varchar(15) NOT NULL,
   `start_time` time NOT NULL,
   `end_time` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- √çndices para tablas volcadas
+-- Õndices para tablas volcadas
 --
 
 --
 -- Indices de la tabla `barber_local`
 --
 ALTER TABLE `barber_local`
-  ADD PRIMARY KEY (`barber_id`,`local_id`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `barber_local`
+--
+ALTER TABLE `barber_local`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -52,13 +52,14 @@
                    				<td><%=schedule.getEnd_time()%> hs</td>
                    				<td><%=schedule.getLocal().getName()%></td>
          
-                   				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" 
-                   						onclick="window.location.href='EditUserServlet?idPersona='+<%=schedule.getId()%>;">Editar</button>
+                   				<td><a type="button" class="btn btn-primary btn-round btn-sm my-0" 
+                   						href="EditScheduleServlet?idSchedule=<%=schedule.getId()%>">Editar</a>
                    				</td>               						
                    			</tr>
                    		<% } %>
-                   		<tr class="text-center"> 
-                   			<td colspan=9> <a type="button" class="btn btn-success btn-round" href="CreateScheduleServlet">Agregar Horario</button></td>
+                   		<tr class="text-center">
+							<td ><a type="button" class="btn btn-primary btn-round" href='index'>Inicio</a></td>
+                   			<td colspan=9> <a type="button" class="btn btn-success btn-round" href="CreateScheduleServlet">Agregar Horario</a></td>
                    		</tr>
                    		</tbody>
                   		</table>

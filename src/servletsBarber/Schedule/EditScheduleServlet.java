@@ -1,11 +1,9 @@
 package servletsBarber.Schedule;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
@@ -15,27 +13,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import data.LocalData;
-import entities.Role;
+import data.ScheduleData;
 import entities.Schedule;
 import entities.User;
-import logic.Admin;
 import logic.LocalAdmin;
+import logic.PublicationBarber;
 import logic.Schedules;
-import logic.SignUp;
 import utils.Days;
 
 /**
- * Servlet implementation class CreateSchedule
+ * Servlet implementation class EditScheduleServlet
  */
-@WebServlet("/CreateScheduleServlet")
-public class CreateScheduleServlet extends HttpServlet {
+@WebServlet("/EditScheduleServlet")
+public class EditScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateScheduleServlet() {
+    public EditScheduleServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,27 +40,33 @@ public class CreateScheduleServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String id = request.getParameter("idSchedule");
+		int idSchedule = Integer.parseInt(id);
+		
+		request.setAttribute("schedule", Schedules.getById(idSchedule));
 		request.setAttribute("localsList", LocalAdmin.getAll());
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Barber/Schedules/CreateSchedule.jsp");
-        dispatcher.forward(request, response);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/Barber/Schedules/EditSchedule.jsp");
+		
+		dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Schedule newSchedule = new Schedule();
-		User user = (User)request.getSession().getAttribute("user");
+		int scheduleId = Integer.parseInt(request.getParameter("schedule_id"));
+		Schedule editedSchedule = Schedules.getById(scheduleId);
+
 		String localId = request.getParameter("local");
 		String dayOfWeek = request.getParameter("day_of_week");
 		String startTime = request.getParameter("start_time");
 		String endTime = request.getParameter("end_time");
 		
-		newSchedule.setLocal(LocalAdmin.getById(Integer.parseInt(localId)));
-		newSchedule.setDay_of_week(Days.valueOf(dayOfWeek));
-		newSchedule.setBarber(user);
-		newSchedule.setStart_time(LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm")));
-		newSchedule.setEnd_time(LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm")));
+		editedSchedule.setLocal(LocalAdmin.getById(Integer.parseInt(localId)));
+		editedSchedule.setDay_of_week(Days.valueOf(dayOfWeek));
+		editedSchedule.setStart_time(LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm")));
+		editedSchedule.setEnd_time(LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm")));
 		
 		try {
 			String destPage = "WEB-INF/Barber/Schedules/SchedulesList.jsp";
@@ -72,15 +74,16 @@ public class CreateScheduleServlet extends HttpServlet {
         		String message = "El horario no está disponible para este peluquero.";
                 request.setAttribute("errorMessage", message);
         	}else {
-            	int idNewSchedule = Schedules.add(newSchedule);
+            	boolean isUpdateSuccesful = Schedules.update(editedSchedule);
             	request.setAttribute("localsList", LocalAdmin.getAll());
-            	if (idNewSchedule != -1) {
-            		String message = "El horario se agregó correctamente";
+            	if (isUpdateSuccesful) {
+            		String message = "El horario se modificó correctamente";
             		request.setAttribute("successMessage", message);
             	} else {
-            		String message = "Hubo un error en el registro del horario.";
+            		String message = "Hubo un error en la actualización del horario.";
                     request.setAttribute("errorMessage", message);
             	}
+        		User user = (User)request.getSession().getAttribute("user");
     			LinkedList<Schedule> barberSchedules = Schedules.getAllByBarber(user.getUserId());
     			Collections.sort(barberSchedules);
     			request.setAttribute("schedulesList",barberSchedules);
