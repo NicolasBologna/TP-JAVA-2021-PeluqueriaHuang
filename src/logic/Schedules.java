@@ -29,4 +29,9 @@ public class Schedules {
 		ScheduleData sd = new ScheduleData();
 		return sd.getById(id);
 	}
+	
+	public static boolean update(Schedule editedSchedule){
+		ScheduleData sData = new ScheduleData();
+		return sData.update(editedSchedule);
+	}
 }

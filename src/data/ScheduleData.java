@@ -99,7 +99,7 @@ public class ScheduleData {
 	public Schedule getById(int id) {
 		UserData ud = new UserData();
 		LocalData ld = new LocalData();
-		Schedule s=null;
+		Schedule s = null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
@@ -109,7 +109,8 @@ public class ScheduleData {
 			stmt.setInt(1, id);
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()) {
-				s=new Schedule();
+				s= new Schedule();
+				s.setId(id);
 				User user = ud.getById(rs.getInt("barber_id"));
 				Local local = ld.getById(rs.getInt("local_id"));
 				s.setBarber(user);
@@ -129,7 +130,38 @@ public class ScheduleData {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(s);
 		return s;
 	}
+	
+	public boolean update(Schedule schedule) {
+		PreparedStatement stmt= null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"UPDATE barber_local SET barber_id = ?, local_id = ?, day_of_week = ?, start_time = ?, end_time = ? WHERE id = ?"
+							);
+			stmt.setInt(1, schedule.getBarber().getUserId());
+			stmt.setInt(2, schedule.getLocal().getLocalId());
+			stmt.setString(3, schedule.getDay_of_week_As_string());
+			stmt.setTime(4, Time.valueOf(schedule.getStart_time()));
+			stmt.setTime(5, Time.valueOf(schedule.getEnd_time()));
+			stmt.setInt(6, schedule.getId());
+			
+			return stmt.executeUpdate() > 0;
+			
+            
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }            
+		}
+		//if error return false
+		return false;
+    }
+	
 }

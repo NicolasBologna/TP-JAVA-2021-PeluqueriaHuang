@@ -63,8 +63,8 @@ public class CreateScheduleServlet extends HttpServlet {
 		newSchedule.setLocal(LocalAdmin.getById(Integer.parseInt(localId)));
 		newSchedule.setDay_of_week(Days.valueOf(dayOfWeek));
 		newSchedule.setBarber(user);
-		newSchedule.setStart_time(LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:MM")));
-		newSchedule.setEnd_time(LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:MM")));
+		newSchedule.setStart_time(LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm")));
+		newSchedule.setEnd_time(LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm")));
 		
 		try {
 			String destPage = "WEB-INF/Barber/Schedules/SchedulesList.jsp";

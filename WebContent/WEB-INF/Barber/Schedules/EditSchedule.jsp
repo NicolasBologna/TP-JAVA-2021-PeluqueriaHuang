@@ -49,7 +49,8 @@
 	<div class="container">
 		<h1 class="text-center pt-2">Editar Horario</h1>
 		<form action="EditScheduleServlet" method="post" class="shadow p-5">
-			<div class="form-group mb-4">
+			<input value="<%= s.getId() %>" name="schedule_id" class="d-none">	
+			<div class="form-group mb-4">				
 				<label for="local">Peluquería</label> 
 				<select name="local" class="browser-default custom-select">
   					<%
@@ -79,24 +80,16 @@
        		</div>
 			<div class="form-group mb-4">
 				<label for="start_time">Horario de inicio</label> <input type="time"
-					name="start_time" id="start_time" class="form-control" min="07:00" max="24:00" required value="<%=s.getStart_time()%>" step="1800">
+					name="start_time" id="start_time" class="form-control" min="07:00" max="23:45" required value="<%=s.getStart_time()%>" step="900">
 			</div>
 			<div class="form-group mb-4">
 				<label for="end_time">Horario de fin</label> <input type="time"
-					name="end_time" id="end_time" class="form-control" step="900" min="07:00" max="24:00" required value="<%=s.getEnd_time()%>">
+					name="end_time" id="end_time" class="form-control"  min="07:00" max="24:00" required value="<%=s.getEnd_time()%>" step="900">
 			</div>
-       		
-       		<span class="text-danger">
-			  ${errorMessage}
-			</span>
-			
-			<span class="text-success">
-			  ${successMessage}
-			</span>
 			
 			<button name="register" id="register" class="btn btn-block btn-primary"
 				type="submit">
-				<span>Agregar</span>
+				<span>Editar</span>
 			</button>
 		</form>
 	</div>
