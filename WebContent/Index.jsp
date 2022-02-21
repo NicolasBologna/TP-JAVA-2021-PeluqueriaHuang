@@ -115,7 +115,7 @@
 		      <div class="card-body">
 		        <h5 class="card-title">Publicacion <%= p.getPublicationId() %></h5>
 		        <p class="card-text"><%= p.getText() %>.</p>
-		        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+		        <p class="card-text"><small class="text-muted"><%= p.getDate() %></small></p>
 		      </div>
 		    </div>
 		  </div>
