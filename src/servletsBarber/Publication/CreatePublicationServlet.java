@@ -57,8 +57,8 @@ public class CreatePublicationServlet extends HttpServlet {
 		
 		try {
 			String destPage = "WEB-INF/Barber/Publications/PublicationsManagement.jsp";
-			request.setAttribute("publicationsList", PublicationBarber.getByBarberId(user.getUserId()));
 			int idNewPublication = PublicationBarber.add(newPublication);
+			request.setAttribute("publicationsList", PublicationBarber.getByBarberId(user.getUserId()));			
 			if(idNewPublication != -1) {
 				String message = "La publicación se agregó correctamente";
 				request.setAttribute("successMessage", message);
