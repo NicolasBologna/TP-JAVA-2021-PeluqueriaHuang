@@ -81,6 +81,11 @@
 							class="now-ui-icons shopping_shop"></i>
 							<p>Horarios</p>
 					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ServiceBarberListServlet"> <i 
+							class="now-ui-icons shopping_shop"></i>
+							<p>Mis servicios</p>
+					</a></li>
 					<li class="nav-item"><a class="nav-link" rel="tooltip"
 						title="Seguinos en Instagram" data-placement="bottom"
 						href="https://www.instagram.com/salonlegend_/"
