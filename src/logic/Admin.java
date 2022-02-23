@@ -26,8 +26,6 @@ public class Admin {
 		LinkedList<Role> roles= rd.getAll();
 		roles.removeIf(r -> !Arrays.asList(rolesToSearch).contains(Integer.toString(r.getId())));
 		return roles;
-		
-		
 	}
 		
 	public static boolean switchUserStatus(int id){
