@@ -24,6 +24,11 @@ public class Turns {
 		return td.getByBarberAndLocal(barberId, localId);
 	}
 	
+	public static LinkedList<Turn> getByBarberId(int barberId){
+		TurnData td = new TurnData();
+		return td.getBookedTurnsByBarberId(barberId);
+	}
+	
 	public static int add(Turn turn){
 		TurnData td = new TurnData();
 		return td.add(turn);

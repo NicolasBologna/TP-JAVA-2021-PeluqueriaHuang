@@ -86,6 +86,16 @@
 							class="now-ui-icons shopping_shop"></i>
 							<p>Mis servicios</p>
 					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="BookTurnServlet"> <i 
+							class="now-ui-icons shopping_shop"></i>
+							<p>Turnos</p>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ListTurnsServlet"> <i 
+							class="now-ui-icons shopping_shop"></i>
+							<p>Listado Turnos</p>
+					</a></li>
 					<li class="nav-item"><a class="nav-link" rel="tooltip"
 						title="Seguinos en Instagram" data-placement="bottom"
 						href="https://www.instagram.com/salonlegend_/"

@@ -92,7 +92,7 @@ public class TurnData {
 		
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select * from turns inner join barber_local where barber_local.barber_id=? and barber_local.local_id=?"
+			"select * from turns inner join barber_local on turns.schedule_id = barber_local.id where barber_local.barber_id=? and barber_local.local_id=?"
 					);
 			stmt.setInt(1, barberId);
 			stmt.setInt(2, localId);
@@ -128,6 +128,54 @@ public class TurnData {
 		return turns;
 	}
 	
+	public LinkedList<Turn> getBookedTurnsByBarberId(int barberId){
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		LinkedList<Turn> turns= new LinkedList<>();
+		
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select * from turns "
+					+ "inner join barber_local on turns.schedule_id = barber_local.id "
+					+ "where barber_local.barber_id=? and turns.init_date >= current_date"
+					);
+			stmt.setInt(1, barberId);
+		
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+					Turn t=new Turn();
+					UserData ud = new UserData();
+					ScheduleData sd = new ScheduleData();
+					ServiceData servicedata = new ServiceData();
+					
+					t.setTurnId(rs.getInt("turn_id"));
+					User client = ud.getById(rs.getInt("client_id"));
+					Schedule schedule = sd.getById(rs.getInt("schedule_id"));
+					t.setClient(client);
+					t.setSchedule(schedule);
+					t.setInit_date(rs.getObject("init_date", LocalDateTime.class));
+					t.setInit_date(rs.getObject("finish_date", LocalDateTime.class));
+					LinkedList<Service> services = servicedata.getServicesByTurn(t.getTurnId());
+					t.setServices(services);
+					turns.add(t);
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+		return turns;
+	}
 	
 	public int add(Turn turn) {
 		PreparedStatement stmt= null;

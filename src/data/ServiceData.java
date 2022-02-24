@@ -77,6 +77,46 @@ public class ServiceData {
 		return s;
 	}
   
+  public LinkedList<Service> getServicesByTurn(int turn_id){
+	  
+	  LinkedList<Service> services = new LinkedList<>();
+	  PreparedStatement stmt=null;
+	  ResultSet rs=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select s.service_id,name,description,price,duration from services as s inner join turns_services as ts on s.service_id = ts.service_id where ts.turn_id= ?"
+					);
+			
+			stmt.setInt(1, turn_id);
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+				Service s = new Service();
+		
+				s.setServiceId(rs.getInt("service_id"));
+				s.setName(rs.getString("name"));
+				s.setDescription(rs.getString("description"));
+				s.setPrice(rs.getFloat("price"));
+				s.setDuration(rs.getTime("duration"));
+				services.add(s);}
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return services;
+	  
+	  
+  }
+  
   public int add(Service service) {
     PreparedStatement stmt= null;
     ResultSet keyResultSet=null;

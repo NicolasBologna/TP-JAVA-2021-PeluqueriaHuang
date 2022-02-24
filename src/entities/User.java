@@ -20,6 +20,12 @@ public class User {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	
+	public String getFullName() {
+		return firstName +' '+ lastName;
+	}
+	
+	
 	public String getFirstName() {
 		return firstName;
 	}

@@ -48,4 +48,5 @@ public class Turn {
 	public void setServices(LinkedList<Service> services) {
 		this.services = services;
 	}
+	
 }
