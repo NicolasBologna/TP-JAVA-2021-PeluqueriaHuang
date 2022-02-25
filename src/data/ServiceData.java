@@ -2,6 +2,8 @@ package data;
 import entities.*;
 
 import java.sql.*;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.LinkedList;
 
 public class ServiceData {
@@ -203,5 +205,45 @@ public class ServiceData {
     //if error return false
     return false;
     }  
+  
+  public LocalTime getTotalDuration(String[] servicesId) {
+	  
+	Service s = null;
+	PreparedStatement stmt=null;
+	ResultSet rs=null;
+	LocalTime totalDuration = LocalTime.parse("00:00:00");
+	
+	for(String serviceId:servicesId) {
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select duration from services where service_id=?"
+					);
+			stmt.setInt(1, Integer.parseInt(serviceId));
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				
+			while(rs.next()) {	
+				s = new Service();
+				s.setDuration(rs.getTime("duration"));
+				
+				
+				LocalTime duration = s.getDuration().toLocalTime();
+				totalDuration.plusHours(duration.getHour()).plusMinutes(duration.getMinute());
+				}}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		}
+	return totalDuration;
+  }
   
 }

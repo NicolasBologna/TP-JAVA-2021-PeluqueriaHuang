@@ -1,5 +1,7 @@
 package logic;
 
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.LinkedList;
 
 import data.PublicationData;
@@ -33,7 +35,13 @@ public class Turns {
 		TurnData td = new TurnData();
 		return td.add(turn);
 	}
-	
+	/*
+	public static Date[] getDaysNot(LocalTime duration, int barberId, int localId) {
+		TurnData td = new TurnData();
+		return td.getDaysNot(duration, barberId, localId);
+		
+		
+	}*/
 	public static boolean delete(int id){
 		TurnData td = new TurnData();
 		Turn turn = td.getById(id);
