@@ -142,7 +142,40 @@ public class ServiceBarberData {
 		return serviceBarber;
 	}
 	
-	
+	/*public LinkedList<Integer> getBarberByServices(String[] services){
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		LinkedList<Integer> barbers = new LinkedList<>();
+		LinkedList<User> barbersData = new LinkedList<>();
+		
+		//barbersData = 
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select barber_id from service_barber where service_id=?"
+					);
+			stmt.setInt(1, barberId);
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+					serviceBarber.add(rs.getInt("service_id"));
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+		return serviceBarber;
+	}
+	*/
 	
 	public int add(ServiceBarber serviceBarber) {
 		PreparedStatement stmt= null;

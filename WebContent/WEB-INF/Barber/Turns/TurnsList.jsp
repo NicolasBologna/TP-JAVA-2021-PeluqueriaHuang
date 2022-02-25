@@ -42,6 +42,7 @@ Turnos	</title>
                    			<tr>
                    				<th>Id</th>
                    				<th>Fecha</th>
+                   				<th>Hora</th>
                    		    	<th>Local</th>
                        			<th>Cliente</th>
                        			<th>Contacto cliente</th>
@@ -61,7 +62,8 @@ Turnos	</title>
                    				
                    			<tr >
                    				<td><%=t.getTurnId()%></td>
-                   				<td><%= t.getInit_date() %></td>
+                   				<td><%= t.getDate() %></td>
+                   				<td><%= t.getHour() %></td>
                    				<td><%=l.getAddress()%></td>
                    				<td><%=c.getFullName()%></td>
                    				<td><%=c.getPhone()%></td>
