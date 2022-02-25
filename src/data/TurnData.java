@@ -29,8 +29,8 @@ public class TurnData {
 					Schedule schedule = sd.getById(rs.getInt("schedule_id"));
 					t.setClient(client);
 					t.setSchedule(schedule);
-					t.setInit_date(rs.getObject("init_date", LocalDateTime.class));
-					t.setInit_date(rs.getObject("finish_date", LocalDateTime.class));
+					t.setDate(rs.getObject("date", LocalDate.class));
+					t.setHour(rs.getObject("hour", LocalTime.class));
 					LinkedList<Service> services = serd.getServicesByTurn(t.getTurnId());
 					t.setServices(services);
 					turns.add(t);
@@ -72,8 +72,8 @@ public class TurnData {
 				Schedule schedule = sd.getById(rs.getInt("schedule_id"));
 				t.setClient(client);
 				t.setSchedule(schedule);
-				t.setInit_date(rs.getObject("init_date", LocalDateTime.class));
-				t.setInit_date(rs.getObject("finish_date", LocalDateTime.class));
+				t.setDate(rs.getObject("date", LocalDate.class));
+				t.setHour(rs.getObject("hour", LocalTime.class));
 				LinkedList<Service> services = serd.getServicesByTurn(t.getTurnId());
 				t.setServices(services);
 			}
@@ -116,8 +116,8 @@ public class TurnData {
 					Schedule schedule = sd.getById(rs.getInt("schedule_id"));
 					t.setClient(client);
 					t.setSchedule(schedule);
-					t.setInit_date(rs.getObject("init_date", LocalDateTime.class));
-					t.setInit_date(rs.getObject("finish_date", LocalDateTime.class));
+					t.setDate(rs.getObject("date", LocalDate.class));
+					t.setHour(rs.getObject("hour", LocalTime.class));
 					turns.add(t);
 				}
 			}
@@ -163,8 +163,8 @@ public class TurnData {
 					Schedule schedule = sd.getById(rs.getInt("schedule_id"));
 					t.setClient(client);
 					t.setSchedule(schedule);
-					t.setInit_date(rs.getObject("init_date", LocalDateTime.class));
-					t.setInit_date(rs.getObject("finish_date", LocalDateTime.class));
+					t.setDate(rs.getObject("date", LocalDate.class));
+					t.setHour(rs.getObject("hour", LocalTime.class));
 					LinkedList<Service> services = servicedata.getServicesByTurn(t.getTurnId());
 					t.setServices(services);
 					turns.add(t);
@@ -198,15 +198,15 @@ public class TurnData {
 			stmt.setInt(1, turn.getSchedule().getId());
 			stmt.setInt(2, turn.getClient().getUserId());
 			stmt.setDate(4, Date.valueOf(turn.getDate()));
-			stmt.setTime(5, Time.valueOf(turn.getTime()));
+			stmt.setTime(5, Time.valueOf(turn.getHour()));
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
                 turn.setTurnId(keyResultSet.getInt(1));
                 
-                ServiceData sd = new ServiceData();
-               // sd.setServicesTurn(turn);
+                TurnServicesData sd = new TurnServicesData();
+                sd.setServicesTurn(turn);
             }
             return turn.getTurnId();
             

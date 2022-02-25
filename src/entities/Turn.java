@@ -10,7 +10,7 @@ public class Turn {
 	private Schedule schedule;
 	private User client;
 	private LocalDate date;
-	private LocalTime time;
+	private LocalTime hour;
 	private LinkedList<Service> services;
 	
 	public int getTurnId() {
@@ -37,11 +37,11 @@ public class Turn {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	public LocalTime getTime() {
-		return time;
+	public LocalTime getHour() {
+		return hour;
 	}
-	public void setTime(LocalTime time) {
-		this.time = time;
+	public void setHour(LocalTime hour) {
+		this.hour = hour;
 	}
 	public LinkedList<Service> getServices() {
 		return services;
