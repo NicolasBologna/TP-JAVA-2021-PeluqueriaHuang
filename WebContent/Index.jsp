@@ -1,6 +1,8 @@
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@page import="logic.Roles"%>
+<%@page import="entities.Role"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@page import="entities.User"%>
 <%@page import="entities.Publication"%>
 <%@page import="java.util.LinkedList"%>
@@ -13,7 +15,7 @@
 		href="./assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" href="./assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>SAL�N LEGEND</title>
+	<title>SALÓN LEGENDS</title>
 	<meta
 		content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 		name='viewport' />
@@ -30,7 +32,7 @@
 	<link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
 	
 	<%
-		User user = (User) session.getAttribute("user");
+		User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
 		LinkedList<Publication> lp = (LinkedList<Publication>)request.getAttribute("publicationList");
 	%>
 	
@@ -43,7 +45,7 @@
 		color-on-scroll="400">
 		<div class="container">
 			<div class="navbar-translate">
-				<a class="navbar-brand" href="./"> Legends </a>
+				<a class="navbar-brand" href="./">SALÓN LEGENDS</a>
 				<button class="navbar-toggler navbar-toggler" type="button"
 					data-toggle="collapse" data-target="#navigation"
 					aria-controls="navigation-index" aria-expanded="false"
@@ -56,6 +58,7 @@
 			<div class="collapse navbar-collapse justify-content-end"
 				id="navigation" data-nav-image="./assets/img/blurred-image-1.jpg">
 				<ul class="navbar-nav">
+				<%if (user.hasRol(Roles.getRoleByName("Administrador"))) { %>
 					<li class="nav-item"><a class="nav-link"
 						href="UserListServlet"> <i
 							class="now-ui-icons users_single-02"></i>
@@ -67,25 +70,42 @@
 							<p>Sucursales</p>
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="PublicationListServlet"> <i
-							class="now-ui-icons users_single-02"></i>
-							<p>Publicaciones</p>
-					</a></li>
-					<li class="nav-item"><a class="nav-link"
 						href="ServiceListServlet"> <i
-							class="now-ui-icons users_single-02"></i>
+							class="now-ui-icons objects_diamond"></i>
 							<p>Servicios</p>
 					</a></li>
+				<% } %>
+				<%if (user.hasRol(Roles.getRoleByName("Peluquero"))) { %>
 					<li class="nav-item"><a class="nav-link"
 						href="ListSchedules"> <i 
-							class="now-ui-icons shopping_shop"></i>
-							<p>Horarios</p>
+							class="now-ui-icons ui-1_calendar-60"></i>
+							<p>Mis Horarios</p>
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="ServiceBarberListServlet"> <i 
-							class="now-ui-icons shopping_shop"></i>
+							class="now-ui-icons text_align-left"></i>
 							<p>Mis servicios</p>
 					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="PublicationListServlet"> <i
+							class="now-ui-icons business_badge"></i>
+							<p>Mis Publicaciones</p>
+					</a></li>
+				<% } %>
+				<%if (user.hasRol(Roles.getRoleByName("Cliente")) || user.hasRol(Roles.getRoleByName("Peluquero"))) { %>
+					<li class="nav-item d-none"><a class="nav-link"
+						href="ListSchedules"> <i 
+							class="now-ui-icons design_scissors"></i>
+							<p>Mis Turnos</p>
+					</a></li>
+				<% } %>
+				<%if (user.getEmail() == null) { %>
+					<li class="nav-item"><a class="nav-link"
+						href="signIn"> <i 
+							class="now-ui-icons users_circle-08"></i>
+							<p>Ingresar</p>
+					</a></li>
+				<% } %>
 					<li class="nav-item"><a class="nav-link" rel="tooltip"
 						title="Seguinos en Instagram" data-placement="bottom"
 						href="https://www.instagram.com/salonlegend_/"
@@ -104,43 +124,37 @@
 			<div class="container">
 				<div class="content-center brand">
 					<img class="img-fluid" src="./assets/img/now-logo.svg" alt="" style="max-width: 200px;">
-					<h1 class="h1-seo">Sal�n Legends</h1>
+					<h1 class="h1-seo">Salón Legends</h1>
 					<h3>Siempre el mejor servicio</h3>
 				</div>
 			</div>
 		</div>
-		<div class="row d-flex justify-content-around">
-		<%for(Publication p: lp){ %>
-			<div class="card my-3 col-5 px-0 rounded">
-		  <div class="row no-gutters">
-		    <div class="col-4">
-		      <img class="img-fluid" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.salonsuccessacademy.com%2Fwp-content%2Fuploads%2F2015%2F01%2FFotolia_64007532_Subscription_Monthly_M.jpg&f=1&nofb=1" alt="...">
-		    </div>
-		    <div class="col-8">
-		      <div class="card-body">
-		        <h5 class="card-title">Publicacion <%= p.getPublicationId() %></h5>
-		        <p class="card-text"><%= p.getText() %>.</p>
-		        <p class="card-text"><small class="text-muted"><%= p.getDate() %></small></p>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		
-		<%} %>
+		<div class="bg-light">
+			<h1 class="d-flex justify-content-center pt-3">Mirá nuestras últimas tendencias</h1>
+			<section class="row d-flex justify-content-around pb-3">
+			<%for(Publication p: lp){ %>
+				<div class="card my-3 col-5 px-0 rounded">
+			  		<div class="row no-gutters">
+					    <div class="col-4">
+					      <img class="img-fluid" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.salonsuccessacademy.com%2Fwp-content%2Fuploads%2F2015%2F01%2FFotolia_64007532_Subscription_Monthly_M.jpg&f=1&nofb=1" alt="...">
+					    </div>
+			    		<div class="col-8">
+				      		<div class="card-body">
+						        <h5 class="card-title"><%=p.getTitle() %></h5>
+						        <p class="card-text"><%= p.getText() %>.</p>
+						        <p class="card-text"><small class="text-muted"><%= p.getDate() %></small></p>
+					      	</div>
+			    		</div>
+			  		</div>
+				</div>
+			<%} %>
+			</section>
 		</div>
 		 
 		<!--  End Modal -->
 		<footer class="footer" data-background-color="black">
 			<div class=" container ">
-				<nav>
-					<ul>
-						<li><a href="https://www.creative-tim.com"> Creative Tim
-						</a></li>
-						<li><a href="http://presentation.creative-tim.com"> About
-								Us </a></li>
-						<li><a href="http://blog.creative-tim.com"> Blog </a></li>
-					</ul>
-				</nav>
+				Diseño basado en una plantilla de <a href="https://www.creative-tim.com"> Creative Tim
 				<div class="copyright" id="copyright">
 					&copy;
 					<script>
@@ -148,9 +162,7 @@
 								document.createTextNode(new Date()
 										.getFullYear()))
 					</script>
-					, Designed by <a href="https://www.invisionapp.com" target="_blank">Invision</a>.
-					Coded by <a href="https://www.creative-tim.com" target="_blank">Creative
-						Tim</a>.
+					UTN - FRRO - JAVA
 				</div>
 			</div>
 		</footer>
