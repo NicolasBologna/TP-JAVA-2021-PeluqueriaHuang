@@ -3,10 +3,12 @@ package logic;
 import java.util.LinkedList;
 
 import data.PublicationData;
+import data.ScheduleData;
 import data.ServiceBarberData;
 import data.ServiceData;
 import entities.Service;
 import entities.ServiceBarber;
+import entities.User;
 
 public class ServicesBarber {
 
@@ -48,5 +50,11 @@ public class ServicesBarber {
 	public static boolean areServiceBarberLoaded(int barberId){
 		ServiceBarberData sbd = new ServiceBarberData();
 		return !sbd.getServicesByBarberId(barberId).isEmpty();
+	}
+	
+	public static LinkedList<User> getBarbersByServices(String[] servicesId,int idLocal){
+		ServiceBarberData sd = new ServiceBarberData();
+		return sd.getBarberByServices(servicesId, idLocal);
+		 
 	}
 }

@@ -1,6 +1,7 @@
 package entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.LinkedList;
 
 public class Turn {
@@ -8,8 +9,8 @@ public class Turn {
 	private int turnId;
 	private Schedule schedule;
 	private User client;
-	private LocalDateTime init_date;
-	private LocalDateTime finish_date;
+	private LocalDate date;
+	private LocalTime hour;
 	private LinkedList<Service> services;
 	
 	public int getTurnId() {
@@ -30,17 +31,17 @@ public class Turn {
 	public void setClient(User client) {
 		this.client = client;
 	}
-	public LocalDateTime getInit_date() {
-		return init_date;
+	public LocalDate getDate() {
+		return date;
 	}
-	public void setInit_date(LocalDateTime init_date) {
-		this.init_date = init_date;
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
-	public LocalDateTime getFinish_date() {
-		return finish_date;
+	public LocalTime getHour() {
+		return hour;
 	}
-	public void setFinish_date(LocalDateTime finish_date) {
-		this.finish_date = finish_date;
+	public void setHour(LocalTime hour) {
+		this.hour = hour;
 	}
 	public LinkedList<Service> getServices() {
 		return services;

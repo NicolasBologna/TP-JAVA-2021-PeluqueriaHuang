@@ -59,6 +59,44 @@ public class ScheduleData {
 		return schedules;
 	}
 	
+	public static LinkedList<User> getBarbersByLocal(int localId){
+		
+		UserData ud = new UserData();
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		LinkedList<User> barbers= new LinkedList<User>();		
+		try {		
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select barber_id from barber_local WHERE local_id = ?"
+					);
+			stmt.setInt(1, localId);
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+					
+					User barber = ud.getById(rs.getInt("barber_id"));
+					
+					barbers.add(barber);
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return barbers;
+	}
+	
 	public int add(Schedule newSchedule) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
