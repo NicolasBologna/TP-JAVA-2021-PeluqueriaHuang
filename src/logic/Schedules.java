@@ -30,6 +30,7 @@ public class Schedules {
 		return sd.getById(id);
 	}
 	
+	
 	public static boolean update(Schedule editedSchedule){
 		ScheduleData sData = new ScheduleData();
 		return sData.update(editedSchedule);

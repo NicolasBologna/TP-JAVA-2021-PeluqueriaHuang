@@ -211,7 +211,48 @@ public class UserData {
 		return p;
 	}*/
 	
-	
+	public LinkedList<User> getAllByRole(){
+		RolData dr=new RolData();
+		Statement stmt=null;
+		ResultSet rs=null;
+		LinkedList<User> pers= new LinkedList<>();
+		
+		try {
+			stmt= DbConnector.getInstancia().getConn().createStatement();
+			rs= stmt.executeQuery("select user_id,first_name,last_name,dni,email,phone,is_enable from users");
+			if(rs!=null) {
+				while(rs.next()) {
+					User p=new User();
+					p.setUserId(rs.getInt("user_id"));
+					p.setFirstName(rs.getString("first_name"));
+					p.setLastName(rs.getString("last_name"));
+					p.setDni(rs.getInt("dni"));
+					p.setEmail(rs.getString("email"));
+					p.setPhone(rs.getString("phone"));
+					
+					p.setIsEnable(rs.getBoolean("is_enable"));
+					
+					dr.setRoles(p);
+					
+					pers.add(p);
+				}
+
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return pers;
+	}
 	
 	public int add(User user) {
 		PreparedStatement stmt= null;
