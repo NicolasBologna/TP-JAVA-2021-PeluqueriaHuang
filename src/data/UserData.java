@@ -236,6 +236,7 @@ public class UserData {
 					
 					pers.add(p);
 				}
+
 			}
 			
 		} catch (SQLException e) {
@@ -250,6 +251,7 @@ public class UserData {
 				e.printStackTrace();
 			}
 		}
+		return pers;
 	}
 	
 	public int add(User user) {

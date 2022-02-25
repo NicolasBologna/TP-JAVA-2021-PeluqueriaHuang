@@ -16,7 +16,7 @@
 	
 	<main>
 		<div class="container">
-			<h1 class="text-center pt-2">Solicitar turno</h1>
+			<h1 class="text-center pt-2">Seleccionar sucursal</h1>
 			<form action="BookTurnServlet" method="post" class="shadow p-5">
 				<div class="form-group mb-4">
 					<label for="local">Peluquería</label> 

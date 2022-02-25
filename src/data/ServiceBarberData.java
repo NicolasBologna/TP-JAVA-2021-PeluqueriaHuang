@@ -142,40 +142,52 @@ public class ServiceBarberData {
 		return serviceBarber;
 	}
 	
-	/*public LinkedList<Integer> getBarberByServices(String[] services){
+	public LinkedList<User> getBarberByServices(String[] idServices, int idLocal){
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
-		LinkedList<Integer> barbers = new LinkedList<>();
-		LinkedList<User> barbersData = new LinkedList<>();
+		LinkedList<User> allBarbers = new LinkedList<>();
+		LinkedList<User> barbers = new LinkedList<>();
 		
-		//barbersData = 
-		try {
-			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select barber_id from service_barber where service_id=?"
-					);
-			stmt.setInt(1, barberId);
-			rs=stmt.executeQuery();
-			if(rs!=null) {
-				while(rs.next()) {
-					serviceBarber.add(rs.getInt("service_id"));
+		allBarbers = ScheduleData.getBarbersByLocal(idLocal);
+		
+		for(User barber: allBarbers) {
+			
+			Boolean band = false;
+			
+			for(String idService: idServices) {
+				
+				try {
+					stmt=DbConnector.getInstancia().getConn().prepareStatement(
+						"select barber_id from service_barber where service_id=? and barber_id = ?"
+								);
+					stmt.setInt(1, Integer.parseInt(idService));
+					stmt.setInt(2, barber.getUserId());
+					rs=stmt.executeQuery();
+				
+					if(rs == null) {
+						band = false;
+						break;
+						}	
+					else{
+						band = true;}} 
+				catch (SQLException e) {
+					e.printStackTrace();}
+				finally {
+					try {
+						if(rs!=null) {rs.close();}
+						if(stmt!=null) {stmt.close();}
+							DbConnector.getInstancia().releaseConn();
+					} catch (SQLException e) {
+						e.printStackTrace();
+								}}	
 				}
+			if (band) {
+				barbers.add(barber);
 			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			
-		} finally {
-			try {
-				if(rs!=null) {rs.close();}
-				if(stmt!=null) {stmt.close();}
-				DbConnector.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
-		}	
-		return serviceBarber;
+		return barbers;
 	}
-	*/
+	
 	
 	public int add(ServiceBarber serviceBarber) {
 		PreparedStatement stmt= null;
