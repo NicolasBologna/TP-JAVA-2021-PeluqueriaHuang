@@ -140,10 +140,10 @@
 			    </div>
 			  </div>
 			</div>
-			<form action="getSchedulesServlet" method="post">				
+			<form action="GetAvailableTurnsServlet" method="post">				
 	       		<div class="form-group">
 					<label for="barber">Peluquero</label> 
-					<select name="barber" class="browser-default custom-select">
+					<select name="idBarber" class="browser-default custom-select">
 	  					<%
 		       			for (User barber: barbersList) {
 	       				%>
@@ -157,10 +157,14 @@
 				<div class="form-group">
 					<label for="start">Start date:</label>
 	
-					<input type="date" id="start" name="trip-start"
+					<input type="date" id="start" name="turn-date"
 					       value="2022-03-03"
 					       min="2022-03-01" max="2022-04-01">   	
 		        </div>	
+   				<button class="btn btn-block btn-primary"
+					type="submit">
+					<span>Seleccionar</span>
+				</button>
 			</form>
 		</div>
 	

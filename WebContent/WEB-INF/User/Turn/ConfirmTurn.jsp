@@ -10,8 +10,7 @@
 <html>
 <%
 	User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
-	LinkedList<Service> servicesList = (LinkedList<Service>)request.getAttribute("servicesList");
-	LinkedList<Local> localsList = (LinkedList<Local>)request.getAttribute("localsList");
+	LinkedList<String> hoursList = (LinkedList<String>)request.getAttribute("hoursList");
 %>
 
 <head>
@@ -135,43 +134,26 @@
 			<div class="progress-container progress-info">
 			  <span class="progress-badge">Tu turno</span>
 			  <div class="progress">
-			    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
-			      <span class="progress-value">10%</span>
+			    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+			      <span class="progress-value">80%</span>
 			    </div>
 			  </div>
 			</div>
-			<form action="GetBarbersByServicesServlet" method="get" >
-				<div class="form-group">
-					<label>Servicios</label>
-					<div class="mb-4">
-			     		<%
-		       			for (Service service : servicesList) {
-			       		%>
-			       		
-						<div class="form-check form-check-inline ">
-						  <label class="form-check-label">
-						    <input class="form-check-input service" onchange="servicesUpdated()" type="checkbox" name="services" value="<%=service.getServiceId()%>"><%=service.getName()%>
-						    <span class="form-check-sign">
-						        <span class="check "></span>
-						    </span>
-						  </label>
-						</div>
-			       		<% } %>
-		       		</div>
-	       		</div>
-	       		<div class="form-group d-none" id="locals">
-					<label for="local">Peluquería</label> 
-					<select name="idLocal" class="browser-default custom-select" onchange="localUpdated()">
+			<form action="ConfirmTurnServlet" method="post">				
+	       		<div class="form-group">
+					<label for="barber">Hora</label> 
+					<select name="turn-hour" class="browser-default custom-select">
 	  					<%
-		       			for (Local local: localsList) {
+		       			for (String hour: hoursList) {
 	       				%>
-					    <option value="<%=local.getLocalId()%>">
-					        <%=local.getName()%>
+					    <option value="<%=hour%>">
+					        <%=hour%>
 					    </option>
 					  	<% } %>
 					</select>	
-				</div>  
-				<button class="btn btn-block btn-primary"
+				</div>
+				
+   				<button class="btn btn-block btn-primary"
 					type="submit">
 					<span>Seleccionar</span>
 				</button>
@@ -233,7 +215,7 @@
 		}
 	}
 	
-	/*function localUpdated(){
+	function localUpdated(){
 		console.log(getCheckedCheckboxesFor("services"));
 		$.ajax({
 		    type:"POST",
@@ -243,7 +225,7 @@
 		         console.log(datos)
 		     }
 		})
-	}*/
+	}
 	
 	
 	
