@@ -3,6 +3,7 @@ package servletsUser.Turn;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import logic.ServicesBarber;
 import logic.Turns;
 
-@WebServlet("/getSchedulesServlet")
+@WebServlet("/GetAvailableTurnsServlet")
 public class GetAvailableTurnsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -25,7 +26,17 @@ public class GetAvailableTurnsServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int barber_id = Integer.parseInt(request.getParameter("idBarber"));
+		String turnDate = request.getParameter("turn-date");
+
+		LinkedList<String> lList = new LinkedList<String>();
 		
+		lList.add("10:00");
+		lList.add("10:30");
+		
+		request.setAttribute("hoursList", lList);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/User/Turn/ConfirmTurn.jsp");
+        dispatcher.forward(request, response);
 	/*	
 		String[] servicesId = request.getParameterValues("serviceId");
 		int barber_id = Integer.parseInt(request.getParameter("idBarber"));
