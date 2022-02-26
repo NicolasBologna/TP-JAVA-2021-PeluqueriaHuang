@@ -1,5 +1,6 @@
 package entities;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
@@ -11,11 +12,13 @@ public class Turn {
 	private User client;
 	private LocalDate date;
 	private LocalTime hour;
+	private Time duration;
 	private LinkedList<Service> services;
 	
 	public int getTurnId() {
 		return turnId;
 	}
+	
 	public void setTurnId(int turnId) {
 		this.turnId = turnId;
 	}
@@ -49,5 +52,15 @@ public class Turn {
 	public void setServices(LinkedList<Service> services) {
 		this.services = services;
 	}
+
+	public Time getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Time duration) {
+		this.duration = duration;
+	}
+	
+	
 	
 }

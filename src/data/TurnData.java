@@ -3,9 +3,11 @@ package data;
 import entities.*;
 
 import java.sql.*;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 
 public class TurnData {
@@ -184,6 +186,84 @@ public class TurnData {
 			}
 		}	
 		return turns;
+	}
+	
+	public LinkedList<String> getHoursFree(int barberId,String turnDate,int idLocal,LocalTime duration){
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		LinkedList<String> hours= new LinkedList<>();
+		LinkedList<Turn> turns = new LinkedList<>();
+		Schedule s = new Schedule();
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select t.hour,t.duration,bl.start_time,bl.end_time from turns as t"
+					+ "inner join barber_local as bl on t.schedule_id = bl.id "
+					+ "where bl.barber_id=? and ts.date =? and bl.local_id = ? order by t.hour asc"
+					);
+			stmt.setInt(1, barberId);
+			stmt.setDate(2,java.sql.Date.valueOf(turnDate));
+			stmt.setInt(3, idLocal);
+
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+					Turn t=new Turn();
+					
+					t.setDate(rs.getObject("date", LocalDate.class));
+					t.setHour(rs.getTime("hour").toLocalTime());
+					t.setDuration(rs.getTime("duration"));
+					s.setStart_time(rs.getTime("start_time").toLocalTime());
+					s.setEnd_time(rs.getTime("end_time").toLocalTime());
+					turns.add(t);
+				}
+			}
+			
+			for(int i = 0;i <= turns.size();i++) {
+				
+				Turn before_turn = turns.get(i);
+				Turn after_turn = turns.get(i+1);
+				
+				LocalTime before_hour = before_turn.getHour();
+				LocalTime after_hour = after_turn.getHour();
+				
+				before_hour.plusHours(before_turn.getDuration().toLocalTime().getHour()).plusMinutes(before_turn.getDuration().toLocalTime().getMinute());
+				
+				LocalTime remainder = after_hour.minusHours(before_hour.getHour()).minusMinutes(before_hour.getMinute());
+				
+				switch (remainder.compareTo(duration)) {
+					
+				case 1:
+					while((after_hour.until(before_hour, ChronoUnit.MINUTES)) < 0) {
+						
+						hours.add(before_hour.toString());
+						before_hour.plusMinutes(30);
+					}
+					break;
+				case 0:
+					hours.add(before_hour.toString());
+					break;
+					
+				
+				case -1:
+					break;
+				}
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+		return hours;
+		
+		
 	}
 	/*
 	public Date[] getDaysNot(LocalTime duration,int barberId, int localId) {
