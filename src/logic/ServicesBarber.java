@@ -1,5 +1,6 @@
 package logic;
 
+import java.time.LocalTime;
 import java.util.LinkedList;
 
 import data.PublicationData;
@@ -56,5 +57,10 @@ public class ServicesBarber {
 		ServiceBarberData sd = new ServiceBarberData();
 		return sd.getBarberByServices(servicesId, idLocal);
 		 
+	}
+	
+	public static LocalTime getTotalDuration(String[] servicesId) {
+		ServiceData sd = new ServiceData();
+		return sd.getTotalDuration(servicesId);
 	}
 }
