@@ -26,14 +26,17 @@ public class GetAvailableTurnsServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		int barber_id = Integer.parseInt(request.getParameter("idBarber"));
+		int idLocal = Integer.parseInt(request.getParameter("idLocal"));
+		
+		String[] servicesId = request.getParameterValues("serviceId");
 		String turnDate = request.getParameter("turn-date");
 
-		LinkedList<String> lList = new LinkedList<String>();
 		
-		lList.add("10:00");
-		lList.add("10:30");
-		
+		LocalTime servicesDuration = ServicesBarber.getTotalDuration(servicesId);
+		LinkedList<String> lList = Turns.getHoursAvailable(barber_id,turnDate, idLocal, servicesDuration);
+	
 		request.setAttribute("hoursList", lList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/User/Turn/ConfirmTurn.jsp");
         dispatcher.forward(request, response);
