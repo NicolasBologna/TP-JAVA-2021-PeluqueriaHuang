@@ -30,6 +30,7 @@
 	<!-- CSS Files -->
 	<link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 	
 	<%
 		User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
@@ -94,7 +95,7 @@
 				<% } %>
 				<%if (user.hasRol(Roles.getRoleByName("Cliente")) || user.hasRol(Roles.getRoleByName("Peluquero"))) { %>
 					<li class="nav-item d-none"><a class="nav-link"
-						href="ListSchedules"> <i 
+						href="ListTurnsServlet"> <i 
 							class="now-ui-icons design_scissors"></i>
 							<p>Mis Turnos</p>
 					</a></li>
@@ -130,7 +131,15 @@
 			</div>
 		</div>
 		<div class="bg-light">
-			<h1 class="d-flex justify-content-center pt-3">Mirá nuestras últimas tendencias</h1>
+			<div class="d-flex justify-content-center">
+				<a class="btn btn-primary btn-round btn-lg mt-4 animate__animated animate__jello animate__infinite	animate__slower" 
+					type="button" href="BookTurnServlet">
+					<i class="now-ui-icons shopping_basket"></i> Reservá tu turno
+				</a>
+			</div>
+			<div class="d-flex justify-content-center">
+				<h1 class="pt-3">Mirá nuestras últimas tendencias</h1>
+			</div>
 			<section class="row d-flex justify-content-around pb-3">
 			<%for(Publication p: lp){ %>
 				<div class="card my-3 col-5 px-0 rounded">

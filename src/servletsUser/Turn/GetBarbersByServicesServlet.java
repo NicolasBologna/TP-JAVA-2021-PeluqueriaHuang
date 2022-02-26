@@ -30,8 +30,7 @@ public class GetBarbersByServicesServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String[] servicesId = request.getParameterValues("serviceId");
+		String[] servicesId = request.getParameterValues("services");
 		int idLocal = Integer.parseInt(request.getParameter("idLocal"));
 		
 		request.setAttribute("servicesId", servicesId);
