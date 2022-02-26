@@ -39,7 +39,7 @@ public class Turns {
 	public static LinkedList<String> getHoursAvailable(int barber_id,String turnDate,int idLocal, LocalTime duration){
 		
 		TurnData td = new TurnData();
-		return getHoursAvailable(barber_id,turnDate,idLocal,duration);
+		return td.getHoursFree(barber_id,turnDate,idLocal,duration);
 	}
 	public static boolean delete(int id){
 		TurnData td = new TurnData();

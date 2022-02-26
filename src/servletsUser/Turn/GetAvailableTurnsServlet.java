@@ -30,7 +30,7 @@ public class GetAvailableTurnsServlet extends HttpServlet {
 		int barber_id = Integer.parseInt(request.getParameter("idBarber"));
 		int idLocal = Integer.parseInt(request.getParameter("idLocal"));
 		
-		String[] servicesId = request.getParameterValues("serviceId");
+		String[] servicesId = request.getParameterValues("services");
 		String turnDate = request.getParameter("turn-date");
 
 		

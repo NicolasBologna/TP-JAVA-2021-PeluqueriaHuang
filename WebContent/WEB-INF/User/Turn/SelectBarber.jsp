@@ -10,8 +10,9 @@
 <html>
 <%
 	User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
-	LinkedList<Service> servicesList = (LinkedList<Service>)request.getAttribute("servicesList");
+	String[] servicesList = (String[])request.getAttribute("servicesId");
 	LinkedList<User> barbersList = (LinkedList<User>)request.getAttribute("barbersList");
+	int idLocal = (int)request.getAttribute("idLocal");
 %>
 
 <head>
@@ -158,9 +159,20 @@
 					<label for="start">Start date:</label>
 	
 					<input type="date" id="start" name="turn-date"
-					       value="2022-03-03"
-					       min="2022-03-01" max="2022-04-01">   	
+					       id="datePicker"
+					       value="<%= java.time.LocalDate.now() %>"
+					       min="<%= java.time.LocalDate.now() %>"
+					       max="<%= java.time.LocalDate.now().plusMonths(1) %>">   	
 		        </div>	
+		        
+		        <input hidden name="idLocal" value="<%=idLocal%>">
+		        
+	     		<%
+       			for (String service : servicesList) {
+	       		%>
+				<input hidden class="form-check-input service" type="checkbox" name="services" value="<%=service%>" checked>
+	       		<% } %>
+		        
    				<button class="btn btn-block btn-primary"
 					type="submit">
 					<span>Seleccionar</span>
@@ -201,40 +213,18 @@
 	<script src="./assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
 	<script>
 		
-	function getCheckedCheckboxesFor(checkboxName) {
-	    var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
-	    Array.prototype.forEach.call(checkboxes, function(el) {
-	        values.push(el.value);
-	    });
-	    return values;
+	window.onload=function(){
+		var picker = document.getElementById('datePicker');
+		console.log(picker)
+		picker.addEventListener('change', function(e){
+		  var day = new Date(this.value).getUTCDay();
+		  if([6,0].includes(day)){
+		    e.target.setCustomValidity('week-end not allowed')
+		  } else {
+		    e.target.setCustomValidity('')
+		  }
+		});
 	}
-	
-	function servicesUpdated(){
-		
-		
-		let selectedServices = getCheckedCheckboxesFor("services");
-		
-		console.log(selectedServices);
-		
-		if(selectedServices.length > 0){
-			document.getElementById("locals").classList.remove("d-none");
-		}else{
-			document.getElementById("locals").classList.add("d-none");
-		}
-	}
-	
-	function localUpdated(){
-		console.log(getCheckedCheckboxesFor("services"));
-		$.ajax({
-		    type:"POST",
-		    url:"GetBarbersByServicesServlet", 
-		    data:{idLocal:2,servicesIds:getCheckedCheckboxesFor("services")},
-		    success:function(datos){
-		         console.log(datos)
-		     }
-		})
-	}
-	
 	
 	
 	</script>

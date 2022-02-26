@@ -171,7 +171,7 @@
 					  	<% } %>
 					</select>	
 				</div>  
-				<button class="btn btn-block btn-primary"
+				<button class="btn btn-block btn-primary" id="submit-button" disabled
 					type="submit">
 					<span>Seleccionar</span>
 				</button>
@@ -228,8 +228,10 @@
 		
 		if(selectedServices.length > 0){
 			document.getElementById("locals").classList.remove("d-none");
+			document.getElementById("submit-button").disabled = false;
 		}else{
 			document.getElementById("locals").classList.add("d-none");
+			document.getElementById("submit-button").disabled = true;
 		}
 	}
 	
