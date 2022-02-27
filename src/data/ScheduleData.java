@@ -146,9 +146,10 @@ public class ScheduleData {
 					);
 			stmt.setInt(1, id);
 			rs=stmt.executeQuery();
-			if(rs!=null && rs.next()) {
+			if(rs!=null) {
+			while(rs.next()) {
 				s= new Schedule();
-				s.setId(id);
+				s.setId(rs.getInt("id"));
 				User user = ud.getById(rs.getInt("barber_id"));
 				Local local = ld.getById(rs.getInt("local_id"));
 				s.setBarber(user);
@@ -156,7 +157,7 @@ public class ScheduleData {
 				s.setDay_of_week(Days.valueOf(rs.getString("day_of_week")));
 				s.setStart_time(rs.getObject("start_time", LocalTime.class));
 				s.setEnd_time(rs.getObject("end_time", LocalTime.class));				
-			}
+			}}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -169,6 +170,52 @@ public class ScheduleData {
 			}
 		}
 		return s;
+	}
+	
+	public Schedule getByBarberLocal(int localId,int barberId) {
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		Schedule s = new Schedule();	
+		UserData ud = new UserData();
+		LocalData ld = new LocalData();
+		try {		
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select * from barber_local WHERE local_id = ? and barber_id = ?;"
+					);
+			stmt.setInt(1, localId);
+			stmt.setInt(2, barberId);
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+					
+					s.setId(rs.getInt("id"));
+					s.setStart_time(rs.getObject("start_time", LocalTime.class));
+					s.setEnd_time(rs.getObject("end_time", LocalTime.class));	
+					s.setDay_of_week(Days.valueOf(rs.getString("day_of_week")));
+					User user = ud.getById(rs.getInt("barber_id"));
+					Local local = ld.getById(rs.getInt("local_id"));
+					s.setBarber(user);
+					s.setLocal(local);
+					
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return s;
+		
 	}
 	
 	public boolean update(Schedule schedule) {

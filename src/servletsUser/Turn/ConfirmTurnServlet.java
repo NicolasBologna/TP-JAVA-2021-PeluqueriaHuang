@@ -1,7 +1,9 @@
 package servletsUser.Turn;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
 
@@ -12,12 +14,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+
 import entities.Role;
+import entities.Schedule;
 import entities.Turn;
 import entities.User;
+import entities.Service;
 import logic.Admin;
+import logic.LocalAdmin;
 import logic.ServicesBarber;
 import logic.SignUp;
+import logic.Turns;
+import logic.Schedules;
 
 /**
  * Servlet implementation class ConfirmTurnServlet
@@ -40,17 +49,48 @@ public class ConfirmTurnServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
-		int clientId = Integer.parseInt(request.getParameter("clientId"));
-		int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
-
 		String hour = request.getParameter("turn-hour");
+		String turnDate = request.getParameter("turn-date");
+		int clientId = Integer.parseInt(request.getParameter("clientId"));
+		int localId = Integer.parseInt(request.getParameter("localId"));
+		int barberId = Integer.parseInt(request.getParameter("barberId"));
 		
 		String[] servicesId = request.getParameterValues("services");
 		LocalTime servicesDuration = ServicesBarber.getTotalDuration(servicesId);
-		Turn turn = new Turn();
 		
-	
+		LinkedList<Service> services = ServicesBarber.getServicesById(servicesId);
+		
+		Schedule schedule= Schedules.getByLocalBarber(localId,barberId);
+		
+		
+		
+		Turn newTurn = new Turn();
+		newTurn.setClient(Admin.getUserById(clientId));
+		newTurn.setSchedule(schedule);
+		newTurn.setServices(services);
+		newTurn.setDuration(Time.valueOf(servicesDuration));
+		newTurn.setHour(LocalTime.parse(hour));
+		newTurn.setDate(LocalDate.parse(turnDate));
+		
+		try {
+			String destPage = "WEB-INF/User/Turn/BookTurn.jsp";
+			
+			int idNewTurn = Turns.add(newTurn);
+            	
+			if (idNewTurn != -1) {
+            		String message = "Su turno fue registrado";
+            		request.setAttribute("successMessage", message);
+            	} else {
+            		String message = "Hubo un error en el registro.";
+                    request.setAttribute("errorMessage", message);
+            	}
+        	
+            RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
+            dispatcher.forward(request, response);
+            
+        } catch (Exception ex) {
+            throw new ServletException(ex);
+        }				
 	}}
 
 

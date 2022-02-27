@@ -11,6 +11,10 @@
 <%
 	User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
 	LinkedList<String> hoursList = (LinkedList<String>)request.getAttribute("hoursList");
+	
+	String[] servicesId = (String[])request.getAttribute("servicesId");
+	int idBarber =(int)request.getAttribute("idBarber");
+	int idLocal = (int)request.getAttribute("idLocal");
 %>
 
 <head>
