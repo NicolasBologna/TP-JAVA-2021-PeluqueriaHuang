@@ -1,14 +1,17 @@
 package data;
-//orig
+
 import entities.*;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
+
 
 public class TurnData {
 	
@@ -188,22 +191,115 @@ public class TurnData {
 		return turns;
 	}
 	
+	public LinkedList<String> getTimes(LinkedList<Turn> turns, LocalTime duration,Schedule schedule){
+		
+		LinkedList<String> hours= new LinkedList<>();
+		LocalTime before_hour = null;
+		LocalTime after_hour = null;
+		Turn tbreak = new Turn();
+		tbreak.setHour(schedule.getEnd_time());
+		
+		
+		if(turns.isEmpty()) {
+			long cant_hours = ChronoUnit.MINUTES.between(schedule.getStart_time(),schedule.getEnd_time());
+					
+			int k = 0;
+			LocalTime start_hour = schedule.getStart_time();
+			while(k <= cant_hours/30) {
+				
+				hours.add(start_hour.toString());
+				start_hour = start_hour.plusMinutes(30);
+				k++;
+			
+		}}else {
+		turns.add(tbreak);
+		for(int i = 0; i < turns.size()-1;i++) {
+			Turn before_turn = turns.get(i);
+			Turn after_turn = turns.get(i+1);
+			
+			before_hour = before_turn.getHour();
+			after_hour = after_turn.getHour();
+			
+			//before_hour = before_hour.plusHours(before_turn.getDuration().toLocalTime().getHour()).plusMinutes(before_turn.getDuration().toLocalTime().getMinute());
+			
+			before_hour = before_hour.plus(Duration.ofHours(before_turn.getDuration().toLocalTime().getHour()));
+			before_hour = before_hour.plus(Duration.ofMinutes(duration.getMinute()));
+			
+			if(i == 0) {
+				
+				before_hour = schedule.getStart_time();
+				before_hour = before_hour.plus(Duration.ofHours(before_turn.getDuration().toLocalTime().getHour()));
+				before_hour = before_hour.plus(Duration.ofMinutes(duration.getMinute()));
+				//before_hour  = before_hour.plusHours(before_turn.getDuration().toLocalTime().getHour()).plusMinutes(before_turn.getDuration().toLocalTime().getMinute());
+			}
+			
+			else if(i == turns.size()) {
+				
+				after_hour = schedule.getEnd_time();}
+			
+			long remainder = ChronoUnit.MINUTES.between(before_hour,after_hour);
+			
+			/*long result = l1.until(l2,
+					ChronoUnit.MINUTES);
+		long r = ChronoUnit.MINUTES.between(l1, l2);*/
+			
+			//LocalTime remainder = after_hour.minus(Duration.ofHours(before_hour.getHour()));
+			//remainder = after_hour.minus(Duration.ofMinutes(before_hour.getMinute()));
+			//LocalTime remainder = after_hour.minusHours(before_hour.getHour()).minusMinutes(before_hour.getMinute());
+		
+			long service_duration = duration.getLong(ChronoField.MINUTE_OF_DAY);
+			
+			
+			
+			if(remainder >= service_duration){
+				
+				long cant = (remainder - service_duration)/30; 
+				int j = 0;
+				while(j <= cant) {
+					
+					hours.add(before_hour.toString());
+					before_hour = before_hour.plusMinutes(30);
+					j++;
+					}
+			}
+			
+			/*switch (remainder.compareTo(duration)) {
+				
+			case 1:
+				while((after_hour.until(before_hour, ChronoUnit.MINUTES)) >= 0) {
+					
+					hours.add(before_hour.toString());
+					before_hour = before_hour.plusMinutes(30);
+				}
+				break;
+			case 0:
+				hours.add(before_hour.toString());
+				break;
+				
+			
+			case -1:
+				break;
+			}*/
+			
+		}}
+		return hours;
+	}
+	
 	public LinkedList<String> getHoursFree(int barberId,String turnDate,int idLocal,LocalTime duration){
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		LinkedList<String> hours= new LinkedList<>();
 		LinkedList<Turn> turns = new LinkedList<>();
 		Schedule s = new Schedule();
+		s.setStart_time(LocalTime.parse("09:00:00"));
+		s.setEnd_time(LocalTime.parse("18:00:00"));
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select t.hour,t.duration,bl.start_time,bl.end_time from turns as t"
-					+ "inner join barber_local as bl on t.schedule_id = bl.id "
-					+ "where bl.barber_id=? and ts.date =? and bl.local_id = ? order by t.hour asc"
+					"select t.hour,t.date,t.duration from turns as t inner join barber_local as bl on t.schedule_id = bl.id where bl.barber_id=? and t.date =? and bl.local_id = ? order by t.hour asc"
 					);
 			stmt.setInt(1, barberId);
-			stmt.setDate(2,java.sql.Date.valueOf(turnDate));
+			stmt.setDate(2, Date.valueOf(turnDate));
 			stmt.setInt(3, idLocal);
-
 			rs=stmt.executeQuery();
 			if(rs!=null) {
 				while(rs.next()) {
@@ -211,44 +307,12 @@ public class TurnData {
 					
 					t.setDate(rs.getObject("date", LocalDate.class));
 					t.setHour(rs.getTime("hour").toLocalTime());
+
 					t.setDuration(rs.getTime("duration"));
-					s.setStart_time(rs.getTime("start_time").toLocalTime());
-					s.setEnd_time(rs.getTime("end_time").toLocalTime());
 					turns.add(t);
 				}
 			}
-			
-			for(int i = 0;i <= turns.size();i++) {
-				
-				Turn before_turn = turns.get(i);
-				Turn after_turn = turns.get(i+1);
-				
-				LocalTime before_hour = before_turn.getHour();
-				LocalTime after_hour = after_turn.getHour();
-				
-				before_hour.plusHours(before_turn.getDuration().toLocalTime().getHour()).plusMinutes(before_turn.getDuration().toLocalTime().getMinute());
-				
-				LocalTime remainder = after_hour.minusHours(before_hour.getHour()).minusMinutes(before_hour.getMinute());
-				
-				switch (remainder.compareTo(duration)) {
-					
-				case 1:
-					while((after_hour.until(before_hour, ChronoUnit.MINUTES)) < 0) {
-						
-						hours.add(before_hour.toString());
-						before_hour.plusMinutes(30);
-					}
-					break;
-				case 0:
-					hours.add(before_hour.toString());
-					break;
-					
-				
-				case -1:
-					break;
-				}
-				
-			}
+			hours = getTimes(turns, duration,s);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			
@@ -325,22 +389,24 @@ public class TurnData {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"insert into turns(schedule_id,client_id,date,time) values(?,?,?,?)",
+							"insert into turns(schedule_id,client_id,date,hour,duration) values(?,?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 			stmt.setInt(1, turn.getSchedule().getId());
 			stmt.setInt(2, turn.getClient().getUserId());
-			stmt.setDate(4, Date.valueOf(turn.getDate()));
-			stmt.setTime(5, Time.valueOf(turn.getHour()));
+			stmt.setDate(3, Date.valueOf(turn.getDate()));
+			stmt.setTime(4, Time.valueOf(turn.getHour()));
+			stmt.setTime(5,turn.getDuration());
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
-            if(keyResultSet!=null && keyResultSet.next()){
+            if(keyResultSet!=null){
+            	while(keyResultSet.next()) {
                 turn.setTurnId(keyResultSet.getInt(1));
                 
                 TurnServicesData sd = new TurnServicesData();
                 sd.setServicesTurn(turn);
-            }
+            }}
             return turn.getTurnId();
             
 		}  catch (SQLException e) {

@@ -226,9 +226,16 @@ public class ServiceData {
 				s = new Service();
 				s.setDuration(rs.getTime("duration"));
 				
-				
 				LocalTime duration = s.getDuration().toLocalTime();
-				totalDuration.plusHours(duration.getHour()).plusMinutes(duration.getMinute());
+				Duration hours = Duration.ofHours(duration.getHour());
+				Duration mins = Duration.ofMinutes(duration.getMinute());
+				
+				totalDuration = totalDuration.plus(hours);
+
+				totalDuration = totalDuration.plus(mins);
+				//totalDuration = totalDuration.plus(Duration.ofHours(duration.to);
+				//totalDuration = totalDuration.plus(Duration.ofMinutes(duration.getMinute()));
+				//totalDuration.plusHours(duration.getHour()).plusMinutes(duration.getMinute());
 				}}
 		} catch (SQLException e) {
 			e.printStackTrace();
