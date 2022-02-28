@@ -16,7 +16,7 @@ public void setServicesTurn(Turn t) {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"insert into turn_services values(?,?);");
+							"insert into turns_services values(?,?)");
 			stmt.setInt(1,t.getTurnId());
 			for(Service s:t.getServices()) {
 				stmt.setInt(2, s.getServiceId());
