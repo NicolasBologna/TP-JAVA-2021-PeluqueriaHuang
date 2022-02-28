@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
  <%@page import="java.util.LinkedList"%>
 <%@page import="entities.Service"%>
 <%@page import="entities.User"%>
@@ -39,7 +39,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 </head>
-<body class="index-page sidebar-collapse" onload="window.location='#form-turno';">
+<body class="index-page sidebar-collapse" onload="window.location='#form-turn';">
 <!-- Navbar -->
 	<nav
 		class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent "
@@ -130,7 +130,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="container shadow my-4 py-4" id="form-turno">
+		<div class="container shadow my-4 py-4" id="form-turn">
 			<h1 class="text-center pt-2">Solicitar turno</h1>
 			
 			<div class="progress-container progress-info">
@@ -141,7 +141,7 @@
 			    </div>
 			  </div>
 			</div>
-			<form action="GetAvailableTurnsServlet" method="post">				
+			<form action="GetAvailableTurnsServlet" method="post" id="form-turn">				
 	       		<div class="form-group">
 					<label for="barber">Peluquero</label> 
 					<select name="idBarber" class="browser-default custom-select">
@@ -211,22 +211,5 @@
 		type="text/javascript"></script>
 	<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 	<script src="./assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
-	<script>
-		
-	window.onload=function(){
-		var picker = document.getElementById('datePicker');
-		console.log(picker)
-		picker.addEventListener('change', function(e){
-		  var day = new Date(this.value).getUTCDay();
-		  if([6,0].includes(day)){
-		    e.target.setCustomValidity('week-end not allowed')
-		  } else {
-		    e.target.setCustomValidity('')
-		  }
-		});
-	}
-	
-	
-	</script>
 	</body>
 </html>

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
  <%@page import="java.util.LinkedList"%>
 <%@page import="entities.Service"%>
 <%@page import="entities.User"%>
@@ -11,10 +11,12 @@
 <%
 	User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
 	LinkedList<String> hoursList = (LinkedList<String>)request.getAttribute("hoursList");
+	String[] servicesList = (String[])request.getAttribute("servicesId");
 	
 	String[] servicesId = (String[])request.getAttribute("servicesId");
-	int idBarber =(int)request.getAttribute("idBarber");
+	int barberId =(int)request.getAttribute("barberId");
 	int idLocal = (int)request.getAttribute("idLocal");
+	String turnDate = (String)request.getAttribute("turn-date");
 %>
 
 <head>
@@ -41,7 +43,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 </head>
-<body class="index-page sidebar-collapse" onload="window.location='#form-turno';">
+<body class="index-page sidebar-collapse" onload="window.location='#form-turn';">
 <!-- Navbar -->
 	<nav
 		class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent "
@@ -132,7 +134,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="container shadow my-4 py-4" id="form-turno">
+		<div class="container shadow my-4 py-4" id="form-turn">
 			<h1 class="text-center pt-2">Solicitar turno</h1>
 			
 			<div class="progress-container progress-info">
@@ -143,7 +145,7 @@
 			    </div>
 			  </div>
 			</div>
-			<form action="ConfirmTurnServlet" method="post">				
+			<form action="ConfirmTurnServlet" method="post" id="form-turn">				
 	       		<div class="form-group">
 					<label for="barber">Hora</label> 
 					<select name="turn-hour" class="browser-default custom-select">
@@ -157,9 +159,21 @@
 					</select>	
 				</div>
 				
+		        <input hidden name="idLocal" value="<%=idLocal%>">
+		        
+	     		<%
+       			for (String service : servicesList) {
+	       		%>
+				<input hidden class="form-check-input service" type="checkbox" name="services" value="<%=service%>" checked>
+	       		<% } %>
+	       		
+	       		<input hidden value="<%= turnDate %>" name="turn-date">
+	       		
+	       		<input hidden value="<%= barberId %>" name="barberId">
+								
    				<button class="btn btn-block btn-primary"
 					type="submit">
-					<span>Seleccionar</span>
+					<span>Confirmar Turno</span>
 				</button>
 			</form>
 		</div>
@@ -196,42 +210,6 @@
 	<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 	<script src="./assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
 	<script>
-		
-	function getCheckedCheckboxesFor(checkboxName) {
-	    var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
-	    Array.prototype.forEach.call(checkboxes, function(el) {
-	        values.push(el.value);
-	    });
-	    return values;
-	}
-	
-	function servicesUpdated(){
-		
-		
-		let selectedServices = getCheckedCheckboxesFor("services");
-		
-		console.log(selectedServices);
-		
-		if(selectedServices.length > 0){
-			document.getElementById("locals").classList.remove("d-none");
-		}else{
-			document.getElementById("locals").classList.add("d-none");
-		}
-	}
-	
-	function localUpdated(){
-		console.log(getCheckedCheckboxesFor("services"));
-		$.ajax({
-		    type:"POST",
-		    url:"GetBarbersByServicesServlet", 
-		    data:{idLocal:2,servicesIds:getCheckedCheckboxesFor("services")},
-		    success:function(datos){
-		         console.log(datos)
-		     }
-		})
-	}
-	
-	
 	
 	</script>
 	</body>

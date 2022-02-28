@@ -51,11 +51,15 @@ public class ConfirmTurnServlet extends HttpServlet {
 		
 		String hour = request.getParameter("turn-hour");
 		String turnDate = request.getParameter("turn-date");
-		int clientId = Integer.parseInt(request.getParameter("clientId"));
-		int localId = Integer.parseInt(request.getParameter("localId"));
+		
+		int localId = Integer.parseInt(request.getParameter("idLocal"));
 		int barberId = Integer.parseInt(request.getParameter("barberId"));
 		
 		String[] servicesId = request.getParameterValues("services");
+		
+		User client = (User)request.getSession().getAttribute("user");
+		int clientId = client.getUserId();
+		
 		LocalTime servicesDuration = ServicesBarber.getTotalDuration(servicesId);
 		
 		LinkedList<Service> services = ServicesBarber.getServicesById(servicesId);
@@ -73,15 +77,16 @@ public class ConfirmTurnServlet extends HttpServlet {
 		newTurn.setDate(LocalDate.parse(turnDate));
 		
 		try {
-			String destPage = "WEB-INF/User/Turn/BookTurn.jsp";
+			String destPage = "WEB-INF/User/Turn/SavedTurn.jsp";
 			
 			int idNewTurn = Turns.add(newTurn);
             	
 			if (idNewTurn != -1) {
+					request.setAttribute("new-turn", newTurn);
             		String message = "Su turno fue registrado";
             		request.setAttribute("successMessage", message);
             	} else {
-            		String message = "Hubo un error en el registro.";
+            		String message = "Hubo un error en la solicitud del turno.";
                     request.setAttribute("errorMessage", message);
             	}
         	

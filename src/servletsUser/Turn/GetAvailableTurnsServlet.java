@@ -36,11 +36,12 @@ public class GetAvailableTurnsServlet extends HttpServlet {
 		
 		LocalTime servicesDuration = ServicesBarber.getTotalDuration(servicesId);
 		LinkedList<String> hoursList = Turns.getHoursAvailable(barberId,turnDate, idLocal, servicesDuration);
-	
+		
+		request.setAttribute("turn-date", turnDate);
 		request.setAttribute("hoursList",hoursList);
 		request.setAttribute("servicesId", servicesId);
 		request.setAttribute("idLocal", idLocal);
-		request.setAttribute("idBarber", barberId);
+		request.setAttribute("barberId", barberId);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/User/Turn/ConfirmTurn.jsp");
         dispatcher.forward(request, response);
 	/*	

@@ -4,14 +4,13 @@
 <%@page import="entities.Service"%>
 <%@page import="entities.User"%>
 <%@page import="entities.Role"%>
-<%@page import="entities.Local"%>
+<%@page import="entities.Turn"%>
 <%@page import="logic.Roles"%>
 <!DOCTYPE html>
 <html>
 <%
 	User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
-	LinkedList<Service> servicesList = (LinkedList<Service>)request.getAttribute("servicesList");
-	LinkedList<Local> localsList = (LinkedList<Local>)request.getAttribute("localsList");
+	Turn turn = (Turn)request.getAttribute("new-turn");
 %>
 
 <head>
@@ -38,7 +37,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 </head>
-<body class="index-page sidebar-collapse" onload="window.location='#form-turno';">
+<body class="index-page sidebar-collapse" onload="window.location='#form-turn';">
 <!-- Navbar -->
 	<nav
 		class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent "
@@ -129,53 +128,33 @@
 				</div>
 			</div>
 		</div>
-		<div class="container shadow my-4 py-4" id="form-turno">
+		<div class="container shadow my-4 py-4" id="form-turn">
 			<h1 class="text-center pt-2">Solicitar turno</h1>
 			
 			<div class="progress-container progress-info">
 			  <span class="progress-badge">Tu turno</span>
 			  <div class="progress">
-			    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
-			      <span class="progress-value">10%</span>
+			    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+			      <span class="progress-value">100%</span>
 			    </div>
 			  </div>
 			</div>
-			<form action="GetBarbersByServicesServlet" method="get" >
-				<div class="form-group">
-					<label>Servicios</label>
-					<div class="mb-4">
-			     		<%
-		       			for (Service service : servicesList) {
-			       		%>
-			       		
-						<div class="form-check form-check-inline ">
-						  <label class="form-check-label">
-						    <input class="form-check-input service" onchange="servicesUpdated()" type="checkbox" name="services" value="<%=service.getServiceId()%>"><%=service.getName()%>
-						    <span class="form-check-sign">
-						        <span class="check "></span>
-						    </span>
-						  </label>
-						</div>
-			       		<% } %>
-		       		</div>
-	       		</div>
-	       		<div class="form-group d-none" id="locals">
-					<label for="local">Peluquería</label> 
-					<select name="idLocal" class="browser-default custom-select" onchange="localUpdated()">
-	  					<%
-		       			for (Local local: localsList) {
-	       				%>
-					    <option value="<%=local.getLocalId()%>">
-					        <%=local.getName()%>
-					    </option>
-					  	<% } %>
-					</select>	
-				</div>  
-				<button class="btn btn-block btn-primary" id="submit-button" disabled
-					type="submit">
-					<span>Seleccionar</span>
-				</button>
-			</form>
+			
+			<div>
+				<span class="font-weight-bold">El día</span>
+				<p><%= turn.getDate() %></p>
+			</div>
+			<div>
+				<span class="font-weight-bold">A las</span>
+				<p><%= turn.getHour() %></p>
+			</div>
+			<div>
+				<span class="font-weight-bold">La duración aproximada de tu turno será</span>
+				<p><%= turn.getDuration() %></p>
+			</div>
+			
+			<a class="btn btn-block btn-primary" href="index" type="button">Volver al inicio</a>
+			
 		</div>
 	
 	
@@ -210,44 +189,6 @@
 	<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 	<script src="./assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
 	<script>
-		
-	function getCheckedCheckboxesFor(checkboxName) {
-	    var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
-	    Array.prototype.forEach.call(checkboxes, function(el) {
-	        values.push(el.value);
-	    });
-	    return values;
-	}
-	
-	function servicesUpdated(){
-		
-		
-		let selectedServices = getCheckedCheckboxesFor("services");
-		
-		console.log(selectedServices);
-		
-		if(selectedServices.length > 0){
-			document.getElementById("locals").classList.remove("d-none");
-			document.getElementById("submit-button").disabled = false;
-		}else{
-			document.getElementById("locals").classList.add("d-none");
-			document.getElementById("submit-button").disabled = true;
-		}
-	}
-	
-	/*function localUpdated(){
-		console.log(getCheckedCheckboxesFor("services"));
-		$.ajax({
-		    type:"POST",
-		    url:"GetBarbersByServicesServlet", 
-		    data:{idLocal:2,servicesIds:getCheckedCheckboxesFor("services")},
-		    success:function(datos){
-		         console.log(datos)
-		     }
-		})
-	}*/
-	
-	
 	
 	</script>
 	</body>
