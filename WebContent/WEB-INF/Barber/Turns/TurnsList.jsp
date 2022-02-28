@@ -1,7 +1,12 @@
-<%@page import="java.util.LinkedList"%>
-<%@page import="entities.User"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+ <%@page import="java.util.LinkedList"%>
+ <%@page import="entities.Turn"%>
+ <%@page import="entities.User"%>
+ <%@page import="entities.Schedule"%>
+ <%@page import="entities.Local"%>
+  <%@page import="entities.Service"%>
+ 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,8 +15,7 @@
 	<link rel="icon" type="image/png" href="./assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<title>
-	  Administar Usuarios
-	</title>
+Turnos	</title>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 	<!--     Fonts and icons     -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -21,8 +25,8 @@
 	<link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
 	
 	<%
-		User p = (User)session.getAttribute("usuario");
-	    	LinkedList<User> lp = (LinkedList<User>)request.getAttribute("lp");
+		
+	    LinkedList<Turn> lt = (LinkedList<Turn>)request.getAttribute("turnsList");
 	    
 	%>
 	
@@ -30,57 +34,52 @@
 <body class="bg-dark text-light">
 	<div class="container">
 		<div class="row">
-        	<h1>Usuarios</h1>
+        	<h1>Agenda de turnos</h1>
            	<div class="col-12 col-sm-12 col-lg-12 shadow">
                	<div class="table-responsive">
                    	<table class="table table-dark pt-2">
                    		<thead>
                    			<tr>
-                   				<th>id</th>
-                   		    	<th>nombre</th>
-                       			<th>apellido</th>
-                       			<th>email</th>
-                       			<th>Dni</th>
-                       			<th>tel</th>
-                       			<th>habilitado</th>
-                       			<th></th>
-                       			<th></th>
+                   				<th>Id</th>
+                   				<th>Fecha</th>
+                   				<th>Hora</th>
+                   		    	<th>Local</th>
+                       			<th>Cliente</th>
+                       			<th>Contacto cliente</th>
+                       			<th>Servicios</th>
+                       			
                    			</tr>
                    		</thead>
                    		<tbody>
                    		<%
-                   			for (User per : lp) {
-                   		%>
-                   			<tr>
-                   				<td><%=per.getUserId()%></td>
-                   				<td><%=per.getFirstName()%></td>
-                   				<td><%=per.getLastName()%></td>
-                   				<td><%=per.getEmail()%></td>
-                   				<td><%=per.getDni()%></td>
-                   				<td><%=per.getPhone()%></td>
-         
-                   				<td>
-	                   				<input type="checkbox" <%=per.getIsEnable()?"checked":""%> name="checkbox" class="bootstrap-switch" onclick="changeEnable(<%=per.getUserId()%>)"
-									    data-on-label="ON"
-									    data-off-label="OFF"
-									/>
-                   				</td>
-                   				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" 
-                   						onclick="window.location.href='EditUserServlet?idPersona='+<%=per.getUserId()%>;">Editar</button>
-                   				</td>
+                   			for (Turn t : lt) {
                    				
-                   				<td>
-                   					<button type="button" class="btn <%=per.getIsEnable()?"btn-danger":"btn-success"%> btn-round btn-sm my-0" 
-                   						onclick="changeStatus(<%=per.getUserId()%>)"><%=per.getIsEnable()?"Borrar":"Recuperar"%></button>
-                   				</td>                   						
+                   				User c = t.getClient();
+                   				Schedule s = t.getSchedule();
+                   				Local l = s.getLocal();
+                   				LinkedList<Service> ls = t.getServices();
+                   		%>
+                   				
+                   			<tr >
+                   				<td><%=t.getTurnId()%></td>
+                   				<td><%= t.getDate() %></td>
+                   				<td><%= t.getHour() %></td>
+                   				<td><%=l.getAddress()%></td>
+                   				<td><%=c.getFullName()%></td>
+                   				<td><%=c.getPhone()%></td>
+                   				
+                   				<td><ul><%for(Service service: ls) { %>
+                   				<li><%=service.getName() %></li>
+            					
+                   				
+                   				<%} %></ul>
+                   				</td>						
                    			</tr>
                    		<% } %>
-                   		<tr class="text-center"> 
-                   		<td ><button type="button" class="btn btn-primary btn-round" onclick="window.location.href='index'">Inicio</button></td> 
-                   			<td colspan=9> <button type="button" class="btn btn-success btn-round" onclick="window.location.href='CreateUserServlet';">Agregar usuario</button></td>
-                   		</tr>
+                   		
                    		</tbody>
                   		</table>
+                  		<button type="button" class="btn btn-primary btn-round" onclick="window.location.href='index'">Inicio</button>
                   		<span class="text-success">
 			  				${successMessage}
 						</span>

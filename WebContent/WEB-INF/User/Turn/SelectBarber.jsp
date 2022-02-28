@@ -1,13 +1,19 @@
-
-<%@page import="logic.Roles"%>
-<%@page import="entities.Role"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ <%@page import="java.util.LinkedList"%>
+<%@page import="entities.Service"%>
 <%@page import="entities.User"%>
-<%@page import="entities.Publication"%>
-<%@page import="java.util.LinkedList"%>
+<%@page import="entities.Role"%>
+<%@page import="entities.Local"%>
+<%@page import="logic.Roles"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
+<%
+	User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
+	String[] servicesList = (String[])request.getAttribute("servicesId");
+	LinkedList<User> barbersList = (LinkedList<User>)request.getAttribute("barbersList");
+	int idLocal = (int)request.getAttribute("idLocal");
+%>
 
 <head>
 	<meta charset="utf-8" />
@@ -15,7 +21,7 @@
 		href="./assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" href="./assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>SALÓN LEGENDS</title>
+	<title>Reservá tu turno</title>
 	<meta
 		content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 		name='viewport' />
@@ -31,16 +37,10 @@
 	<link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-	
-	<%
-		User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
-		LinkedList<Publication> lp = (LinkedList<Publication>)request.getAttribute("publicationList");
-	%>
-	
-</head>
 
-<body class="index-page sidebar-collapse">
-	<!-- Navbar -->
+</head>
+<body class="index-page sidebar-collapse" onload="window.location='#form-turn';">
+<!-- Navbar -->
 	<nav
 		class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent "
 		color-on-scroll="400">
@@ -130,51 +130,72 @@
 				</div>
 			</div>
 		</div>
-		<div class="bg-light">
-			<div class="d-flex justify-content-center">
-				<a class="btn btn-primary btn-round btn-lg mt-4 animate__animated animate__jello animate__infinite	animate__slower" 
-					type="button" href="BookTurnServlet">
-					<i class="now-ui-icons shopping_basket"></i> Reservá tu turno
-				</a>
+		<div class="container shadow my-4 py-4" id="form-turn">
+			<h1 class="text-center pt-2">Solicitar turno</h1>
+			
+			<div class="progress-container progress-info">
+			  <span class="progress-badge">Tu turno</span>
+			  <div class="progress">
+			    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+			      <span class="progress-value">40%</span>
+			    </div>
+			  </div>
 			</div>
-			<div class="d-flex justify-content-center">
-				<h1 class="pt-3">Mirá nuestras últimas tendencias</h1>
-			</div>
-			<section class="row d-flex justify-content-around pb-3">
-			<%for(Publication p: lp){ %>
-				<div class="card my-3 col-5 px-0 rounded">
-			  		<div class="row no-gutters">
-					    <div class="col-4">
-					      <img class="img-fluid" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.salonsuccessacademy.com%2Fwp-content%2Fuploads%2F2015%2F01%2FFotolia_64007532_Subscription_Monthly_M.jpg&f=1&nofb=1" alt="...">
-					    </div>
-			    		<div class="col-8">
-				      		<div class="card-body">
-						        <h5 class="card-title"><%=p.getTitle() %></h5>
-						        <p class="card-text"><%= p.getText() %>.</p>
-						        <p class="card-text"><small class="text-muted"><%= p.getDate() %></small></p>
-					      	</div>
-			    		</div>
-			  		</div>
+			<form action="GetAvailableTurnsServlet" method="post" id="form-turn">				
+	       		<div class="form-group">
+					<label for="barber">Peluquero</label> 
+					<select name="idBarber" class="browser-default custom-select">
+	  					<%
+		       			for (User barber: barbersList) {
+	       				%>
+					    <option value="<%=barber.getUserId()%>">
+					        <%=barber.getFullName()%>
+					    </option>
+					  	<% } %>
+					</select>	
 				</div>
-			<%} %>
-			</section>
+				
+				<div class="form-group">
+					<label for="start">Start date:</label>
+	
+					<input type="date" id="start" name="turn-date"
+					       id="datePicker"
+					       value="<%= java.time.LocalDate.now() %>"
+					       min="<%= java.time.LocalDate.now() %>"
+					       max="<%= java.time.LocalDate.now().plusMonths(1) %>">   	
+		        </div>	
+		        
+		        <input hidden name="idLocal" value="<%=idLocal%>">
+		        
+	     		<%
+       			for (String service : servicesList) {
+	       		%>
+				<input hidden class="form-check-input service" type="checkbox" name="services" value="<%=service%>" checked>
+	       		<% } %>
+		        
+   				<button class="btn btn-block btn-primary"
+					type="submit">
+					<span>Seleccionar</span>
+				</button>
+			</form>
 		</div>
-		 
-		<!--  End Modal -->
-		<footer class="footer" data-background-color="black">
-			<div class=" container ">
-				Diseño basado en una plantilla de <a href="https://www.creative-tim.com"> Creative Tim
-				<div class="copyright" id="copyright">
-					&copy;
-					<script>
-						document.getElementById('copyright').appendChild(
-								document.createTextNode(new Date()
-										.getFullYear()))
-					</script>
-					UTN - FRRO - JAVA
-				</div>
+	
+	
+			<!--  End Modal -->
+	<footer class="footer" data-background-color="black">
+		<div class=" container ">
+			Dise�o basado en una plantilla de <a href="https://www.creative-tim.com"> Creative Tim
+			<div class="copyright" id="copyright">
+				&copy;
+				<script>
+					document.getElementById('copyright').appendChild(
+							document.createTextNode(new Date()
+									.getFullYear()))
+				</script>
+				UTN - FRRO - JAVA
 			</div>
-		</footer>
+		</div>
+	</footer>
 	</div>
 	<!--   Core JS Files   -->
 	<script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
@@ -190,21 +211,5 @@
 		type="text/javascript"></script>
 	<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 	<script src="./assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
-	<script>
-		$(document).ready(function() {
-			// the body of this function is in assets/js/now-ui-kit.js
-			nowuiKit.initSliders();
-		});
-
-		function scrollToDownload() {
-
-			if ($('.section-download').length != 0) {
-				$("html, body").animate({
-					scrollTop : $('.section-download').offset().top
-				}, 1000);
-			}
-		}
-	</script>
-</body>
-
+	</body>
 </html>

@@ -1,5 +1,6 @@
+<%@page import="entities.User"%>
 <%@page import="java.util.LinkedList"%>
-<%@page import="entities.Service"%>
+<%@page import="entities.Schedule"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -10,7 +11,7 @@
 	<link rel="icon" type="image/png" href="./assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<title>
-	  Administar Servicios
+	  Administar Horarios
 	</title>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 	<!--     Fonts and icons     -->
@@ -21,54 +22,44 @@
 	<link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
 	
 	<%
-	    	LinkedList<Service> ls = (LinkedList<Service>)request.getAttribute("servicesList");
-	    
+		User user = (User)session.getAttribute("usuario");
+    	LinkedList<Schedule> schedulesList = (LinkedList<Schedule>)request.getAttribute("schedulesList");    
 	%>
-	
 </head>
 <body class="bg-dark text-light">
 	<div class="container">
 		<div class="row">
-        	<h1>Servicios</h1>
+        	<h1>Mis Horarios</h1>
            	<div class="col-12 col-sm-12 col-lg-12 shadow">
                	<div class="table-responsive">
                    	<table class="table table-dark pt-2">
                    		<thead>
                    			<tr>
-                   				<th>Id</th>
-                   		    	<th>Nombre</th>
-                       			<th>Descripcion</th>
-                       			<th>Precio</th>
-                       			<th>Duracion</th>
-                       			<th></th>
+                   				<th>Dia de la semana</th>
+                   		    	<th>Horario de inicio</th>
+                       			<th>Horario de fin</th>
+                       			<th>Barbería</th>
                        			<th></th>
                    			</tr>
                    		</thead>
                    		<tbody>
                    		<%
-                   			for (Service service : ls) {
+                   			for (Schedule schedule : schedulesList) {
                    		%>
                    			<tr>
-                   				<td><%=service.getServiceId()%></td>
-                   				<td><%=service.getName()%></td>
-                   				<td><%=service.getDescription()%></td>
-                   				<td><%=service.getPrice()%></td>
-                   				<td><%=service.getDuration()%></td>
-                   				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" 
-                   						onclick="window.location.href='EditServiceServlet?idService='+<%=service.getServiceId()%>;">Editar</button>
-                   				</td>
-                   				
-                   				<td><button type="button" class="btn btn-danger btn-round btn-sm my-0" 
-                   						onclick="window.location.href='DeleteServiceServlet?idService=<%=service.getServiceId()%>';">Eliminar</button>
-                   				</td>                   						
+                   				<td><%=schedule.getDay_of_week_As_string()%></td>
+                   				<td><%=schedule.getStart_time()%> hs</td>
+                   				<td><%=schedule.getEnd_time()%> hs</td>
+                   				<td><%=schedule.getLocal().getName()%></td>
+         
+                   				<td><a type="button" class="btn btn-primary btn-round btn-sm my-0" 
+                   						href="EditScheduleServlet?idSchedule=<%=schedule.getId()%>">Editar</a>
+                   				</td>               						
                    			</tr>
                    		<% } %>
                    		<tr class="text-center">
-                   		<td ><button type="button" class="btn btn-primary btn-round" onclick="window.location.href='index'">Inicio</button></td> 
-                   		<td colspan = 9> <button type="button" class="btn btn-success btn-round" onclick="window.location.href='CreateServiceServlet';">Agregar servicio</button></td>
-                   			
-                   			
-
+							<td ><a type="button" class="btn btn-primary btn-round" href='index'>Inicio</a></td>
+                   			<td colspan=9> <a type="button" class="btn btn-success btn-round" href="CreateScheduleServlet">Agregar Horario</a></td>
                    		</tr>
                    		</tbody>
                   		</table>
@@ -86,17 +77,5 @@
 	<script src="./assets/js/plugins/bootstrap-switch.js"></script>
 	<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
 	<script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
-		<script type="text/javascript">
-	$('.bootstrap-switch').each(function(){
-	    $this = $(this);
-	    data_on_label = $this.data('on-label') || '';
-	    data_off_label = $this.data('off-label') || '';
-	
-	    $this.bootstrapSwitch({
-	        onText: data_on_label,
-	        offText: data_off_label
-	    });
-	});
-	</script>
 </body>
 </html>
