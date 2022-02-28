@@ -34,6 +34,7 @@ public class GetBarbersByServicesServlet extends HttpServlet {
 		int idLocal = Integer.parseInt(request.getParameter("idLocal"));
 		
 		request.setAttribute("servicesId", servicesId);
+		request.setAttribute("idLocal", idLocal);
 		request.setAttribute("barbersList", ServicesBarber.getBarbersByServices(servicesId,idLocal));
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/User/Turn/SelectBarber.jsp");
         dispatcher.forward(request, response);

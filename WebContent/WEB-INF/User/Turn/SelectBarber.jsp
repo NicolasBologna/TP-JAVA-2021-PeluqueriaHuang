@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
  <%@page import="java.util.LinkedList"%>
 <%@page import="entities.Service"%>
 <%@page import="entities.User"%>
@@ -10,8 +10,9 @@
 <html>
 <%
 	User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
-	LinkedList<Service> servicesList = (LinkedList<Service>)request.getAttribute("servicesList");
+	String[] servicesList = (String[])request.getAttribute("servicesId");
 	LinkedList<User> barbersList = (LinkedList<User>)request.getAttribute("barbersList");
+	int idLocal = (int)request.getAttribute("idLocal");
 %>
 
 <head>
@@ -38,7 +39,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 </head>
-<body class="index-page sidebar-collapse" onload="window.location='#form-turno';">
+<body class="index-page sidebar-collapse" onload="window.location='#form-turn';">
 <!-- Navbar -->
 	<nav
 		class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent "
@@ -129,7 +130,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="container shadow my-4 py-4" id="form-turno">
+		<div class="container shadow my-4 py-4" id="form-turn">
 			<h1 class="text-center pt-2">Solicitar turno</h1>
 			
 			<div class="progress-container progress-info">
@@ -140,7 +141,7 @@
 			    </div>
 			  </div>
 			</div>
-			<form action="GetAvailableTurnsServlet" method="post">				
+			<form action="GetAvailableTurnsServlet" method="post" id="form-turn">				
 	       		<div class="form-group">
 					<label for="barber">Peluquero</label> 
 					<select name="idBarber" class="browser-default custom-select">
@@ -158,9 +159,20 @@
 					<label for="start">Start date:</label>
 	
 					<input type="date" id="start" name="turn-date"
-					       value="2022-03-03"
-					       min="2022-03-01" max="2022-04-01">   	
+					       id="datePicker"
+					       value="<%= java.time.LocalDate.now() %>"
+					       min="<%= java.time.LocalDate.now() %>"
+					       max="<%= java.time.LocalDate.now().plusMonths(1) %>">   	
 		        </div>	
+		        
+		        <input hidden name="idLocal" value="<%=idLocal%>">
+		        
+	     		<%
+       			for (String service : servicesList) {
+	       		%>
+				<input hidden class="form-check-input service" type="checkbox" name="services" value="<%=service%>" checked>
+	       		<% } %>
+		        
    				<button class="btn btn-block btn-primary"
 					type="submit">
 					<span>Seleccionar</span>
@@ -199,44 +211,5 @@
 		type="text/javascript"></script>
 	<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 	<script src="./assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
-	<script>
-		
-	function getCheckedCheckboxesFor(checkboxName) {
-	    var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
-	    Array.prototype.forEach.call(checkboxes, function(el) {
-	        values.push(el.value);
-	    });
-	    return values;
-	}
-	
-	function servicesUpdated(){
-		
-		
-		let selectedServices = getCheckedCheckboxesFor("services");
-		
-		console.log(selectedServices);
-		
-		if(selectedServices.length > 0){
-			document.getElementById("locals").classList.remove("d-none");
-		}else{
-			document.getElementById("locals").classList.add("d-none");
-		}
-	}
-	
-	function localUpdated(){
-		console.log(getCheckedCheckboxesFor("services"));
-		$.ajax({
-		    type:"POST",
-		    url:"GetBarbersByServicesServlet", 
-		    data:{idLocal:2,servicesIds:getCheckedCheckboxesFor("services")},
-		    success:function(datos){
-		         console.log(datos)
-		     }
-		})
-	}
-	
-	
-	
-	</script>
 	</body>
 </html>

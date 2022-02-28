@@ -63,4 +63,10 @@ public class ServicesBarber {
 		ServiceData sd = new ServiceData();
 		return sd.getTotalDuration(servicesId);
 	}
+	
+	public static LinkedList<Service> getServicesById(String[] servicesId){
+		
+		ServiceData sd = new ServiceData();
+		return sd.getServicesById(servicesId);
+	}
 }

@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/User/Turn/BookTurn.jsp=UTF-8
 encoding//WebContent/WEB-INF/User/Turn/ConfirmTurn.jsp=UTF-8
+encoding//WebContent/WEB-INF/User/Turn/SavedTurn.jsp=UTF-8
 encoding//WebContent/WEB-INF/User/Turn/SelectBarber.jsp=UTF-8
 encoding/README.md=UTF-8

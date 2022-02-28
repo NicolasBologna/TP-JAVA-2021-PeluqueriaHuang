@@ -35,13 +35,12 @@ public class Turns {
 		TurnData td = new TurnData();
 		return td.add(turn);
 	}
-	/*
-	public static Date[] getDaysNot(LocalTime duration, int barberId, int localId) {
+	
+	public static LinkedList<String> getHoursAvailable(int barber_id,String turnDate,int idLocal, LocalTime duration){
+		
 		TurnData td = new TurnData();
-		return td.getDaysNot(duration, barberId, localId);
-		
-		
-	}*/
+		return td.getHoursFree(barber_id,turnDate,idLocal,duration);
+	}
 	public static boolean delete(int id){
 		TurnData td = new TurnData();
 		Turn turn = td.getById(id);

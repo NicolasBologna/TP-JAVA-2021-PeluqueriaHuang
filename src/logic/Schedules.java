@@ -11,6 +11,12 @@ public class Schedules {
 		return scheduleData.getAllByBarber(barberId);
 	}
 	
+	public static Schedule getByLocalBarber(int localId,int barberId) {
+		ScheduleData sd = new ScheduleData();
+		return sd.getByBarberLocal(localId,barberId);
+	}
+	
+	
 	public static boolean areSchedulesLoaded(int barberId) {
 		ScheduleData scheduleData = new ScheduleData();
 		return !scheduleData.getAllByBarber(barberId).isEmpty();

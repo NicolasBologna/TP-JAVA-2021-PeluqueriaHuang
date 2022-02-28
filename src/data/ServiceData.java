@@ -226,9 +226,16 @@ public class ServiceData {
 				s = new Service();
 				s.setDuration(rs.getTime("duration"));
 				
-				
 				LocalTime duration = s.getDuration().toLocalTime();
-				totalDuration.plusHours(duration.getHour()).plusMinutes(duration.getMinute());
+				Duration hours = Duration.ofHours(duration.getHour());
+				Duration mins = Duration.ofMinutes(duration.getMinute());
+				
+				totalDuration = totalDuration.plus(hours);
+
+				totalDuration = totalDuration.plus(mins);
+				//totalDuration = totalDuration.plus(Duration.ofHours(duration.to);
+				//totalDuration = totalDuration.plus(Duration.ofMinutes(duration.getMinute()));
+				//totalDuration.plusHours(duration.getHour()).plusMinutes(duration.getMinute());
 				}}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -245,5 +252,50 @@ public class ServiceData {
 		}
 	return totalDuration;
   }
+  
+  public LinkedList<Service> getServicesById(String[] servicesId){
+	  PreparedStatement stmt=null;
+	  ResultSet rs=null;
+	  Service s = null;
+	  LinkedList<Service> services = new LinkedList<>();
+		
+	  for(String serviceId: servicesId) {
+			
+			
+		  try {
+				stmt=DbConnector.getInstancia().getConn().prepareStatement(
+						"select * from services where service_id=?"
+						);
+				stmt.setInt(1, Integer.parseInt(serviceId));
+				rs=stmt.executeQuery();
+				if(rs!=null) {
+					
+				while(rs.next()) {	
+					s = new Service();
+					
+					s.setServiceId(rs.getInt("service_id"));
+					s.setName(rs.getString("name"));
+					s.setDescription(rs.getString("description"));
+					s.setDuration(rs.getTime("duration"));
+					s.setPrice(rs.getFloat("price"));
+					
+					services.add(s);
+					}}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) {rs.close();}
+					if(stmt!=null) {stmt.close();}
+					DbConnector.getInstancia().releaseConn();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+	  
+	  
+	  }
+	  return services;}
   
 }
