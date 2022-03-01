@@ -1,8 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="java.util.LinkedList"%>
 <%@page import="entities.User"%>
 <%@page import="entities.Local" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,7 +33,6 @@
 	<div class="container">
 		<div class="row">
         	<h1>Peluqueros de <%= local.getName()%></h1>
-        	<h2></h>
            	<div class="col-12 col-sm-12 col-lg-12 shadow">
                	<div class="table-responsive">
                    	<table class="table table-dark pt-2">
@@ -42,9 +42,7 @@
                    		    	<th>Nombre</th>
                        			<th>Apellido</th>
                        			<th>Email</th>
-                       			<th>Telefono</th>
-                       			
-                       			
+                       			<th>Telefono</th>                    	               			
                    			</tr>
                    		</thead>
                    		<tbody>
@@ -55,15 +53,12 @@
                    				<td><%=barber.getUserId()%></td>
                    				<td><%=barber.getFirstName()%></td>
                    				<td><%=barber.getLastName()%></td>
-                   				<td><%=barber.getEmail()%></td>
-                   				
-                   				<td><%=barber.getPhone()%></td>
-         
-                   				                 						
+                   				<td><%=barber.getEmail()%></td>                   				
+                   				<td><%=barber.getPhone()%></td>                        				                 						
                    			</tr>
                    		<% } %>
                    		<tr class="text-center"> 
-                   			<td colspan=9> <button type="button" class="btn btn-success btn-round" onclick="window.location.href='signin';">Inicio</button></td>
+                   			<td colspan=9> <a type="button" class="btn btn-primary btn-round" href="LocalListServlet">volver</a></td>
                    		</tr>
                    		</tbody>
                   		</table>

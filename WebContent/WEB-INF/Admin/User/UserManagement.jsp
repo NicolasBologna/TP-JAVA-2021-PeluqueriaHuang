@@ -81,8 +81,13 @@
                    		</tr>
                    		</tbody>
                   		</table>
-                  		<span class="text-success">
-			  				${successMessage}
+                  		       		
+			       		<span class="text-danger">
+						  ${errorMessage}
+						</span>
+						
+						<span class="text-success">
+						  ${successMessage}
 						</span>
               		</div>
               	</div>	

@@ -91,6 +91,11 @@
 				type="submit">
 				<span>Editar</span>
 			</button>
+			
+			<a class="btn btn-block btn-primary"
+				href="ListSchedules">
+				<span>Volver</span>
+			</a>
 		</form>
 	</div>
 	</main>

@@ -1,8 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="java.util.LinkedList"%>
 <%@page import="entities.Service"%>
 <%@page import="entities.ServiceBarber"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,22 +26,30 @@
 			LinkedList<Integer> serviceBarber = (LinkedList<Integer>)request.getAttribute("serviceBarberList");
 	    
 	%>
+	<style type="text/css">
+	.form-check .form-check-sign::after{
+		color:white;
+	}
 	
+	.form-control {
+		color:white;
+	}
+	</style>	
 	
 </head>
 <body class="bg-dark text-light">
 	<div class="container">
-		<div class="row">
-        	<h1>Mis servicios</h1>
-       		<form action="ServiceBarberListServlet" method="post" class="shadow p-5">          
-                <label>Servicios</label>
+       	<h1>Mis servicios</h1>
+      		<form action="ServiceBarberListServlet" method="post" class="shadow p-5">          
+               <label>Servicios</label>
 				<div class="mb-4">
 		     		<%
 	       			for (Service service : allServices) {		       				
 		       		%>
-						<div class="form-check form-check-inline ">
+						<div class="form-check form-check-inline text-light">
 						  <label class="form-check-label">
-						    <input class="form-check-input" type="checkbox" <%= serviceBarber.contains(service.getServiceId())? "checked":"" %> name="services" value="<%=service.getServiceId()%>"><%=service.getName()%> 
+						    <input class="form-check-input" type="checkbox" <%= serviceBarber.contains(service.getServiceId())? "checked":"" %> name="services" 
+						    	value="<%=service.getServiceId()%>"><%=service.getName()%> 
 						    <span class="form-check-sign">
 						        <span class="check "></span>
 						    </span>
@@ -49,18 +57,17 @@
 						</div>
 	       			<% } %>
 	       		</div>
-	       		<button class="btn btn-block btn-primary"
-				type="submit" >
-				Guardar
-				</button>
-         		<span class="text-success">
+	       		<button class="btn btn-block btn-success"
+				type="submit" >Guardar</button>
+				<a class="btn btn-block btn-primary"
+				href="Index" >Volver</a>
+	       		<span class="text-success">
 	  				${successMessage}
 				</span>
 				<span class="text-danger">
 	  				${errorMessage}
 				</span>
-       		</form>
-       	</div>	
+      		</form>
    	</div>
 	
 	<script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>

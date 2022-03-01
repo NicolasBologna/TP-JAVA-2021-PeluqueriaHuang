@@ -108,15 +108,16 @@
        		<span class="text-danger">
 			  ${errorMessage}
 			</span>
-			
-			<span class="text-success">
-			  ${successMessage}
-			</span>
-			
-			<button name="register" id="register" class="btn btn-block btn-primary"
+						
+			<button name="register" id="register" class="btn btn-block btn-success"
 				type="submit">
 				<span>Agregar Usuario</span>
 			</button>
+			
+			<a class="btn btn-block btn-primary"
+				href="UserListServlet">
+				<span>Volver</span>
+			</a>
 		</form>
 	</div>
 	</main>
