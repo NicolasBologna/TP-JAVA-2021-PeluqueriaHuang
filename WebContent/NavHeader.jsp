@@ -61,7 +61,7 @@
 					</a></li>
 				<% } %>
 				<%if (user.hasRol(Roles.getRoleByName("Cliente")) || user.hasRol(Roles.getRoleByName("Peluquero"))) { %>
-					<li class="nav-item d-none"><a class="nav-link"
+					<li class="nav-item"><a class="nav-link"
 						href="ListTurnsServlet"> <i 
 							class="now-ui-icons design_scissors"></i>
 							<p>Mis Turnos</p>

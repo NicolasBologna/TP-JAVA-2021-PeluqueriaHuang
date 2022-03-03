@@ -149,9 +149,7 @@ public class TurnData {
 		
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select * from turns "
-					+ "inner join barber_local on turns.schedule_id = barber_local.id "
-					+ "where barber_local.barber_id=? and turns.init_date >= current_date"
+			"select t.turn_id,t.date,t.hour,t.client_id,bl.id from turns as t inner join barber_local as bl on t.schedule_id = bl.id where bl.barber_id=? and t.date>=CURRENT_DATE;"
 					);
 			stmt.setInt(1, barberId);
 		
@@ -165,7 +163,7 @@ public class TurnData {
 					
 					t.setTurnId(rs.getInt("turn_id"));
 					User client = ud.getById(rs.getInt("client_id"));
-					Schedule schedule = sd.getById(rs.getInt("schedule_id"));
+					Schedule schedule = sd.getById(rs.getInt("id"));
 					t.setClient(client);
 					t.setSchedule(schedule);
 					t.setDate(rs.getObject("date", LocalDate.class));
