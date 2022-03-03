@@ -116,7 +116,7 @@ public class LocalData {
 		LinkedList<User> barbers= new LinkedList<>();
 		
 		try {
-			stmt=DbConnector.getInstancia().getConn().prepareStatement("select bl.barber_id,u.first_name,u.last_name,u.phone,u.email "
+			stmt=DbConnector.getInstancia().getConn().prepareStatement("select distinct bl.barber_id,u.first_name,u.last_name,u.phone,u.email "
 					+ "from barber_local bl "
 					+ "inner join users u on bl.barber_id = u.user_id "
 					+ "where local_id =?;");
