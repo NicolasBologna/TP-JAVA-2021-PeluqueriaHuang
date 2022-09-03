@@ -25,7 +25,6 @@ public class PublicationData {
 					p.setText(rs.getString("text"));
 					p.setDate(rs.getString("date"));
 					p.setImage(rs.getBlob("image").getBinaryStream());
-					p.setBase64Image(rs.getBlob("image").getBinaryStream());
 					publications.add(p);
 				}
 			}
@@ -62,9 +61,7 @@ public class PublicationData {
 				p.setTitle(rs.getString("title"));
 				p.setText(rs.getString("text"));
 				p.setDate(rs.getString("date"));
-				p.setImage(rs.getBlob("image").getBinaryStream());
-				p.setBase64Image(rs.getBinaryStream("image"));
-				
+				p.setImage(rs.getBlob("image").getBinaryStream());				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
