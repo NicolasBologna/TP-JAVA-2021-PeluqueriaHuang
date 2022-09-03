@@ -1,5 +1,10 @@
 package entities;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Base64;
+
 public class Publication {
 	
 	private int publicationId;
@@ -7,7 +12,29 @@ public class Publication {
 	private String title;
 	private String text;
 	private String date;
-	private String image;
+	private InputStream image;
+	private String base64Image;
+	
+    public String getBase64Image() {
+		return this.base64Image;
+    }
+    
+    public void setBase64Image(InputStream image) throws IOException {
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		byte[] buffer = new byte[4096];
+		int bytesRead = -1;
+		
+		while ((bytesRead = image.read(buffer)) != -1) {
+			outputStream.write(buffer, 0, bytesRead);
+		}
+		
+		byte[] imageBytes = outputStream.toByteArray();
+		
+		String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+		
+		outputStream.close();
+		this.base64Image = base64Image;
+    }
 	
 	public int getPublicationId() {
 		return publicationId;
@@ -39,10 +66,10 @@ public class Publication {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public String getImage() {
-		return image;
+	public InputStream getImage() {
+		return this.image;
 	}
-	public void setImage(String image) {
+	public void setImage(InputStream image) {
 		this.image = image;
 	}
 }

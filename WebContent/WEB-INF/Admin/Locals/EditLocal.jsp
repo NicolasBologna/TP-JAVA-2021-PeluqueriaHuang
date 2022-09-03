@@ -78,10 +78,15 @@
 			<span class="text-success">
 			  ${successMessage}
 			</span>
-			<button name="register" id="register" class="btn btn-block btn-primary"
+			<button name="register" id="register" class="btn btn-block btn-success"
 				type="submit">
 				<span>Finalizar</span>
 			</button>
+			
+			<a class="btn btn-block btn-primary"
+				href="LocalListServlet">
+				<span>Volver</span>
+			</a>
 		</form>
 	</div>
 	</main>

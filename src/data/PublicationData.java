@@ -1,13 +1,14 @@
 package data;
-//orig
+
 import entities.*;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.LinkedList;
 
 public class PublicationData {
 	
-	public LinkedList<Publication> getAll(){
+	public LinkedList<Publication> getAll() throws IOException{
 		Statement stmt=null;
 		ResultSet rs=null;
 		LinkedList<Publication> publications= new LinkedList<>();
@@ -23,7 +24,8 @@ public class PublicationData {
 					p.setTitle(rs.getString("title"));
 					p.setText(rs.getString("text"));
 					p.setDate(rs.getString("date"));
-					p.setImage(rs.getString("image"));
+					p.setImage(rs.getBlob("image").getBinaryStream());
+					p.setBase64Image(rs.getBlob("image").getBinaryStream());
 					publications.add(p);
 				}
 			}
@@ -43,7 +45,7 @@ public class PublicationData {
 		return publications;
 	}
 	
-	public Publication getById(int id) {
+	public Publication getById(int id) throws IOException {
 		Publication p=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
@@ -60,7 +62,8 @@ public class PublicationData {
 				p.setTitle(rs.getString("title"));
 				p.setText(rs.getString("text"));
 				p.setDate(rs.getString("date"));
-				p.setImage(rs.getString("image"));
+				p.setImage(rs.getBlob("image").getBinaryStream());
+				p.setBase64Image(rs.getBinaryStream("image"));
 				
 			}
 		} catch (SQLException e) {
@@ -97,7 +100,7 @@ public class PublicationData {
 					p.setTitle(rs.getString("title"));
 					p.setText(rs.getString("text"));
 					p.setDate(rs.getString("date"));
-					p.setImage(rs.getString("image"));
+					p.setImage(rs.getBinaryStream("image"));
 					publications.add(p);
 				}
 			}
@@ -122,6 +125,8 @@ public class PublicationData {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
 		try {
+            // "SET GLOBAL max_allowed_packet=104857600;";  //Para que acepte archivos de mas de un mega hay que modificar la variable en la db
+            
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
 							"insert into publications(barber_id,title,text,image) values(?,?,?,?)",
@@ -130,8 +135,9 @@ public class PublicationData {
 			stmt.setInt(1, publication.getBarberId());
 			stmt.setString(2, publication.getTitle());
 			stmt.setString(3, publication.getText());
-			stmt.setString(4, publication.getImage());
+			stmt.setBlob(4, publication.getImage());
 			stmt.executeUpdate();
+			
 			
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){

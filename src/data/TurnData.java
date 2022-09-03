@@ -149,9 +149,7 @@ public class TurnData {
 		
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select * from turns "
-					+ "inner join barber_local on turns.schedule_id = barber_local.id "
-					+ "where barber_local.barber_id=? and turns.init_date >= current_date"
+			"select t.turn_id,t.date,t.hour,t.client_id,bl.id from turns as t inner join barber_local as bl on t.schedule_id = bl.id where bl.barber_id=? and t.date>=CURRENT_DATE;"
 					);
 			stmt.setInt(1, barberId);
 		
@@ -165,7 +163,7 @@ public class TurnData {
 					
 					t.setTurnId(rs.getInt("turn_id"));
 					User client = ud.getById(rs.getInt("client_id"));
-					Schedule schedule = sd.getById(rs.getInt("schedule_id"));
+					Schedule schedule = sd.getById(rs.getInt("id"));
 					t.setClient(client);
 					t.setSchedule(schedule);
 					t.setDate(rs.getObject("date", LocalDate.class));
@@ -196,6 +194,10 @@ public class TurnData {
 		LinkedList<String> hours= new LinkedList<>();
 		LocalTime before_hour = null;
 		LocalTime after_hour = null;
+		Turn tinit = new Turn();
+		
+		tinit.setHour(schedule.getStart_time());
+		tinit.setDuration(Time.valueOf("00:00:00"));
 		Turn tbreak = new Turn();
 		tbreak.setHour(schedule.getEnd_time());
 		
@@ -209,79 +211,62 @@ public class TurnData {
 				
 				hours.add(start_hour.toString());
 				start_hour = start_hour.plusMinutes(30);
-				k++;
+				k++;}
 			
-		}}else {
-		turns.add(tbreak);
-		for(int i = 0; i < turns.size()-1;i++) {
-			Turn before_turn = turns.get(i);
-			Turn after_turn = turns.get(i+1);
+		}else {
+			turns.add(tbreak);
+			turns.addFirst(tinit);
+			for(int i = 0; i < turns.size()-1;i++) {
 			
-			before_hour = before_turn.getHour();
-			after_hour = after_turn.getHour();
+				Turn before_turn = turns.get(i);
+				Turn after_turn = turns.get(i+1);
+				/*if(i == 0) {
+				
+					before_hour = schedule.getStart_time();
+				
+				//before_hour = before_hour.plus(Duration.ofHours(before_turn.getDuration().toLocalTime().getHour()));
+				//before_hour = before_hour.plus(Duration.ofMinutes(duration.getMinute()));
+					after_hour = before_turn.getHour();
+					}
+			
+			/*else if(i == (turns.size()-2)) {
+				before_hour = before_turn.getHour();
+				after_hour = schedule.getEnd_time();}*/
+			
+				//else {
+			
+					before_hour = before_turn.getHour();
+					after_hour = after_turn.getHour();
 			
 			//before_hour = before_hour.plusHours(before_turn.getDuration().toLocalTime().getHour()).plusMinutes(before_turn.getDuration().toLocalTime().getMinute());
-			
-			before_hour = before_hour.plus(Duration.ofHours(before_turn.getDuration().toLocalTime().getHour()));
-			before_hour = before_hour.plus(Duration.ofMinutes(duration.getMinute()));
-			
-			if(i == 0) {
-				
-				before_hour = schedule.getStart_time();
-				before_hour = before_hour.plus(Duration.ofHours(before_turn.getDuration().toLocalTime().getHour()));
-				before_hour = before_hour.plus(Duration.ofMinutes(duration.getMinute()));
-				//before_hour  = before_hour.plusHours(before_turn.getDuration().toLocalTime().getHour()).plusMinutes(before_turn.getDuration().toLocalTime().getMinute());
-			}
-			
-			else if(i == turns.size()) {
-				
-				after_hour = schedule.getEnd_time();}
-			
-			long remainder = ChronoUnit.MINUTES.between(before_hour,after_hour);
-			
-			/*long result = l1.until(l2,
-					ChronoUnit.MINUTES);
-		long r = ChronoUnit.MINUTES.between(l1, l2);*/
-			
-			//LocalTime remainder = after_hour.minus(Duration.ofHours(before_hour.getHour()));
-			//remainder = after_hour.minus(Duration.ofMinutes(before_hour.getMinute()));
-			//LocalTime remainder = after_hour.minusHours(before_hour.getHour()).minusMinutes(before_hour.getMinute());
-		
-			long service_duration = duration.getLong(ChronoField.MINUTE_OF_DAY);
+					Duration hour= Duration.ofHours(before_turn.getDuration().toLocalTime().getHour());
+					Duration min = Duration.ofMinutes(before_turn.getDuration().toLocalTime().getMinute());
+					Duration total = hour.plus(min);
+					before_hour = before_hour.plus(total);
+					//before_hour = before_hour.plus(Duration.ofHours(before_turn.getDuration().toLocalTime().getHour()));
+					//before_hour = before_hour.plus(Duration.ofMinutes(before_turn.getDuration().toLocalTime().getMinute()));
+					//before_hour = before_hour.plus(Duration.ofMinutes(duration.getMinute()));
+					//}
 			
 			
+				long remainder = ChronoUnit.MINUTES.between(before_hour,after_hour);
+				long service_duration = duration.getLong(ChronoField.MINUTE_OF_DAY);
 			
 			if(remainder >= service_duration){
 				
 				long cant = (remainder - service_duration)/30; 
+				//long cant = remainder/30;
 				int j = 0;
-				while(j <= cant) {
+				
+				do {
 					
 					hours.add(before_hour.toString());
 					before_hour = before_hour.plusMinutes(30);
 					j++;
-					}
+					}while(j<=cant);
 			}
-			
-			/*switch (remainder.compareTo(duration)) {
-				
-			case 1:
-				while((after_hour.until(before_hour, ChronoUnit.MINUTES)) >= 0) {
-					
-					hours.add(before_hour.toString());
-					before_hour = before_hour.plusMinutes(30);
 				}
-				break;
-			case 0:
-				hours.add(before_hour.toString());
-				break;
-				
-			
-			case -1:
-				break;
-			}*/
-			
-		}}
+		}
 		return hours;
 	}
 	

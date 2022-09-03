@@ -67,7 +67,7 @@ public class ScheduleData {
 		LinkedList<User> barbers= new LinkedList<User>();		
 		try {		
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select barber_id from barber_local WHERE local_id = ?"
+					"select distinct barber_id from barber_local WHERE local_id = ?"
 					);
 			stmt.setInt(1, localId);
 			rs=stmt.executeQuery();
@@ -142,7 +142,7 @@ public class ScheduleData {
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select barber_id,local_id,day_of_week,start_time,end_time from barber_local where id=?"
+					"select id,barber_id,local_id,day_of_week,start_time,end_time from barber_local where id=?"
 					);
 			stmt.setInt(1, id);
 			rs=stmt.executeQuery();

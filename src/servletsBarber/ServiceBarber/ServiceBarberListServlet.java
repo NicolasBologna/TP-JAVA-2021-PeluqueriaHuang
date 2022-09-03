@@ -55,7 +55,7 @@ public class ServiceBarberListServlet extends HttpServlet {
 		String destPage = "WEB-INF/Barber/ServiceBarber/ServiceBarberManagement.jsp";
 		request.setAttribute("serviceList", ServiceAdmin.getAll());
 		request.setAttribute("serviceBarberList", ServicesBarber.getServicesByBarberId(user.getUserId()));
-			
+		request.setAttribute("successMessage", "Se actualizaron los servicios");	
  
         RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
         dispatcher.forward(request, response);

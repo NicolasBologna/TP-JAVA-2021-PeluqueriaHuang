@@ -39,7 +39,6 @@
                    				<th>Título</th>
                    		    	<th>Texto</th>
                    		    	<th>Fecha</th>
-                       			<th>Imagen</th>
                        			<th></th>
                        			<th></th>
                    			</tr>
@@ -53,7 +52,6 @@
                    				<td><%=publication.getTitle()%></td>
                    				<td><%=publication.getText()%></td>
                    				<td><%=publication.getDate()%></td>
-                   				<td><%=publication.getImage()%></td>
                    				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" 
                    						onclick="window.location.href='EditPublicationServlet?idPublication='+<%=publication.getPublicationId()%>;">Editar</button>
                    				</td>
