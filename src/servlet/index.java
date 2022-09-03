@@ -31,7 +31,7 @@ public class index extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
         RequestDispatcher dispatcher = request.getRequestDispatcher("Index.jsp");
-        request.setAttribute("publicationList", PublicationBarber.getAll());
+        request.setAttribute("publicationList", PublicationBarber.getAllWithBarber());
         dispatcher.forward(request, response);
 	}
 

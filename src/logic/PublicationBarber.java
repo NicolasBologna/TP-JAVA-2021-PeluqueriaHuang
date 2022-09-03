@@ -5,6 +5,8 @@ import java.util.LinkedList;
 
 import data.PublicationData;
 import data.ServiceData;
+import data.UserData;
+import dtos.PublicationsIndexDto;
 import entities.Publication;
 import entities.Service;
 
@@ -14,6 +16,23 @@ public class PublicationBarber {
 		PublicationData pd = new PublicationData();
 		return pd.getAll();
 	}
+	
+	public static LinkedList<PublicationsIndexDto> getAllWithBarber() throws IOException{
+		LinkedList<PublicationsIndexDto> dtoList = new LinkedList<PublicationsIndexDto>();
+		PublicationData pd = new PublicationData();
+		UserData ud = new UserData();
+		
+		LinkedList<Publication> publications = pd.getAll();
+		
+		for(Publication pub : publications) {
+			PublicationsIndexDto pubDto = new PublicationsIndexDto(pub, ud.getById(pub.getBarberId()));
+			pubDto.setBase64Image(pub.getImage());
+			dtoList.add(pubDto);
+			
+		}
+		return dtoList;
+	}
+	
 	
 	public static Publication getById(int publicationId) throws IOException{
 		PublicationData pd = new PublicationData();

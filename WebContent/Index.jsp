@@ -6,6 +6,7 @@
 <%@page import="entities.User"%>
 <%@page import="entities.Publication"%>
 <%@page import="java.util.LinkedList"%>
+<%@page import="dtos.PublicationsIndexDto"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +35,7 @@
 	
 	<%
 		User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
-		LinkedList<Publication> lp = (LinkedList<Publication>)request.getAttribute("publicationList");
+		LinkedList<PublicationsIndexDto> lp = (LinkedList<PublicationsIndexDto>)request.getAttribute("publicationList");
 	%>
 	
 </head>
@@ -64,17 +65,18 @@
 				<h1 class="pt-3">Mirá nuestras últimas tendencias</h1>
 			</div>
 			<section class="row d-flex justify-content-around pb-3">
-			<%for(Publication p: lp){ %>
+			<%for(PublicationsIndexDto p: lp){ %>
 				<div class="card my-3 col-5 px-0 rounded">
 			  		<div class="row no-gutters">
-					    <div class="col-4">
+					    <div class="col-6">
 					      <img class="img-fluid" src="data:image/jpg;base64,<%=p.getBase64Image()%>" alt="...">
 					    </div>
-			    		<div class="col-8">
+			    		<div class="col-6">
 				      		<div class="card-body">
-						        <h5 class="card-title"><%=p.getTitle() %></h5>
-						        <p class="card-text"><%= p.getText() %>.</p>
-						        <p class="card-text"><small class="text-muted"><%= p.getDate() %></small></p>
+						        <h5 class="card-title"><%=p.getPublication().getTitle() %></h5>
+						        <p class="card-text"><%= p.getPublication().getText() %>.</p>
+						        <p class="card-text"><small class="text-muted"><%= p.getPublication().getDate() %></small></p>
+						        <p class="card-text"><small class="text-muted"><%= p.getCreatedBy().getFullName() %></small></p>
 					      	</div>
 			    		</div>
 			  		</div>
@@ -82,9 +84,10 @@
 			<%} %>
 			</section>
 		</div>
-		 <jsp:include page="/Footer.jsp" />
+		
 
 	</div>
+	<jsp:include page="/Footer.jsp" />
 	<!--   Core JS Files   -->
 	<script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
 	<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
