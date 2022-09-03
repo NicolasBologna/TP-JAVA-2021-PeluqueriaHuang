@@ -1,13 +1,16 @@
 package servletsBarber.Publication;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import entities.Publication;
 import entities.User;
@@ -18,6 +21,7 @@ import logic.PublicationBarber;
  * Servlet implementation class CreatePublicationServlet
  */
 @WebServlet("/CreatePublicationServlet")
+@MultipartConfig(maxFileSize = 16177215)    // upload file's size up to 16MB
 public class CreatePublicationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -47,12 +51,25 @@ public class CreatePublicationServlet extends HttpServlet {
 		User user = (User)request.getSession().getAttribute("user");
 		String title = request.getParameter("title");
 		String text = request.getParameter("text");
-		String image = request.getParameter("image");
+		
+		InputStream inputStream = null; // input stream of the upload file
+		
+		// obtains the upload file part in this multipart request
+        Part filePart = request.getPart("image");
+        if (filePart != null) {
+            // prints out some information for debugging
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+             
+            // obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+        }
 		
 		newPublication.setBarberId(user.getUserId());
 		newPublication.setTitle(title);
 		newPublication.setText(text);
-		newPublication.setImage(image);
+		newPublication.setImage(inputStream);
 		
 		
 		try {

@@ -43,7 +43,7 @@
 	<main>
 	<div class="container">
 		<h1 class="text-center pt-2">Crear Publicacion</h1>
-		<form action="CreatePublicationServlet" method="post" class="shadow p-5">
+		<form action="CreatePublicationServlet" method="post" class="shadow p-5" enctype="multipart/form-data">
 			<div class="form-group mb-4">
 				<label for="title">Title</label> <input type="text"
 					name="title" id="title" class="form-control"
@@ -54,11 +54,12 @@
 					name="text" id="text" class="form-control"
 					placeholder="Ingrese el texto de la publicacion" required>
 			</div>
-			<div class="form-group mb-4">
-				<label for="image">Imagen</label> <input type="text"
-					name="image" id="image" class="form-control"
-					placeholder="Ingrese la imagen" required>
+
+			<div>
+				<label for="image" class="col-12 pl-0">Imagen</label> 
+				<input type="file" name="image" id="image" size="50" required>
 			</div>
+			
        		<span class="text-danger">
 			  ${errorMessage}
 			</span>
@@ -67,7 +68,7 @@
 			  ${successMessage}
 			</span>
 			
-			<button name="register" id="register" class="btn btn-block btn-success"
+			<button name="register" id="register" class="btn btn-block btn-success mt-4"
 				type="submit" >
 				<span >Agregar</span>
 			</button>

@@ -1,5 +1,6 @@
 package logic;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 import data.PublicationData;
@@ -9,12 +10,12 @@ import entities.Service;
 
 public class PublicationBarber {
 	
-	public static LinkedList<Publication> getAll(){
+	public static LinkedList<Publication> getAll() throws IOException{
 		PublicationData pd = new PublicationData();
 		return pd.getAll();
 	}
 	
-	public static Publication getById(int publicationId){
+	public static Publication getById(int publicationId) throws IOException{
 		PublicationData pd = new PublicationData();
 		return pd.getById(publicationId);
 	}
@@ -34,12 +35,12 @@ public class PublicationBarber {
 		return pd.update(publication);
 	}
 	
-	public static boolean arePublicationsLoaded(){
+	public static boolean arePublicationsLoaded() throws IOException{
 		PublicationData pd = new PublicationData();
 		return !pd.getAll().isEmpty();
 	}
 	
-	public static boolean delete(int id){
+	public static boolean delete(int id) throws IOException{
 	    PublicationData pd = new PublicationData();
 	    Publication publication = pd.getById(id);
 	    return pd.delete(publication);

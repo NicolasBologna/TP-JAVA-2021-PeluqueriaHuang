@@ -68,7 +68,7 @@
 				<div class="card my-3 col-5 px-0 rounded">
 			  		<div class="row no-gutters">
 					    <div class="col-4">
-					      <img class="img-fluid" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.salonsuccessacademy.com%2Fwp-content%2Fuploads%2F2015%2F01%2FFotolia_64007532_Subscription_Monthly_M.jpg&f=1&nofb=1" alt="...">
+					      <img class="img-fluid" src="data:image/jpg;base64,<%=p.getBase64Image()%>" alt="...">
 					    </div>
 			    		<div class="col-8">
 				      		<div class="card-body">
