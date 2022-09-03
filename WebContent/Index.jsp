@@ -61,23 +61,36 @@
 					<i class="now-ui-icons shopping_basket"></i> Reservá tu turno
 				</a>
 			</div>
-			<div class="d-flex justify-content-center">
-				<h1 class="pt-3">Mirá nuestras últimas tendencias</h1>
+			<div class="d-flex justify-content-center ">
+				<h1 class="pt-3 ml-3 ml-md-0">Mirá nuestras últimas tendencias</h1>
 			</div>
 			<section class="row d-flex justify-content-around pb-3">
 			<%for(PublicationsIndexDto p: lp){ %>
-				<div class="card my-3 col-5 px-0 rounded">
-			  		<div class="row no-gutters">
-					    <div class="col-6">
+				<div class="card my-3 col-5 px-0 rounded ">
+			  		<div class="row no-gutters d-flex align-self-center">
+					    <div class="col-12 col-xl-6 d-flex justify-content-center">
 					      <img class="img-fluid" src="data:image/jpg;base64,<%=p.getBase64Image()%>" alt="...">
 					    </div>
-			    		<div class="col-6">
+			    		<div class="col-12 col-xl-6">
 				      		<div class="card-body">
 						        <h5 class="card-title"><%=p.getPublication().getTitle() %></h5>
 						        <p class="card-text"><%= p.getPublication().getText() %>.</p>
 						        <p class="card-text"><small class="text-muted"><%= p.getPublication().getDate() %></small></p>
 						        <p class="card-text"><small class="text-muted"><%= p.getCreatedBy().getFullName() %></small></p>
-					      	</div>
+    					      	
+						      	<div class="d-flex justify-content-center">
+							      	<a class="btn btn-primary btn-round btn-sm mt-1" type="button" href="PublicationCommentsServlet?id=<%=p.getPublication().getPublicationId()%>">
+										<i class="now-ui-icons ui-2_chat-round"></i> 
+										<%if (p.hasComments()) { %>
+											Ver Comentarios
+
+										<%}else { %>
+											Agregar Comentario
+										<% } %>
+									</a>
+								</div>
+						      	
+					      	</div>					      	
 			    		</div>
 			  		</div>
 				</div>
