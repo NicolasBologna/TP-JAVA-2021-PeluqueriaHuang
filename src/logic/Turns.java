@@ -6,8 +6,10 @@ import java.util.LinkedList;
 
 import data.PublicationData;
 import data.TurnData;
+import data.UserData;
 import entities.Publication;
 import entities.Turn;
+import entities.User;
 
 public class Turns {
 	
@@ -46,4 +48,11 @@ public class Turns {
 		Turn turn = td.getById(id);
 	    return td.delete(turn);
 	  }
+	public static boolean switchTurnStatus(int id){
+		TurnData td = new TurnData();
+		Turn turn = td.getById(id);
+		return td.switchTurnStatus((byte)(turn.getNot_cancelled()?0:1), turn.getTurnId());
+		
+		
+	}
 }

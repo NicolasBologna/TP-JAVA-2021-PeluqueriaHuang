@@ -47,7 +47,7 @@ Turnos	</title>
                        			<th>Cliente</th>
                        			<th>Contacto cliente</th>
                        			<th>Servicios</th>
-                       			
+                       			<th>Pendiente</th>
                    			</tr>
                    		</thead>
                    		<tbody>
@@ -73,7 +73,14 @@ Turnos	</title>
             					
                    				
                    				<%} %></ul>
-                   				</td>						
+                   				</td>		
+                   				 <td>
+	                   				<input type="checkbox" <%=t.getNot_cancelled()?"checked":""%> name="checkbox" class="bootstrap-switch" onclick="changeEnable(<%= t.getTurnId()%>)"
+									    data-on-label="ON"
+									    data-off-label="OFF"
+									/>
+                   				</td>
+                   								
                    			</tr>
                    		<% } %>
                    		
@@ -111,7 +118,7 @@ Turnos	</title>
 	
 		    $.ajax({
 	            type:'POST',
-	            url:'DeleteUserServlet',  
+	            url:'CancelTurnServlet',  
 	            cache:false,
 	            headers:dataRequestHeader,
 	            success:function(){ location.reload(true)},

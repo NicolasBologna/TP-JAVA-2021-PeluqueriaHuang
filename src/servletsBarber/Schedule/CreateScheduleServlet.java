@@ -70,6 +70,9 @@ public class CreateScheduleServlet extends HttpServlet {
 			String destPage = "WEB-INF/Barber/Schedules/SchedulesList.jsp";
         	if (!Schedules.isTimeAvailable()){
         		String message = "El horario no está disponible para este peluquero.";
+                request.setAttribute("errorMessage", message);}
+			if(Schedules.isDayOccupied(newSchedule)) {
+				String message = "El peluquero ya tiene una agenda registrada ese día.";
                 request.setAttribute("errorMessage", message);
         	}else {
             	int idNewSchedule = Schedules.add(newSchedule);
@@ -81,10 +84,13 @@ public class CreateScheduleServlet extends HttpServlet {
             		String message = "Hubo un error en el registro del horario.";
                     request.setAttribute("errorMessage", message);
             	}
-    			LinkedList<Schedule> barberSchedules = Schedules.getAllByBarber(user.getUserId());
-    			Collections.sort(barberSchedules);
-    			request.setAttribute("schedulesList",barberSchedules);
+    		//	LinkedList<Schedule> barberSchedules = Schedules.getAllByBarber(user.getUserId());
+    			//Collections.sort(barberSchedules);
+    			//request.setAttribute("schedulesList",barberSchedules);
         	}
+			LinkedList<Schedule> barberSchedules = Schedules.getAllByBarber(user.getUserId());
+			Collections.sort(barberSchedules);
+			request.setAttribute("schedulesList",barberSchedules);
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
             dispatcher.forward(request, response);
             

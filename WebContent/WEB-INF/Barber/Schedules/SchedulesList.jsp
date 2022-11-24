@@ -66,6 +66,9 @@
                   		<span class="text-success">
 			  				${successMessage}
 						</span>
+						<span class="text-danger">
+			  				${errorMessage}
+						</span>
               		</div>
               	</div>	
        	</div>

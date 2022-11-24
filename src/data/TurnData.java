@@ -38,6 +38,7 @@ public class TurnData {
 					t.setHour(rs.getObject("hour", LocalTime.class));
 					LinkedList<Service> services = serd.getServicesByTurn(t.getTurnId());
 					t.setServices(services);
+					t.setNot_cancelled(rs.getBoolean("not_cancelled"));
 					turns.add(t);
 				}
 			}
@@ -123,6 +124,9 @@ public class TurnData {
 					t.setSchedule(schedule);
 					t.setDate(rs.getObject("date", LocalDate.class));
 					t.setHour(rs.getObject("hour", LocalTime.class));
+					t.setNot_cancelled(rs.getBoolean("not_cancelled"));
+
+
 					turns.add(t);
 				}
 			}
@@ -143,13 +147,14 @@ public class TurnData {
 	}
 	
 	public LinkedList<Turn> getBookedTurnsByBarberId(int barberId){
+		//Turnos pendientes 
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		LinkedList<Turn> turns= new LinkedList<>();
 		
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-			"select t.turn_id,t.date,t.hour,t.client_id,bl.id from turns as t inner join barber_local as bl on t.schedule_id = bl.id where bl.barber_id=? and t.date>=CURRENT_DATE;"
+			"select t.turn_id,t.date,t.hour,t.client_id,t.not_cancelled,bl.id from turns as t inner join barber_local as bl on t.schedule_id = bl.id where bl.barber_id=? and t.date>=CURRENT_DATE;"
 					);
 			stmt.setInt(1, barberId);
 		
@@ -170,6 +175,9 @@ public class TurnData {
 					t.setHour(rs.getObject("hour", LocalTime.class));
 					LinkedList<Service> services = servicedata.getServicesByTurn(t.getTurnId());
 					t.setServices(services);
+					t.setNot_cancelled(rs.getBoolean("not_cancelled"));
+
+
 					turns.add(t);
 				}
 			}
@@ -428,5 +436,31 @@ public class TurnData {
             }
 		}
 		return false;
+	}
+	public boolean switchTurnStatus(byte notCancelled, int turnId) {
+		PreparedStatement stmt= null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"UPDATE turns SET not_cancelled=? WHERE turn_id = ?"
+							);
+			stmt.setInt(1, notCancelled);
+			stmt.setInt(2, turnId);
+			stmt.executeUpdate();
+
+            return stmt.executeUpdate() > 0;
+			
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }            
+		}
+		//if error return false
+		return false;	
 	}
 }

@@ -249,4 +249,44 @@ public class ScheduleData {
 		return false;
     }
 	
+	public LinkedList<Days> getDays(Schedule schedule){
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		LinkedList<Days> days= new LinkedList<Days>();		
+		try {		
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select distinct day_of_week from barber_local WHERE barber_local.barber_id = ?"
+					);
+			stmt.setInt(1, schedule.getBarber().getUserId());
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+					
+					
+					Days day = Days.valueOf(rs.getString("day_of_week"));
+					//String day = rs.getString("day_of_week");
+				
+					
+					days.add(day);
+				
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return days;
+	}
+	
 }

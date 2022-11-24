@@ -14,7 +14,7 @@ public class Turn {
 	private LocalTime hour;
 	private Time duration;
 	private LinkedList<Service> services;
-	
+	private boolean not_cancelled;
 	public int getTurnId() {
 		return turnId;
 	}
@@ -59,6 +59,16 @@ public class Turn {
 
 	public void setDuration(Time duration) {
 		this.duration = duration;
+	}
+
+
+
+	public boolean getNot_cancelled() {
+		return not_cancelled;
+	}
+
+	public void setNot_cancelled(boolean not_cancelled) {
+		this.not_cancelled = not_cancelled;
 	}
 	
 	
