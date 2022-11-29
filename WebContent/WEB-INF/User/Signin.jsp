@@ -35,7 +35,7 @@
                   placeholder="enter your passsword">
               </div>
               <div>${message}</div>
-              <input name="login" id="login" class="btn btn-block login-btn" type="submit">
+              <button name="login" id="login" class="btn btn-block login-btn" type="submit">Ingresar</button>
             </form>
             <a href="#!" class="forgot-password-link">Olvidaste tu contraseña?</a>
             <p class="login-wrapper-footer-text">No tenés una cuenta? <a href="Signup" class="text-reset">Registrate</a></p>

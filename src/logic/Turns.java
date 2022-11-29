@@ -10,6 +10,7 @@ import data.UserData;
 import entities.Publication;
 import entities.Turn;
 import entities.User;
+import utils.TurnStatus;
 
 public class Turns {
 	
@@ -48,11 +49,9 @@ public class Turns {
 		Turn turn = td.getById(id);
 	    return td.delete(turn);
 	  }
-	public static boolean switchTurnStatus(int id){
+	public static boolean switchTurnStatus(int id, TurnStatus newStatus){
 		TurnData td = new TurnData();
 		Turn turn = td.getById(id);
-		return td.switchTurnStatus((byte)(turn.getNot_cancelled()?0:1), turn.getTurnId());
-		
-		
+		return td.switchTurnStatus(newStatus, id);
 	}
 }

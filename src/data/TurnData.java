@@ -1,6 +1,8 @@
 package data;
 
 import entities.*;
+import utils.Days;
+import utils.TurnStatus;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -38,7 +40,7 @@ public class TurnData {
 					t.setHour(rs.getObject("hour", LocalTime.class));
 					LinkedList<Service> services = serd.getServicesByTurn(t.getTurnId());
 					t.setServices(services);
-					t.setNot_cancelled(rs.getBoolean("not_cancelled"));
+					t.setStatus(TurnStatus.valueOf(rs.getString("status")));
 					turns.add(t);
 				}
 			}
@@ -68,7 +70,7 @@ public class TurnData {
 		ResultSet rs=null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select schedule_id,client_id,init_date,finish_date from turns where turn_id=?"
+					"select schedule_id,client_id,date,hour from turns where turn_id=?"
 					);
 			stmt.setInt(1, id);
 			rs=stmt.executeQuery();
@@ -124,7 +126,7 @@ public class TurnData {
 					t.setSchedule(schedule);
 					t.setDate(rs.getObject("date", LocalDate.class));
 					t.setHour(rs.getObject("hour", LocalTime.class));
-					t.setNot_cancelled(rs.getBoolean("not_cancelled"));
+					t.setStatus(TurnStatus.valueOf(rs.getString("status")));
 
 
 					turns.add(t);
@@ -154,7 +156,7 @@ public class TurnData {
 		
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-			"select t.turn_id,t.date,t.hour,t.client_id,t.not_cancelled,bl.id from turns as t inner join barber_local as bl on t.schedule_id = bl.id where bl.barber_id=? and t.date>=CURRENT_DATE;"
+			"select t.turn_id,t.date,t.hour,t.client_id,t.status,bl.id from turns as t inner join barber_local as bl on t.schedule_id = bl.id where bl.barber_id=? and t.date>=CURRENT_DATE;"
 					);
 			stmt.setInt(1, barberId);
 		
@@ -175,7 +177,7 @@ public class TurnData {
 					t.setHour(rs.getObject("hour", LocalTime.class));
 					LinkedList<Service> services = servicedata.getServicesByTurn(t.getTurnId());
 					t.setServices(services);
-					t.setNot_cancelled(rs.getBoolean("not_cancelled"));
+					t.setStatus(TurnStatus.valueOf(rs.getString("status")));
 
 
 					turns.add(t);
@@ -382,7 +384,7 @@ public class TurnData {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"insert into turns(schedule_id,client_id,date,hour,duration) values(?,?,?,?,?)",
+							"insert into turns(schedule_id,client_id,date,hour,duration,status) values(?,?,?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 			stmt.setInt(1, turn.getSchedule().getId());
@@ -390,6 +392,7 @@ public class TurnData {
 			stmt.setDate(3, Date.valueOf(turn.getDate()));
 			stmt.setTime(4, Time.valueOf(turn.getHour()));
 			stmt.setTime(5,turn.getDuration());
+			stmt.setString(6, turn.getStatus().toString());
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
@@ -437,14 +440,14 @@ public class TurnData {
 		}
 		return false;
 	}
-	public boolean switchTurnStatus(byte notCancelled, int turnId) {
+	public boolean switchTurnStatus(TurnStatus newStatus, int turnId) {
 		PreparedStatement stmt= null;
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"UPDATE turns SET not_cancelled=? WHERE turn_id = ?"
+							"UPDATE turns SET status=? WHERE turn_id = ?"
 							);
-			stmt.setInt(1, notCancelled);
+			stmt.setString(1, newStatus.toString());
 			stmt.setInt(2, turnId);
 			stmt.executeUpdate();
 

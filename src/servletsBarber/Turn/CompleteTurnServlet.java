@@ -1,6 +1,4 @@
 package servletsBarber.Turn;
-import logic.Turns;
-import utils.TurnStatus;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,19 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import logic.Admin;
+import logic.Turns;
+import utils.TurnStatus;
 
 /**
- * Servlet implementation class CancelTurnServlet
+ * Servlet implementation class CompleteTurnServlet
  */
-@WebServlet("/CancelTurnServlet")
-public class CancelTurnServlet extends HttpServlet {
+@WebServlet("/CompleteTurnServlet")
+public class CompleteTurnServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CancelTurnServlet() {
+    public CompleteTurnServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,7 +40,7 @@ public class CancelTurnServlet extends HttpServlet {
 		String id = request.getHeader("Id");
 		int idTurn = Integer.parseInt(id);
 		
-		Turns.switchTurnStatus(idTurn, TurnStatus.Cancelado);  
+		Turns.switchTurnStatus(idTurn, TurnStatus.Finalizado);  
 	}
 
 }

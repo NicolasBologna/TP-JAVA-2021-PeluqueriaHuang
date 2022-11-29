@@ -42,7 +42,7 @@
                        			<th>email</th>
                        			<th>Dni</th>
                        			<th>tel</th>
-                       			<th>habilitado</th>
+                       			<th>estado</th>
                        			<th></th>
                        			<th></th>
                    			</tr>
@@ -60,10 +60,7 @@
                    				<td><%=per.getPhone()%></td>
          
                    				<td>
-	                   				<input type="checkbox" <%=per.getIsEnable()?"checked":""%> name="checkbox" class="bootstrap-switch" onclick="changeEnable(<%=per.getUserId()%>)"
-									    data-on-label="ON"
-									    data-off-label="OFF"
-									/>
+	                   				<%=per.getIsEnable()?"Habilidatado":"Deshabilitado"%> 
                    				</td>
                    				<td><button type="button" class="btn btn-primary btn-round btn-sm my-0" 
                    						onclick="window.location.href='EditUserServlet?idPersona='+<%=per.getUserId()%>;">Editar</button>

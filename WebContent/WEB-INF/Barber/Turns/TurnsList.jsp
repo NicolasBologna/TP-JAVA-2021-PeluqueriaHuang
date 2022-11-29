@@ -47,7 +47,7 @@ Turnos	</title>
                        			<th>Cliente</th>
                        			<th>Contacto cliente</th>
                        			<th>Servicios</th>
-                       			<th>Pendiente</th>
+                       			<th>Estado</th>
                    			</tr>
                    		</thead>
                    		<tbody>
@@ -75,10 +75,11 @@ Turnos	</title>
                    				<%} %></ul>
                    				</td>		
                    				 <td>
-	                   				<input type="checkbox" <%=t.getNot_cancelled()?"checked":""%> name="checkbox" class="bootstrap-switch" onclick="changeEnable(<%= t.getTurnId()%>)"
-									    data-on-label="ON"
-									    data-off-label="OFF"
-									/>
+	                   				<%=t.getStatus().toString()%>
+                   				</td>
+         				       	<td>
+         				       		<button type="button" class="btn btn-primary btn-round btn-sm my-0" <%=t.getStatus().toString() != "Pendiente" ? "disabled" : "" %>
+                   						onclick="changeStatus(<%=t.getTurnId()%>);">Completar turno</button>
                    				</td>
                    								
                    			</tr>
@@ -102,32 +103,19 @@ Turnos	</title>
 	<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
 	<script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		$('.bootstrap-switch').each(function(){
-		    $this = $(this);
-		    data_on_label = $this.data('on-label') || '';
-		    data_off_label = $this.data('off-label') || '';
-		
-		    $this.bootstrapSwitch({
-		        onText: data_on_label,
-		        offText: data_off_label
-		    });
-		});
-		
-		function changeStatus(id){
-			var dataRequestHeader={"Id" : id};
-	
-		    $.ajax({
-	            type:'POST',
-	            url:'CancelTurnServlet',  
-	            cache:false,
-	            headers:dataRequestHeader,
-	            success:function(){ location.reload(true)},
-	            error:function(xhr,ajaxOptions){
-	                alert(xhr.status + " :: " + xhr.statusText);
-	                } 
-	            });
-		}
+	function changeStatus(id){
+		var dataRequestHeader={"Id" : id};
 
-	</script>
+	    $.ajax({
+            type:'POST',
+            url:'CompleteTurnServlet',  
+            cache:false,
+            headers:dataRequestHeader,
+            success:function(){ location.reload(true)},
+            error:function(xhr,ajaxOptions){
+                alert(xhr.status + " :: " + xhr.statusText);
+                } 
+            });
+	}</script>
 </body>
 </html>

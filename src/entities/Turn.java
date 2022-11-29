@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
 
+import utils.TurnStatus;
+
 public class Turn {
 
 	private int turnId;
@@ -14,7 +16,7 @@ public class Turn {
 	private LocalTime hour;
 	private Time duration;
 	private LinkedList<Service> services;
-	private boolean not_cancelled;
+	private TurnStatus status;
 	public int getTurnId() {
 		return turnId;
 	}
@@ -61,16 +63,12 @@ public class Turn {
 		this.duration = duration;
 	}
 
-
-
-	public boolean getNot_cancelled() {
-		return not_cancelled;
+	public TurnStatus getStatus() {
+		return status;
 	}
 
-	public void setNot_cancelled(boolean not_cancelled) {
-		this.not_cancelled = not_cancelled;
+	public void setStatus(TurnStatus status) {
+		this.status = status;
 	}
-	
-	
 	
 }

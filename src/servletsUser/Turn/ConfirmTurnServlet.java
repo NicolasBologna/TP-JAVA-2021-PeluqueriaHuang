@@ -26,6 +26,7 @@ import logic.LocalAdmin;
 import logic.ServicesBarber;
 import logic.SignUp;
 import logic.Turns;
+import utils.TurnStatus;
 import logic.Schedules;
 
 /**
@@ -75,6 +76,7 @@ public class ConfirmTurnServlet extends HttpServlet {
 		newTurn.setDuration(Time.valueOf(servicesDuration));
 		newTurn.setHour(LocalTime.parse(hour));
 		newTurn.setDate(LocalDate.parse(turnDate));
+		newTurn.setStatus(TurnStatus.Pendiente);
 		
 		try {
 			String destPage = "WEB-INF/User/Turn/SavedTurn.jsp";
