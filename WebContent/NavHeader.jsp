@@ -44,6 +44,11 @@
 					</a></li>
 				<% } %>
 				<%if (user.hasRol(Roles.getRoleByName("Peluquero"))) { %>
+				<li class="nav-item"><a class="nav-link"
+						href="ListTurnsServlet"> <i 
+							class="now-ui-icons design_scissors"></i>
+							<p>Mis Turnos</p>
+					</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="ListSchedules"> <i 
 							class="now-ui-icons ui-1_calendar-60"></i>
@@ -60,9 +65,9 @@
 							<p>Mis Publicaciones</p>
 					</a></li>
 				<% } %>
-				<%if (user.hasRol(Roles.getRoleByName("Cliente")) || user.hasRol(Roles.getRoleByName("Peluquero"))) { %>
+				<%if (user.hasRol(Roles.getRoleByName("Cliente"))) { %>
 					<li class="nav-item"><a class="nav-link"
-						href="ListTurnsServlet"> <i 
+						href="ListTurnsUserServlet"> <i 
 							class="now-ui-icons design_scissors"></i>
 							<p>Mis Turnos</p>
 					</a></li>

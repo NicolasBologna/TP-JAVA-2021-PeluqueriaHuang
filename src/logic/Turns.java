@@ -8,6 +8,7 @@ import data.PublicationData;
 import data.TurnData;
 import data.UserData;
 import entities.Publication;
+import entities.Schedule;
 import entities.Turn;
 import entities.User;
 import utils.TurnStatus;
@@ -34,15 +35,21 @@ public class Turns {
 		return td.getBookedTurnsByBarberId(barberId);
 	}
 	
+	public static LinkedList<Turn> getByUserId(int userId){
+		TurnData td = new TurnData();
+		
+		return td.getBookedTurnsByUserId(userId);
+	}
+	
 	public static int add(Turn turn){
 		TurnData td = new TurnData();
 		return td.add(turn);
 	}
 	
-	public static LinkedList<String> getHoursAvailable(int barber_id,String turnDate,int idLocal, LocalTime duration){
+	public static LinkedList<String> getHoursAvailable(int barber_id,String turnDate,int idLocal, LocalTime duration,Schedule schedule){
 		
 		TurnData td = new TurnData();
-		return td.getHoursFree(barber_id,turnDate,idLocal,duration);
+		return td.getHoursFree(barber_id,turnDate,idLocal,duration,schedule);
 	}
 	public static boolean delete(int id){
 		TurnData td = new TurnData();

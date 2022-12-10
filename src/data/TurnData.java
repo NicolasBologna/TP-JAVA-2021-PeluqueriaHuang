@@ -280,14 +280,12 @@ public class TurnData {
 		return hours;
 	}
 	
-	public LinkedList<String> getHoursFree(int barberId,String turnDate,int idLocal,LocalTime duration){
+	public LinkedList<String> getHoursFree(int barberId,String turnDate,int idLocal,LocalTime duration,Schedule schedule){
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		LinkedList<String> hours= new LinkedList<>();
 		LinkedList<Turn> turns = new LinkedList<>();
-		Schedule s = new Schedule();
-		s.setStart_time(LocalTime.parse("09:00:00"));
-		s.setEnd_time(LocalTime.parse("18:00:00"));
+		
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
 					"select t.hour,t.date,t.duration from turns as t inner join barber_local as bl on t.schedule_id = bl.id where bl.barber_id=? and t.date =? and bl.local_id = ? order by t.hour asc"
@@ -307,7 +305,7 @@ public class TurnData {
 					turns.add(t);
 				}
 			}
-			hours = getTimes(turns, duration,s);
+			hours = getTimes(turns, duration,schedule);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			
@@ -324,60 +322,7 @@ public class TurnData {
 		
 		
 	}
-	/*
-	public Date[] getDaysNot(LocalTime duration,int barberId, int localId) {
-		
-		PreparedStatement stmt=null;
-		ResultSet rs=null;
-		Date[] daysNot = null;
-		
-		try {
-			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select t.date from turns as t "
-					+ "inner join barber_local as bl on t.schedule_id = bl.id"
-					+ "where bl.barber_id=? and bl.local_id = ? and t.date >= current_date"
-					+ "and t.date < DATEADD(DD,30,@Date)"
-					);
-			stmt.setInt(1, barberId);
-			stmt.setInt(2, localId);
-			rs=stmt.executeQuery();
-			if(rs!=null) {
-				while(rs.next()) {
-					Turn t=new Turn();
-					UserData ud = new UserData();
-					ScheduleData sd = new ScheduleData();
-					ServiceData servicedata = new ServiceData();
-					
-					t.setTurnId(rs.getInt("turn_id"));
-					User client = ud.getById(rs.getInt("client_id"));
-					Schedule schedule = sd.getById(rs.getInt("schedule_id"));
-					t.setClient(client);
-					t.setSchedule(schedule);
-					t.setDate(rs.getObject("date", LocalDate.class));
-					t.setHour(rs.getObject("hour", LocalTime.class));
-					LinkedList<Service> services = servicedata.getServicesByTurn(t.getTurnId());
-					t.setServices(services);
-					turns.add(t);
-				}
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			
-		} finally {
-			try {
-				if(rs!=null) {rs.close();}
-				if(stmt!=null) {stmt.close();}
-				DbConnector.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}	
-		return daysNot;
-		
-		
-		 
-	}*/
+	
 	public int add(Turn turn) {
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
@@ -465,5 +410,60 @@ public class TurnData {
 		}
 		//if error return false
 		return false;	
+	}
+	public LinkedList<Turn> getBookedTurnsByUserId(int userId){
+		//Turnos pendientes 
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		LinkedList<Turn> turns= new LinkedList<>();
+		
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+			"select t.turn_id,t.date,t.hour,t.schedule_id,bl.barber_id,bl.local_id from turns as t "
+			+ "inner join barber_local as bl on t.schedule_id = bl.id "
+			+ "where t.client_id = ? and t.date>=CURRENT_DATE;");
+			stmt.setInt(1, userId);
+		
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+					Turn t=new Turn();
+					UserData ud = new UserData();
+					ScheduleData sd = new ScheduleData();
+					LocalData ld = new LocalData();
+					
+					t.setTurnId(rs.getInt("turn_id"));
+					
+					User client = ud.getById(userId);
+					Schedule schedule = sd.getById(rs.getInt("schedule_id"));
+					User barber = ud.getById(rs.getInt("barber_id"));
+					Local local = ld.getById(rs.getInt("local_id"));
+					
+					schedule.setBarber(barber);
+					schedule.setLocal(local);
+					t.setClient(client);
+					t.setSchedule(schedule);
+					t.setDate(rs.getObject("date", LocalDate.class));
+					t.setHour(rs.getObject("hour", LocalTime.class));
+					
+
+
+					turns.add(t);
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+		return turns;
 	}
 }

@@ -7,41 +7,7 @@ import java.util.LinkedList;
 
 public class ServiceBarberData {
 	
-	/*public LinkedList<ServiceBarber> getAll(){
-		Statement stmt=null;
-		ResultSet rs=null;
-		LinkedList<ServiceBarber> servicesBarbers= new LinkedList<>();
-		
-		try {
-			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select publication_id,barber_id,title,text,date,image from publications");
-			if(rs!=null) {
-				while(rs.next()) {
-					Publication p=new Publication();
-					p.setPublicationId(rs.getInt("publication_id"));
-					p.setBarberId(rs.getInt("barber_id"));
-					p.setTitle(rs.getString("title"));
-					p.setText(rs.getString("text"));
-					p.setDate(rs.getString("date"));
-					p.setImage(rs.getString("image"));
-					publications.add(p);
-				}
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			
-		} finally {
-			try {
-				if(rs!=null) {rs.close();}
-				if(stmt!=null) {stmt.close();}
-				DbConnector.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}	
-		return publications;
-	}*/
+	
 	
 	public ServiceBarber getById(int id) {
 		ServiceBarber sb=null;

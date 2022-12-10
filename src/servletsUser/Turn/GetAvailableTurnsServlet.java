@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entities.Schedule;
+import logic.Schedules;
 import logic.ServicesBarber;
 import logic.Turns;
 
@@ -33,9 +35,9 @@ public class GetAvailableTurnsServlet extends HttpServlet {
 		String[] servicesId = request.getParameterValues("services");
 		String turnDate = request.getParameter("turn-date");
 
-		
+		Schedule schedule = Schedules.getByLocalBarber(idLocal,barberId);
 		LocalTime servicesDuration = ServicesBarber.getTotalDuration(servicesId);
-		LinkedList<String> hoursList = Turns.getHoursAvailable(barberId,turnDate, idLocal, servicesDuration);
+		LinkedList<String> hoursList = Turns.getHoursAvailable(barberId,turnDate, idLocal, servicesDuration,schedule);
 		
 		request.setAttribute("turn-date", turnDate);
 		request.setAttribute("hoursList",hoursList);
@@ -44,26 +46,12 @@ public class GetAvailableTurnsServlet extends HttpServlet {
 		request.setAttribute("barberId", barberId);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/User/Turn/ConfirmTurn.jsp");
         dispatcher.forward(request, response);
-	/*	
-		String[] servicesId = request.getParameterValues("serviceId");
-		int barber_id = Integer.parseInt(request.getParameter("idBarber"));
-		int idLocal = Integer.parseInt(request.getParameter("idLocal"));
-		LocalTime servicesDuration = ServicesBarber.getTotalDuration(servicesId);
-		
-		Date[] daysNot = Turns.getDaysNot(servicesDuration, barber_id, idLocal);
-		request.setAttribute("schedules");
-		request.setAttribute("barbersList", ServicesBarber.getBarbersByServices(servicesId,idLocal));
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/User/Turn/SelectBarber.jsp");
-        dispatcher.forward(request, response);
-
-	*/
+	
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		doGet(request, response);
 	}
 
