@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@page import="java.util.LinkedList"%>
@@ -5,13 +6,15 @@
 <%@page import="entities.User"%>
 <%@page import="entities.Role"%>
 <%@page import="entities.Local"%>
+<%@page import="entities.Schedule"%>
 <%@page import="logic.Roles"%>
+<%@page import="dtos.BarberWithWorkingDaysDto"%>
 <!DOCTYPE html>
 <html>
 <%
 	User user = (User)session.getAttribute("user") != null ? (User)session.getAttribute("user") : new User();
 	String[] servicesList = (String[])request.getAttribute("servicesId");
-	LinkedList<User> barbersList = (LinkedList<User>)request.getAttribute("barbersList");
+	LinkedList<BarberWithWorkingDaysDto> barbersList = (LinkedList<BarberWithWorkingDaysDto>)request.getAttribute("barbersList");
 	int idLocal = (int)request.getAttribute("idLocal");
 %>
 
@@ -37,7 +40,6 @@
 	<link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="./assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
 </head>
 <body class="index-page sidebar-collapse" onload="window.location='#form-turn';">
 	<jsp:include page="/NavHeader.jsp" />
@@ -68,14 +70,15 @@
 	       		<div class="form-group">
 					<label for="barber" class="font-weight-bold">Peluquero</label> 
 					<select name="idBarber" class="browser-default custom-select">
-	  					<%
-		       			for (User barber: barbersList) {
-	       				%>
-					    <option value="<%=barber.getUserId()%>">
-					        <%=barber.getFullName()%>
-					    </option>
+	  					<% for (BarberWithWorkingDaysDto dto: barbersList) { %>
+						    <option value="<%=dto.getBarber().getUserId()%>">
+						        <%=dto.getBarber().getFullName()%> (
+						        <% for (Schedule schedule: dto.getSchedules()) { %>
+				    	<%=schedule.getDay_of_week()%> 
+				    <% } %>)
+						    </option>
 					  	<% } %>
-					</select>	
+					</select>
 				</div>
 				
 				<div class="form-group">
@@ -83,9 +86,11 @@
 	
 					<input type="date" id="start" name="turn-date"
 					       id="datePicker"
-					       value="<%= java.time.LocalDate.now() %>"
+					       value=""
 					       min="<%= java.time.LocalDate.now() %>"
 					       max="<%= java.time.LocalDate.now().plusMonths(1) %>">   	
+			
+					<label hidden class"ml-2" id="error-message">El peluquero seleccionado no atiende ese día, por favor seleccione otra fecha.</label>
 		        </div>	
 		        
 		        <input hidden name="idLocal" value="<%=idLocal%>">
@@ -97,7 +102,7 @@
 	       		<% } %>
 		        
 				<div class="d-flex justify-content-center">
-					<button class="btn btn-primary btn-round btn-lg" type="submit">
+					<button class="btn btn-primary btn-round btn-lg" type="submit" disabled id="submit-button">
 						<i class="now-ui-icons design_scissors"></i> Continuar
 					</button>
 				</div>
@@ -122,5 +127,56 @@
 		type="text/javascript"></script>
 	<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 	<script src="./assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
+	<script type="text/javascript">
+		let workingDays ={
+			<% for (BarberWithWorkingDaysDto dto: barbersList) { %>
+		   	<%=dto.getBarber().getUserId()%>:
+		   		[
+		        <% for (Schedule schedule: dto.getSchedules()) { %>
+					'<%=schedule.getDay_of_week()%>', 
+				<% } %>],
+		  	<% } %>	
+		}
+		
+		var WEEKDAYS = ['Lunes', 'Martes', 'Miercoes', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
+		
+		let selectedBarberId = Object.keys(workingDays)[0];
+		let barberWorkingDays = workingDays[selectedBarberId].map(function(day) {
+		  return WEEKDAYS.indexOf(day);
+		})
+		
+		console.log(barberWorkingDays)
+	
+		// Everything except weekend days
+		const validate = dateString => {
+		  const day = (new Date(dateString)).getDay();
+		  console.log(day)
+		  if (!barberWorkingDays.includes(day)) {
+			let message = document.getElementById('error-message');
+			message.removeAttribute("hidden");
+	    	return false;
+		  }
+			let message = document.getElementById('error-message');
+			message.setAttribute("hidden", "true");
+		  return true;
+		}
+
+	
+		document.querySelector('input').onchange = evt => {
+			let submitButton = document.getElementById('submit-button');
+			if (!validate(evt.target.value)) {	
+			  submitButton.setAttribute("disabled", "true");
+			  evt.target.value = '';
+			}
+			else{
+			  submitButton.removeAttribute("disabled");
+			}
+		}
+		
+		document.querySelector('select').onchange = evt => {
+		  selectedBarberId = evt.target.value;
+		  document.querySelector('input').value = '';
+		}
+	</script>
 	</body>
 </html>

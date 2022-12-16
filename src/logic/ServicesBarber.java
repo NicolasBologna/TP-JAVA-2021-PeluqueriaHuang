@@ -7,6 +7,7 @@ import data.PublicationData;
 import data.ScheduleData;
 import data.ServiceBarberData;
 import data.ServiceData;
+import dtos.BarberWithWorkingDaysDto;
 import entities.Service;
 import entities.ServiceBarber;
 import entities.User;
@@ -53,9 +54,18 @@ public class ServicesBarber {
 		return !sbd.getServicesByBarberId(barberId).isEmpty();
 	}
 	
-	public static LinkedList<User> getBarbersByServices(String[] servicesId,int idLocal){
+	public static LinkedList<BarberWithWorkingDaysDto> getBarbersByServices(String[] servicesId,int idLocal){
 		ServiceBarberData sd = new ServiceBarberData();
-		return sd.getBarberByServices(servicesId, idLocal);
+		ScheduleData scheduleData = new ScheduleData();
+		LinkedList<User> barbers = sd.getBarberByServices(servicesId, idLocal);
+		LinkedList<BarberWithWorkingDaysDto> dtoList = new LinkedList<BarberWithWorkingDaysDto>();
+		for(User barber: barbers) {
+			BarberWithWorkingDaysDto dto = new BarberWithWorkingDaysDto();
+			dto.setSchedules(scheduleData.getAllByBarber(barber.getUserId())); 
+			dto.setBarber(barber);
+			dtoList.add(dto);
+		}
+		return dtoList;
 		 
 	}
 	
