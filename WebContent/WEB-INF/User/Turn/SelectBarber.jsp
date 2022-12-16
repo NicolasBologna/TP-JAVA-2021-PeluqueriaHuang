@@ -138,14 +138,12 @@
 		  	<% } %>	
 		}
 		
-		var WEEKDAYS = ['Lunes', 'Martes', 'Miercoes', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
+		var WEEKDAYS = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
 		
 		let selectedBarberId = Object.keys(workingDays)[0];
 		let barberWorkingDays = workingDays[selectedBarberId].map(function(day) {
 		  return WEEKDAYS.indexOf(day);
 		})
-		
-		console.log(barberWorkingDays)
 	
 		// Everything except weekend days
 		const validate = dateString => {
@@ -161,7 +159,6 @@
 		  return true;
 		}
 
-	
 		document.querySelector('input').onchange = evt => {
 			let submitButton = document.getElementById('submit-button');
 			if (!validate(evt.target.value)) {	
