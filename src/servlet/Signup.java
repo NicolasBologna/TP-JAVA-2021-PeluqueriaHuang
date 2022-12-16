@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entities.Role;
 import entities.User;
 import logic.*;
 
@@ -64,6 +66,9 @@ public class Signup extends HttpServlet {
 		newUser.setPhone(phone);
 		newUser.setEmail(email);
 		newUser.setPassword(password);
+		LinkedList<Role> defaultRoles = new LinkedList<Role>();
+		defaultRoles.add(Roles.getRoleByName("Cliente"));
+		newUser.setRoles(defaultRoles);
 		
 		try {
 			

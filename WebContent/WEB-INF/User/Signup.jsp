@@ -32,7 +32,13 @@
               <div class="form-group mb-4">
                 <label for="password">Contraseña</label>
                 <input type="password" name="password" id="password" minlength="8" class="form-control"
-                  placeholder="Ingrese su contraseña" required>
+                  placeholder="Ingrese su contraseña" required onkeyup='check();'>
+              </div>
+              <div class="form-group mb-4">
+                <label for="repeat-password">Repita la contraseña</label>
+                <input type="password" name="repeat-password" id="repeat-password" minlength="8" class="form-control"
+                  placeholder="Ingrese otra vez su contraseña" required onkeyup='check();' >
+                  <span id='message'></span>
               </div>
               <div class="form-group mb-4">
                 <label for="first_name">Nombre</label>
@@ -67,6 +73,18 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+  var check = function() {
+	  if (document.getElementById('password').value ==
+	    document.getElementById('repeat-password').value) {
+	    document.getElementById('message').style.color = 'green';
+	    document.getElementById('message').innerHTML = 'Las contraseñas coinciden';
+	  } else {
+	    document.getElementById('message').style.color = 'red';
+	    document.getElementById('message').innerHTML = 'Las contraseñas no coinciden';
+	  }
+	}
+  </script>
 </body>
 
 </html>

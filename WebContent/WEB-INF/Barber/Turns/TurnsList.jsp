@@ -40,7 +40,7 @@ Turnos	</title>
                    	<table class="table table-dark pt-2">
                    		<thead>
                    			<tr>
-                   				<th>Id</th>
+                   				<th hidden>Id</th>
                    				<th>Fecha</th>
                    				<th>Hora</th>
                    		    	<th>Local</th>
@@ -61,7 +61,7 @@ Turnos	</title>
                    		%>
                    				
                    			<tr >
-                   				<td><%=t.getTurnId()%></td>
+                   				<td hidden><%=t.getTurnId()%></td>
                    				<td><%= t.getDate() %></td>
                    				<td><%= t.getHour() %></td>
                    				<td><%=l.getAddress()%></td>
